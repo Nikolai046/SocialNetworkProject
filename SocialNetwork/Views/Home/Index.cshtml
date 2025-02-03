@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="login-container">
+    <form class="login-form" action="process_login.php" method="post">
+        <h2>Вход</h2>
+        <label for="username">Имя пользователя</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Войти</button>
+        <p>Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+    </form>
+</div>
