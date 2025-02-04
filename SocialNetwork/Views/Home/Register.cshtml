@@ -1,16 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Вход";
+    ViewData["Title"] = "Регистрация";
 }
 
 
 <div class="login-container">
     <form class="login-form">
-        <h2>Вход</h2>
+        <h2>Регистрация</h2>
         <label for="username">Имя пользователя</label>
         <input type="text" id="username" name="username" required>
         <label for="password">Пароль</label>
         <input type="password" id="password" name="password" required>
         <button type="submit">Войти</button>
-        <p>Нет аккаунта? <a  asp-area="" asp-controller="Home" asp-action="Register">Зарегистрироваться</a></p>
+        <p>Уже зарегистрированы? <a asp-area="" asp-controller="Home" asp-action="Index">Авторизироваться</a></p>
     </form>
 </div>

@@ -122,23 +122,42 @@ header {
 main {
     flex: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 90vH;
+    /*justify-content: center;*/
+    /*align-items: center;
+    height: 90vH;*/
+    flex-direction: column;
+    min-height: calc(100vh - 150px);
 }
 
-.login-container {
+.spacer-container {
+    flex: 1;
+    min-height: 30px; /* Минимальный отступ */
+}
+
+/*.login-container {
     background: white;
-    padding: 30px;
+    padding: 10px 30px 30px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
+   /* width: 100%;
+    max-width: 400px;*/
+    /*margin: 20px;
+}*/
+
+.login-container {
+    flex-shrink: 0; /* Запрещаем сжатие */
+    background: white;
+    padding: 10px 30px 30px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    margin: 20px;
+    margin: 0 auto; /* Центрирование по горизонтали */
+    /*width: 100%;*/
+    max-width: 400px; /* Фиксируем максимальную ширину */
 }
 
 .login-form h2 {
-    margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 15px;
     color: #333;
 }
 
@@ -149,7 +168,10 @@ main {
 }
 
 .login-form input {
+    /*width: -webkit-fill-available;*/
     width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -159,25 +181,25 @@ main {
 .login-form button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #ff7700;
     border: none;
-    border-radius: 4px;
+    border-radius: 100px;
     color: white;
     font-size: 1em;
     cursor: pointer;
 }
 
-.login-form button:hover {
-    background-color: #45a049;
-}
+    .login-form button:hover {
+        background-color: #d66400;
+    }
 
 .login-form p {
+    margin-top: 0;
     text-align: center;
-    margin-top: 10px;
 }
 
 .login-form a {
-    color: #4CAF50;
+    color: #ff7700;
     text-decoration: none;
 }
 
@@ -185,7 +207,7 @@ main {
     text-decoration: underline;
 }
 
-footer {
+/*footer {
     box-sizing: border-box;
     display: flex;
     position: sticky;
@@ -195,13 +217,23 @@ footer {
     align-items: center;
     font-size: 1.5em;
     color: rgba(46, 47, 51, .639);
+}*/
+
+footer {
+    margin-top: auto;
+    padding: 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+    font-size: 1.5em;
+    color: rgba(46, 47, 51, .639);
 }
 
 /* Адаптация для мобильных */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 10px;
-    }
 
     .toolbar_logo p {
         display: none;
