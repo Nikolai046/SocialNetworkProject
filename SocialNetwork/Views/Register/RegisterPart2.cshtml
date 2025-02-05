@@ -1,0 +1,60 @@
+﻿@model SocialNetwork.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+@* <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+ *@<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+
+<div class="registration-container">
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-controller="Register" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div>
+            <label asp-for="FirstName"></label>
+            <input style="background-color: aliceblue" asp-for="FirstName" readonly>
+    </div>
+    <div>
+            <label asp-for="LastName"></label>
+            <input style="background-color: aliceblue" asp-for="LastName" readonly>
+    </div>
+    <div>
+        <label asp-for="Login"></label>
+        <input asp-for="Login">
+        <span asp-validation-for="Login"></span>
+    </div>
+    <div>
+        <label asp-for="EmailReg"></label>
+        <input asp-for="EmailReg">
+        <span asp-validation-for="EmailReg"></span>
+    </div>
+    <div>
+            <label asp-for="Date"></label>
+            <input style="background-color: aliceblue" asp-for="Date" readonly>
+        </div>
+    <div>
+            <label asp-for="Month"></label>
+            <input style="background-color: aliceblue" asp-for="Month" readonly>
+        </div>
+    <div>
+            <label asp-for="Year"></label>
+            <input style="background-color: aliceblue" asp-for="Year" readonly>
+        </div>
+    <div>
+        <label asp-for="PasswordReg"></label>
+        <input asp-for="PasswordReg">
+        <span asp-validation-for="PasswordReg"></span>
+    </div>
+    <div>
+        <label asp-for="PasswordConfirm"></label>
+        <input asp-for="PasswordConfirm" />
+        <span asp-validation-for="PasswordConfirm"></span>
+    </div>
+    <div>
+            <button type="submit">Завершить регистрацию</button>
+        @* <input type="submit" value="Регистрация"/> *@
+    </div>
+</form>
+</div>

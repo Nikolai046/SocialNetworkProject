@@ -122,9 +122,6 @@ header {
 main {
     flex: 1;
     display: flex;
-    /*justify-content: center;*/
-    /*align-items: center;
-    height: 90vH;*/
     flex-direction: column;
     min-height: calc(100vh - 150px);
 }
@@ -134,41 +131,34 @@ main {
     min-height: 30px; /* Минимальный отступ */
 }
 
-/*.login-container {
-    background: white;
-    padding: 10px 30px 30px 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
-   /* width: 100%;
-    max-width: 400px;*/
-    /*margin: 20px;
-}*/
-
-.login-container {
+.login-container,
+.registration-container {
     flex-shrink: 0; /* Запрещаем сжатие */
     background: white;
     padding: 10px 30px 30px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 0 auto; /* Центрирование по горизонтали */
-    /*width: 100%;*/
     max-width: 400px; /* Фиксируем максимальную ширину */
 }
 
-.login-form h2 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #333;
-}
+    .login-form h2,
+    .registration-container h2 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #333;
+    }
 
-.login-form label {
+.login-form label,
+.registration-container label{
     display: block;
     margin-bottom: 5px;
     color: #666;
 }
 
-.login-form input {
-    /*width: -webkit-fill-available;*/
+.login-form input,
+.registration-container input,
+.registration-container select {
     width: 100%;
     box-sizing: border-box;
     max-width: 100%;
@@ -178,7 +168,8 @@ main {
     border-radius: 4px;
 }
 
-.login-form button {
+.login-form button,
+.registration-container button {
     width: 100%;
     padding: 10px;
     background-color: #ff7700;
@@ -189,21 +180,25 @@ main {
     cursor: pointer;
 }
 
-    .login-form button:hover {
-        background-color: #d66400;
-    }
+.login-form button:hover,
+.registration-container button:hover {
+    background-color: #d66400;
+}
 
-.login-form p {
-    margin-top: 0;
+.login-form p,
+.registration-container p{
+    margin-top: 15px;
     text-align: center;
 }
 
-.login-form a {
+.login-form a,
+.registration-container a{
     color: #ff7700;
     text-decoration: none;
 }
 
-.login-form a:hover {
+.login-form a:hover,
+.registration-container a:hover{
     text-decoration: underline;
 }
 

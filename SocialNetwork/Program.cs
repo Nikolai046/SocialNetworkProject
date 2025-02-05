@@ -6,6 +6,7 @@ using SocialNetwork.Models.Entities;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
            .UseLoggerFactory(builder.Services.BuildServiceProvider().GetRequiredService<ILoggerFactory>()));
@@ -19,6 +20,12 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireDigit = false;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+//builder.Services.AddMvc()
+//    .AddViewOptions(options =>
+//    {
+//        options.HtmlHelperOptions.ClientValidationEnabled = false;
+//    });
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -31,6 +38,7 @@ app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
+app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
