@@ -4,82 +4,95 @@
     ViewData["Title"] = "Регистрация";
 }
 
+<script src="js/formChecker.js"></script>
+
 <div class="registration-container">
-        <h2>Впервые в SocialNetwork?</h2>
-        <form method="get" asp-controller="Register" asp-action="RegisterPart2">
-            <div asp-validation-summary="ModelOnly"></div>
+    <h2>Впервые в SocialNetwork?</h2>
+    <form method="get" asp-controller="Register" asp-action="RegisterPart2">
+        <div asp-validation-summary="ModelOnly"></div>
 
-          <label asp-for="FirstName">Имя</label>
-          <input asp-for="FirstName"  required>
-         
-            <label asp-for="LastName">Фамилия</label>
-            <input asp-for="LastName" required>
-          
-            <label>Дата рождения</label>
-            <div style="display: flex; gap: 8px;">
-            <select id="birth-year" asp-for="Year" onchange="updateDays()" required>
-                    <option value="">Год</option>
-                </select>
-            <select id="birth-month" asp-for="Month" onchange="updateDays()" required>
-                    <option value="">Месяц</option>
-                </select>
-            <select id="birth-day" asp-for="Date" required>
-                    <option value="">День</option>
-                </select>
+        <div class="form-group">
+            <label asp-for="FirstName">Имя</label>
+            <div class="input-wrapper">
+                <input asp-for="FirstName" required>
+                <span asp-validation-for="FirstName"></span>
             </div>
-            <button type="submit" >Продолжить регистрацию</button>
-        </form>
-        <p>Уже зарегистрированы? <a asp-area="" asp-controller="Home" asp-action="Index">Авторизироваться</a></p>
+        </div>
 
+<div class="form-group">
+    <label asp-for="LastName">Фамилия</label>
+    <div class="input-wrapper">
+        <input asp-for="LastName" required>
+        <span asp-validation-for="LastName"></span>
     </div>
+</div>
 
-    <script>
-        // Массив месяцев
-        const months = [
-            { name: "Январь", value: 1 },
-            { name: "Февраль", value: 2 },
-            { name: "Март", value: 3 },
-            { name: "Апрель", value: 4 },
-            { name: "Май", value: 5 },
-            { name: "Июнь", value: 6 },
-            { name: "Июль", value: 7 },
-            { name: "Август", value: 8 },
-            { name: "Сентябрь", value: 9 },
-            { name: "Октябрь", value: 10 },
-            { name: "Ноябрь", value: 11 },
-            { name: "Декабрь", value: 12 }
-        ];
 
-        // Инициализация годов и месяцев при загрузке страницы
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearSelect = document.getElementById('birth-year');
-            const monthSelect = document.getElementById('birth-month');
-            const currentYear = new Date().getFullYear();
-            const startYear = 1940;
+<label>Дата рождения</label>
+<div style="display: flex; gap: 8px;">
+    <select id="birth-year" asp-for="Year" onchange="updateDays()" required>
+        <option value="">Год</option>
+    </select>
+    <select id="birth-month" asp-for="Month" onchange="updateDays()" required>
+        <option value="">Месяц</option>
+    </select>
+    <select id="birth-day" asp-for="Date" required>
+        <option value="">День</option>
+    </select>
+</div>
+<button type="submit">Продолжить регистрацию</button>
+    </form>
+<p>Уже зарегистрированы? <a asp-area="" asp-controller="Home" asp-action="Index">Авторизироваться</a></p>
 
-            // Заполняем года
-            for (let year = currentYear - 10; year >= startYear; year--) {
-                yearSelect.appendChild(new Option(year, year));
-            }
+</div>
 
-            // Заполняем месяцы
-            months.forEach(month => {
-                monthSelect.appendChild(new Option(month.name, month.value));
-            });
+<script>
+    // Массив месяцев
+    const months = [
+        { name: "Январь", value: 1 },
+        { name: "Февраль", value: 2 },
+        { name: "Март", value: 3 },
+        { name: "Апрель", value: 4 },
+        { name: "Май", value: 5 },
+        { name: "Июнь", value: 6 },
+        { name: "Июль", value: 7 },
+        { name: "Август", value: 8 },
+        { name: "Сентябрь", value: 9 },
+        { name: "Октябрь", value: 10 },
+        { name: "Ноябрь", value: 11 },
+        { name: "Декабрь", value: 12 }
+    ];
+
+    // Инициализация годов и месяцев при загрузке страницы
+    document.addEventListener('DOMContentLoaded', () => {
+        const yearSelect = document.getElementById('birth-year');
+        const monthSelect = document.getElementById('birth-month');
+        const currentYear = new Date().getFullYear();
+        const startYear = 1940;
+
+        // Заполняем года
+        for (let year = currentYear - 10; year >= startYear; year--) {
+            yearSelect.appendChild(new Option(year, year));
+        }
+
+        // Заполняем месяцы
+        months.forEach(month => {
+            monthSelect.appendChild(new Option(month.name, month.value));
         });
+    });
 
-        function updateDays() {
-            const month = document.getElementById("birth-month").value;
-            const year = document.getElementById("birth-year").value;
-            const daysSelect = document.getElementById("birth-day");
+    function updateDays() {
+        const month = document.getElementById("birth-month").value;
+        const year = document.getElementById("birth-year").value;
+        const daysSelect = document.getElementById("birth-day");
 
-            daysSelect.innerHTML = '<option value="">День</option>';
+        daysSelect.innerHTML = '<option value="">День</option>';
 
-            if (month && year) {
-                const daysInMonth = new Date(year, month, 0).getDate();
-                for (let day = 1; day <= daysInMonth; day++) {
-                    daysSelect.appendChild(new Option(day, day));
-                }
+        if (month && year) {
+            const daysInMonth = new Date(year, month, 0).getDate();
+            for (let day = 1; day <= daysInMonth; day++) {
+                daysSelect.appendChild(new Option(day, day));
             }
         }
-    </script>
+    }
+</script>

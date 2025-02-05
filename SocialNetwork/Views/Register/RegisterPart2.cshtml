@@ -4,57 +4,92 @@
     ViewData["Title"] = "Register";
 }
 
-@* <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
- *@<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"></script>
+<script src="js/formChecker.js"></script>
 
 <div class="registration-container">
 <h2>Регистрация нового пользователя</h2>
 <form method="post" asp-controller="Register" asp-action="Register">
     <div asp-validation-summary="ModelOnly"></div>
 
-    <div>
-            <label asp-for="FirstName"></label>
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <div class="input-wrapper">
             <input style="background-color: aliceblue" asp-for="FirstName" readonly>
+            <span class="field-validation-valid"></span>
+        </div>
     </div>
-    <div>
-            <label asp-for="LastName"></label>
-            <input style="background-color: aliceblue" asp-for="LastName" readonly>
+
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+                <div class="input-wrapper">
+        <input style="background-color: aliceblue" asp-for="LastName" readonly>
+        <span class="field-validation-valid"></span>
+        </div>
     </div>
-    <div>
+
+    <div class="form-group">
         <label asp-for="Login"></label>
-        <input asp-for="Login">
-        <span asp-validation-for="Login"></span>
+        <div class="input-wrapper">
+            <input asp-for="Login">
+            <span asp-validation-for="Login"></span>
+        </div>
     </div>
-    <div>
+
+    <div class="form-group">
         <label asp-for="EmailReg"></label>
-        <input asp-for="EmailReg">
-        <span asp-validation-for="EmailReg"></span>
+        <div class="input-wrapper">
+            <input asp-for="EmailReg">
+            <span asp-validation-for="EmailReg"></span>
+        </div>
     </div>
-    <div>
-            <label asp-for="Date"></label>
+
+    <div class="form-group">
+        <label asp-for="Date"></label>
+        <div class="input-wrapper">
             <input style="background-color: aliceblue" asp-for="Date" readonly>
+                <span class="field-validation-valid"></span>
         </div>
-    <div>
-            <label asp-for="Month"></label>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="Month"></label>
+        <div class="input-wrapper">
             <input style="background-color: aliceblue" asp-for="Month" readonly>
+            <span class="field-validation-valid"></span>
         </div>
-    <div>
-            <label asp-for="Year"></label>
+    </div>
+
+
+
+    <div class="form-group">
+        <label asp-for="Year"></label>
+        <div class="input-wrapper">
             <input style="background-color: aliceblue" asp-for="Year" readonly>
+                <span class="field-validation-valid"></span>
         </div>
-    <div>
+    </div>
+
+
+    <div class="form-group">
         <label asp-for="PasswordReg"></label>
+            <div class="input-wrapper">
         <input asp-for="PasswordReg">
         <span asp-validation-for="PasswordReg"></span>
     </div>
-    <div>
-        <label asp-for="PasswordConfirm"></label>
-        <input asp-for="PasswordConfirm" />
-        <span asp-validation-for="PasswordConfirm"></span>
     </div>
+
+    <div class="form-group">
+        <label asp-for="PasswordConfirm"></label>
+                <div class="input-wrapper">
+            <input asp-for="PasswordConfirm">
+            <span asp-validation-for="PasswordConfirm"></span>
+        </div>
+    </div>
+
     <div>
             <button type="submit">Завершить регистрацию</button>
-        @* <input type="submit" value="Регистрация"/> *@
+
     </div>
 </form>
 </div>

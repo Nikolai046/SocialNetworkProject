@@ -5,43 +5,43 @@ namespace SocialNetwork.ViewModels.Account;
 public class RegisterViewModel
 {
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Имя")]
     public string FirstName { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Фамилия")]
     public string LastName { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Email")]
-    public string EmailReg { get; set; }
+    public string? EmailReg { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Год")]
     public int Year { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "День")]
     public int Date { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Месяц")]
     public int Month { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [DataType(DataType.Password)]
     [Display(Name = "Пароль")]
     [StringLength(100, ErrorMessage = "Поле {0} должно иметь минимум {2} и максимум {1} символов.", MinimumLength = 5)]
     public string PasswordReg { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Compare("PasswordReg", ErrorMessage = "Пароли не совпадают")]
     [DataType(DataType.Password)]
     [Display(Name = "Подтвердить пароль")]
     public string PasswordConfirm { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Никнейм")]
     public string Login { get; set; }
 }
