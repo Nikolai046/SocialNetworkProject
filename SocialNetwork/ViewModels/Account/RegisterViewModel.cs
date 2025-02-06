@@ -14,6 +14,7 @@ public class RegisterViewModel
     public string LastName { get; set; }
 
     [Required(ErrorMessage = "Заполните это поле")]
+    [EmailAddress(ErrorMessage = "Введите корректный email адрес")]
     [Display(Name = "Email")]
     public string? EmailReg { get; set; }
 

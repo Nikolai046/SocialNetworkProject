@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork.Models.DB;
 using SocialNetwork.Models.Entities;
+using System.Reflection;
+using SocialNetwork;
 
 var builder = WebApplication.CreateBuilder(args);
+var assembly = Assembly.GetAssembly(typeof(MappingProfile));
 
 builder.Services.AddControllersWithViews();
 
@@ -25,6 +28,9 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
 //    {
 //        options.HtmlHelperOptions.ClientValidationEnabled = false;
 //    });
+
+// Подключаем автомаппинг
+builder.Services.AddAutoMapper(assembly);
 
 var app = builder.Build();
 
