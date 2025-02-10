@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SocialNetwork - @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await Html.PartialAsync("_ScriptCssPartial.cshtml")
+  
 </head>
 <body >
 <div class="svg-container">
@@ -21,6 +22,13 @@
                 </button>
             </label>
         </div>
+            <form class="toolbar_logout" asp-controller="AccountManager" asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+            <button type="submit">
+                <p>Выйти</p>
+                <img src="/images/logout.svg" alt="Logo">
+            </button>
+        </form>
     </nav>
 </header>
 
@@ -37,8 +45,5 @@
         &copy; 2025 - SocialNetwork 
     </div>
 </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

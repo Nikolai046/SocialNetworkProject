@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.Models.Entities;
+using SocialNetwork.DLL.Entities;
 using SocialNetwork.ViewModels.Account;
 
 namespace SocialNetwork.Controllers;
@@ -20,23 +20,24 @@ public class RegisterController : Controller
         _signInManager = signInManager;
     }
 
-    [Route("Register")]
+    [Route("register")]
     [HttpGet]
-    public IActionResult Register()
+    public async Task<IActionResult> Register()
     {
         return View("Register");
     }
 
-    [Route("RegisterPart2")]
+    [Route("register2")]
     [HttpGet]
-    public IActionResult RegisterPart2(RegisterViewModel model)
+    public async Task<IActionResult> RegisterPart2(RegisterViewModel model)
     {
-        return View("RegisterPart2", model);
+        return View("RegisterPart2");
     }
 
-    [Route("Register")]
+    [Route("register2")]
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterViewModel model)
+    [ActionName("RegisterPart2")]
+    public async Task<IActionResult> RegisterPart2Post(RegisterViewModel model)
     {
         if (ModelState.IsValid)
         {
@@ -46,7 +47,7 @@ public class RegisterController : Controller
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("MyPage", "AccountManager");
             }
             else
             {
@@ -58,5 +59,7 @@ public class RegisterController : Controller
         }
         return View("RegisterPart2", model);
     }
-
 }
+
+
+

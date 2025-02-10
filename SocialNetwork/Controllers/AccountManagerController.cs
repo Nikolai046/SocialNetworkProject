@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.Models.Entities;
+using SocialNetwork.DLL.Entities;
 using SocialNetwork.ViewModels.Account;
 
 public class AccountManagerController : Controller
@@ -18,44 +19,6 @@ public class AccountManagerController : Controller
         _mapper = mapper;
     }
 
-    [Route("Login")]
-    [HttpGet]
-    public IActionResult Login()
-    {
-        return View("Login");
-    }
-
-    [Route("Login")]
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Login(LoginViewModel model)
-    {
-        if (ModelState.IsValid)
-        {
-
-            var user = _mapper.Map<User>(model);
-
-            var result = await _signInManager.PasswordSignInAsync(user.Email, model.Password, model.RememberMe, false);
-            if (result.Succeeded)
-            {
-                if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                {
-                    return Redirect(model.ReturnUrl);
-                }
-                else
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
-                ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-            }
-        }
-        return View("Views/Home/Index.cshtml");
-    }
-
-    [Route("Logout")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
@@ -63,4 +26,19 @@ public class AccountManagerController : Controller
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
+
+    [Authorize]
+    [Route("my_page")]
+    [HttpGet]
+    public async Task<IActionResult> MyPage()
+    {
+       var result = await _userManager.GetUserAsync(User);
+
+       var autorizedUser = new UserViewModel(result);
+        //model.Friends = await GetAllFriend(model.User);
+
+        //return View("User", model);
+        return View("Mypage",autorizedUser);
+    }
+
 }

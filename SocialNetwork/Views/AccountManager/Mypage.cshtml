@@ -1,0 +1,79 @@
+﻿@model SocialNetwork.ViewModels.Account.UserViewModel;
+@{
+    ViewData["Title"] = "My page";
+}
+
+<div class="main-container">
+    <div class="user-container">
+        <h2>@Model._user.FirstName @Model._user.LastName</h2>
+        <div>
+            <img src="@Model._user.Image"/>
+        </div>
+        @* <p>@Model._user.FirstName @Model._user.LastName</p> *@
+      
+        <div class="friens-container">
+            <ul>
+                <li><img src="images/person-unknown.svg"/>Первый друг</li>
+                <li><img src="images/person-unknown.svg" />Второй друг</li>
+                <li><img src="images/person-unknown.svg" />Третий друг</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <h2>Моя лента</h2>
+        
+        <div class="mt-5 container">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Напишите сообщение</h5>
+                    <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
+                    <button id="sendMessage" class="btn btn-primary mt-2">Отправить</button>
+                </div>
+            </div>
+
+            <div id="messageSection" class="mt-4">
+                <!-- Здесь будет отображаться сообщение -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#sendMessage").click(function () {
+            var message = $("#messageInput").val().trim();
+            if (message === "") return;
+
+            var messageHtml = `
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Ваше сообщение</h6>
+                        <p class="card-text">${message}</p>
+                        <button class="btn btn-sm btn-secondary addComment">Добавить комментарий</button>
+                        <div class="comment-section mt-2"></div>
+                    </div>
+                </div>`;
+
+            $("#messageSection").prepend(messageHtml);
+            $("#messageInput").val(""); // Очистить поле
+        });
+
+        $(document).on("click", ".addComment", function () {
+            var commentInput = `<textarea class="form-control commentText mt-2" rows="2" placeholder="Введите комментарий..."></textarea>
+                                <button class="btn btn-sm btn-success submitComment mt-1">Добавить</button>`;
+            $(this).siblings(".comment-section").html(commentInput);
+        });
+
+        $(document).on("click", ".submitComment", function () {
+            var comment = $(this).siblings(".commentText").val().trim();
+            if (comment === "") return;
+
+            var commentHtml = `<div class="alert alert-light mt-2 border">${comment}</div>`;
+            $(this).parent().append(commentHtml);
+            $(this).siblings(".commentText").remove();
+            $(this).remove();
+        });
+    });
+</script>

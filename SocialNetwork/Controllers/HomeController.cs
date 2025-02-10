@@ -1,32 +1,78 @@
 using System.Diagnostics;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.Models;
+using SocialNetwork.DLL.Entities;
+using SocialNetwork.ViewModels;
+using SocialNetwork.ViewModels.Account;
 
-namespace SocialNetwork.Controllers
+namespace SocialNetwork.Controllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly ILogger<HomeController> _logger;
+    private IMapper _mapper;
+    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<User> _signInManager;
+
+
+    public HomeController(ILogger<HomeController> logger, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
     {
-        private readonly ILogger<HomeController> _logger;
+        _logger = logger;
+        _mapper = mapper;
+        _userManager = userManager;
+        _signInManager = signInManager;
+    }
 
-        public HomeController(ILogger<HomeController> logger)
+
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Index(LoginViewModel model)
+    {
+        if (ModelState.IsValid)
         {
-            _logger = logger;
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Ќеправильный логин и (или) пароль");
+                return View(model); // возвращаем представление, чтобы отобразились ошибки
+            }
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("MyPage", "AccountManager");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Ќеправильный логин и (или) пароль");
+                return View(model);
+            }
         }
 
-        public IActionResult Index()
+        return View(model);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        if (_signInManager.IsSignedIn(User))
+        {
+            return RedirectToAction("MyPage", "AccountManager");
+        }
+        else
         {
             return View();
         }
+    }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public async Task<IActionResult> Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
     }
 }

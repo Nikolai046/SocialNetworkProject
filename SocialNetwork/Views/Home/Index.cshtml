@@ -1,16 +1,34 @@
-﻿@{
+﻿@model SocialNetwork.ViewModels.Account.LoginViewModel
+
+@{
     ViewData["Title"] = "Главная";
 }
 
-
-<div class="login-container">
-    <form class="login-form">
-        <h2>Вход</h2>
-        <label for="username">Имя пользователя</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Пароль</label>
-        <input type="password" id="password" name="password" required>
+<div class="main-container">
+    <form class="login-form" id="checkMe" method="post" asp-controller="Home" asp-action="Index">
+       <h2>Вход</h2>
+        
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <div class="input-wrapper">
+                <input asp-for="Email">
+                <span asp-validation-for="Email"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <div class="input-wrapper">
+                <input asp-for="Password">
+                <span asp-validation-for="Password"></span>
+            </div>
+        </div>
+        <div class="remember-me">
+            <input type="checkbox" id="remember-me" asp-for="RememberMe"></input>
+            <label asp-for="RememberMe">Запомнить меня</label>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <button type="submit">Войти</button>
-        <p>Нет аккаунта? <a  asp-area="" asp-controller="Register" asp-action="Register">Зарегистрироваться</a></p>
+        <p>Нет аккаунта? <a asp-area="" asp-controller="Register" asp-action="Register">Зарегистрироваться</a></p>
+
     </form>
 </div>

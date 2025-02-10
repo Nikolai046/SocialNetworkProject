@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace SocialNetwork.ViewModels.Account;
 
 public class RegisterViewModel

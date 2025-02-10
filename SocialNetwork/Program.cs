@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Models.DB;
-using SocialNetwork.Models.Entities;
 using System.Reflection;
 using SocialNetwork;
+using SocialNetwork.DLL.DB;
+using SocialNetwork.DLL.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = Assembly.GetAssembly(typeof(MappingProfile));
@@ -40,11 +40,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseAuthentication();
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
+
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
+app.UseAuthentication();
 app.UseAuthorization();
-app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",

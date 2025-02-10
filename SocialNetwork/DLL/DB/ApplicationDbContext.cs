@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using SocialNetwork.Models.Entities;
+using SocialNetwork.DLL.Entities;
 
-namespace SocialNetwork.Models.DB;
+namespace SocialNetwork.DLL.DB;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {
@@ -11,4 +10,11 @@ public class ApplicationDbContext : IdentityDbContext<User>
     {
         Database.EnsureCreated();
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
+        base.OnModelCreating(modelBuilder);
+    }
+
 }

@@ -1,0 +1,31 @@
+﻿@{
+    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+<!-- Подключение стилей для конкретных контроллеров -->
+@{
+    if (controllerName is "Home" or "Register" or "Error")
+    {
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/hideElementsFromNavbar.css" asp-append-version="true"/>
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/css/siteAuthorized.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    }
+}
+<!-- Подключение скриптов для конкретных контроллеров -->
+@{
+    if (controllerName is "Home" or "Register")
+    {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/js/formChecker.js"></script>
+    }
+    if (controllerName is "AccountManager")
+    {
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    }
+
+}
