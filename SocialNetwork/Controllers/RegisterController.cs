@@ -60,6 +60,3 @@ public class RegisterController : Controller
         return View("RegisterPart2", model);
     }
 }
-
-
-

@@ -7,13 +7,13 @@
     <div class="user-container">
         <h2>@Model._user.FirstName @Model._user.LastName</h2>
         <div>
-            <img src="@Model._user.Image"/>
+            <img src="@Model._user.Image" />
         </div>
         @* <p>@Model._user.FirstName @Model._user.LastName</p> *@
-      
+
         <div class="friens-container">
             <ul>
-                <li><img src="images/person-unknown.svg"/>Первый друг</li>
+                <li><img src="images/person-unknown.svg" />Первый друг</li>
                 <li><img src="images/person-unknown.svg" />Второй друг</li>
                 <li><img src="images/person-unknown.svg" />Третий друг</li>
             </ul>
@@ -22,58 +22,75 @@
 
     <div class="content-container">
         <h2>Моя лента</h2>
-        
-        <div class="mt-5 container">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Напишите сообщение</h5>
-                    <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
-                    <button id="sendMessage" class="btn btn-primary mt-2">Отправить</button>
-                </div>
-            </div>
 
-            <div id="messageSection" class="mt-4">
-                <!-- Здесь будет отображаться сообщение -->
-            </div>
+        <div class="card-body">
+            <h5 class="card-title">Напишите сообщение</h5>
+            <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
+            <button id="sendMessage" class="btn btn-primary">Отправить</button>
         </div>
-
+        
+        <div id="messageSection" class="mt-4">
+            <!-- Здесь будет отображаться сообщение -->
+        </div>
     </div>
+
 </div>
 
+
 <script>
-    $(document).ready(function () {
-        $("#sendMessage").click(function () {
-            var message = $("#messageInput").val().trim();
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sendMessage').addEventListener('click', function() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
             if (message === "") return;
 
-            var messageHtml = `
-                <div class="card mt-3">
+            const messageHtml = `
+                <div class="card">
                     <div class="card-body">
-                        <h6 class="card-subtitle mb-2 text-muted">Ваше сообщение</h6>
+                    <div class="card-subtitle">
+                        <h6 class="card-subtitle-author">@Model._user.GetFullName()</h6>
+                        <h6 class="card-subtitle-date">${new Date().toLocaleString()}</h6>
+                        </div>
                         <p class="card-text">${message}</p>
                         <button class="btn btn-sm btn-secondary addComment">Добавить комментарий</button>
-                        <div class="comment-section mt-2"></div>
+                        <div class="comment-section"></div>
                     </div>
                 </div>`;
 
-            $("#messageSection").prepend(messageHtml);
-            $("#messageInput").val(""); // Очистить поле
+            const messageSection = document.getElementById('messageSection');
+            messageSection.insertAdjacentHTML('afterbegin', messageHtml);
+            messageInput.value = ''; // Очистить поле
         });
 
-        $(document).on("click", ".addComment", function () {
-            var commentInput = `<textarea class="form-control commentText mt-2" rows="2" placeholder="Введите комментарий..."></textarea>
-                                <button class="btn btn-sm btn-success submitComment mt-1">Добавить</button>`;
-            $(this).siblings(".comment-section").html(commentInput);
+        // Обработчик для добавления комментария
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('addComment')) {
+                const commentInput = `
+                    <textarea class="form-control commentText mt-2" rows="2" placeholder="Введите комментарий..."></textarea>
+                    <button class="btn btn-sm btn-success submitComment mt-1">Добавить</button>`;
+
+                const commentSection = e.target.nextElementSibling;
+                commentSection.innerHTML = commentInput;
+            }
         });
 
-        $(document).on("click", ".submitComment", function () {
-            var comment = $(this).siblings(".commentText").val().trim();
-            if (comment === "") return;
+        // Обработчик для отправки комментария
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('submitComment')) {
+                const textarea = e.target.previousElementSibling;
+                const comment = textarea.value.trim();
+                if (comment === "") return;
 
-            var commentHtml = `<div class="alert alert-light mt-2 border">${comment}</div>`;
-            $(this).parent().append(commentHtml);
-            $(this).siblings(".commentText").remove();
-            $(this).remove();
+                const commentHtml = `<div class="alert alert-light mt-2 border">${comment}</div>`;
+                const commentSection = e.target.parentElement;
+
+                // Добавляем комментарий
+                commentSection.insertAdjacentHTML('beforeend', commentHtml);
+
+                // Удаляем поле ввода и кнопку
+                textarea.remove();
+                e.target.remove();
+            }
         });
     });
 </script>

@@ -8,10 +8,10 @@
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
         <link rel="stylesheet" href="~/css/hideElementsFromNavbar.css" asp-append-version="true"/>
     }
-    else
+    if (controllerName is "AccountManager")
     {
         <link rel="stylesheet" href="~/css/siteAuthorized.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+        // <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     }
 }
 <!-- Подключение скриптов для конкретных контроллеров -->
@@ -25,7 +25,7 @@
     }
     if (controllerName is "AccountManager")
     {
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        // <script src="~/lib/jquery/dist/jquery.min.js"></script>
     }
 
 }
