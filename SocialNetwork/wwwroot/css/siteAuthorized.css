@@ -6,6 +6,7 @@ html {
     background-position-y: center;
     background-size: 120vH;
     background-color: #FCF4EC;
+    background-attachment: fixed;
 }
 
 body {
@@ -124,7 +125,7 @@ header {
 
 .container {
     display: flex;
-    position: fixed;
+    position: relative;
    transform: translateY(75px);
     min-height: calc(100vh - 150px);
     width:100%
@@ -163,6 +164,7 @@ main {
     width: 820px;
     background-color: rgba(252, 244, 236, 0.75);
     border-block-style: initial;
+    padding-left: 10px;
 }
 
 .friens-container ul {
@@ -181,16 +183,100 @@ main {
     max-width: 32px;
 }
 
+.inputMessageSection-body {
+    padding: 0 25px 0 25px;
+    margin-bottom: 15px;
+}
+
+.card-body,
+.messageSection-body,
+.inputMessageSection-body {
+    background-color: rgba(255,255,255,0.63);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    padding: 20px 25px 15px 20px;
+}
+
+.card-title {
+    margin: 0;
+   /* padding: 0 0 10px 0;*/
+    font-size: 1em;
+}
+
 .form-control {
     resize: vertical;
     width: 100%;
+    border-radius: 5px;
+    border-color: rgb(220 220 220);
+    background-color: rgba(240, 248, 255, 0.5);
+    margin: 10px 0 10px 0;
 }
+
+.btn-primary {
+    border-radius: 5px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgb(204 174 129);
+    color: white;
+}
+
+
+
+.card-subtitle {
+    display: flex;
+    justify-content: flex-start;
+    font-style: oblique;
+    font-size: 1.4em;
+    background-color: rgba(251,231,205,0.6);
+    border: 1px solid rgb(220,220,220);
+    padding: 5px;
+}
+
+.card-subtitle-author {
+    margin: 0 10px 0 0;
+}
+
+.card-subtitle-date {
+    margin: 0;
+}
+
+.card-text {
+    margin: 0;
+    background-color: rgb(251 231 205);
+    border-radius: 0 0 5px 5px;
+    border: 1px solid rgb(220 220 220);
+    padding: 5px;
+}
+
+.card-comment {
+    background-color: rgba(251,231,205,0.48);
+/*    display: flex;
+    justify-self: right;*/
+    width: 90%;
+    margin: 0 0 10px 0;
+   /* padding: 10p*/x;
+    border: 1px solid rgb(220,220,220);
+    border-radius: 5px;
+}
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 10px;
+}
+
+.coomment-area {
+    width: 90%;
+}
+
 
 
 footer {
     margin-top: auto;
     padding: 20px 0;
-    width: 100%;
+    /*width: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -212,14 +298,3 @@ footer {
     }
 }
 
-@media (max-width: 480px) {
-    .login-container {
-        padding: 20px;
-        margin: 10px;
-    }
-
-    .svg-bg {
-        min-width: 800px;
-        min-height: 600px;
-    }
-}

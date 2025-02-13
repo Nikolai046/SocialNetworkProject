@@ -6,6 +6,7 @@ html {
     background-position-y: center;
     background-size: 120vH;
     background-color: #FCF4EC;
+    background-attachment: fixed;
 }
 
 
@@ -342,7 +343,7 @@ main {
 footer {
     margin-top: auto;
     padding: 20px 0;
-    width: 100%;
+    /*width: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -370,8 +371,4 @@ footer {
         margin: 10px;
     }
 
-    .svg-bg {
-        min-width: 800px;
-        min-height: 600px;
-    }
 }

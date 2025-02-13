@@ -1,6 +1,8 @@
-﻿@model SocialNetwork.ViewModels.Account.UserViewModel;
+﻿@using SocialNetwork.Models.ViewModels.Account
+@model UserViewModel;
+
 @{
-    ViewData["Title"] = "My page";
+    ViewData["Title"] = $"{Model._user.GetFullName()} page";
 }
 
 <div class="main-container">
@@ -9,8 +11,6 @@
         <div>
             <img src="@Model._user.Image" />
         </div>
-        @* <p>@Model._user.FirstName @Model._user.LastName</p> *@
-
         <div class="friens-container">
             <ul>
                 <li><img src="images/person-unknown.svg" />Первый друг</li>
@@ -23,19 +23,16 @@
     <div class="content-container">
         <h2>Моя лента</h2>
 
-        <div class="card-body">
+        <div class="inputMessageSection-body">
             <h5 class="card-title">Напишите сообщение</h5>
             <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
-            <button id="sendMessage" class="btn btn-primary">Отправить</button>
+            <button id="sendMessage" class="btn-primary">Отправить</button>
         </div>
-        
-        <div id="messageSection" class="mt-4">
-            <!-- Здесь будет отображаться сообщение -->
+        <div id="messageSection">
         </div>
     </div>
 
 </div>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -52,25 +49,27 @@
                         <h6 class="card-subtitle-date">${new Date().toLocaleString()}</h6>
                         </div>
                         <p class="card-text">${message}</p>
-                        <button class="btn btn-sm btn-secondary addComment">Добавить комментарий</button>
                         <div class="comment-section"></div>
+                        <button class="btn-primary addComment">Добавить комментарий</button>
                     </div>
                 </div>`;
 
             const messageSection = document.getElementById('messageSection');
             messageSection.insertAdjacentHTML('afterbegin', messageHtml);
             messageInput.value = ''; // Очистить поле
+            messageInput.style.height = 'auto';
+
         });
 
         // Обработчик для добавления комментария
         document.addEventListener('click', function(e) {
             if (e.target.classList.contains('addComment')) {
                 const commentInput = `
-                    <textarea class="form-control commentText mt-2" rows="2" placeholder="Введите комментарий..."></textarea>
-                    <button class="btn btn-sm btn-success submitComment mt-1">Добавить</button>`;
-
-                const commentSection = e.target.nextElementSibling;
-                commentSection.innerHTML = commentInput;
+                    <textarea class="form-control coomment-area" rows="2" placeholder="Введите комментарий..."></textarea>
+                    <button class="btn-primary submitComment">Добавить</button>`;
+                const commentSection = e.target.previousElementSibling;
+                commentSection.insertAdjacentHTML('beforeend', commentInput);
+                e.target.remove();
             }
         });
 
@@ -81,11 +80,23 @@
                 const comment = textarea.value.trim();
                 if (comment === "") return;
 
-                const commentHtml = `<div class="alert alert-light mt-2 border">${comment}</div>`;
+                const commentHtml =`
+                    <div class="card-comment">
+                        <div class="card-subtitle">
+                    <h6 class="card-subtitle-author">@Model._user.GetFullName()</h6>
+                    <h6 class="card-subtitle-date">${new Date().toLocaleString()}</h6>
+                    </div>
+                    <p class="card-text">${comment}</p>
+                    </div>`;
+                // const commentSection = e.target.previousElementSibling;
                 const commentSection = e.target.parentElement;
-
+                console.log(commentSection);
+                const buttonSection = e.target.parentElement;
+                const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
                 // Добавляем комментарий
-                commentSection.insertAdjacentHTML('beforeend', commentHtml);
+                commentSection.insertAdjacentHTML('afterbegin', commentHtml);
+                buttonSection.insertAdjacentHTML('afterend', commentButton);
+
 
                 // Удаляем поле ввода и кнопку
                 textarea.remove();

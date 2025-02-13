@@ -9,12 +9,21 @@ public class FriendConfiguration : IEntityTypeConfiguration<Friend>
 
     public void Configure(EntityTypeBuilder<Friend> builder)
     {
-        builder.ToTable("UserFriends").HasKey(p => p.Id);
-        builder.Property(x => x.Id).UseIdentityColumn();
+        builder.ToTable("UserFriends");
+        builder.HasKey(f => f.Id);
+        builder.Property(f => f.Id).UseIdentityColumn();
+
         builder
             .HasOne(f => f.User)
-            .WithMany()
+            .WithMany(u => u.Friends)
             .HasForeignKey(f => f.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+
+        builder
+            .HasOne(f => f.CurrentFriend)
+            .WithMany()
+            .HasForeignKey(f => f.CurrentFriendId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

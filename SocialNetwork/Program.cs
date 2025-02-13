@@ -4,15 +4,23 @@ using System.Reflection;
 using SocialNetwork;
 using SocialNetwork.DLL.DB;
 using SocialNetwork.DLL.Entities;
+using SocialNet.Data.UoW;
+using SocialNetwork.DLL.UoW;
+using SocialNet.Extentions;
+using SocialNetwork.DLL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = Assembly.GetAssembly(typeof(MappingProfile));
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .UseLoggerFactory(builder.Services.BuildServiceProvider().GetRequiredService<ILoggerFactory>()));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .UseLoggerFactory(builder.Services.BuildServiceProvider()
+           .GetRequiredService<ILoggerFactory>()))
+            .AddCustomRepository<Message, MessagesRepository>()
+            .AddCustomRepository<Comment, CommentsRepository>()
+            .AddTransient<IUnitOfWork, UnitOfWork>(); ;
+
 
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
 {
@@ -21,6 +29,11 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
     opts.Password.RequireLowercase = false;
     opts.Password.RequireUppercase = false;
     opts.Password.RequireDigit = false;
+    opts.User.AllowedUserNameCharacters =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
+        "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
+        "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+        "-_.";
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
 //builder.Services.AddMvc()
@@ -29,7 +42,7 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
 //        options.HtmlHelperOptions.ClientValidationEnabled = false;
 //    });
 
-// Подключаем автомаппинг
+// Подключаем авто маппинг
 builder.Services.AddAutoMapper(assembly);
 
 var app = builder.Build();

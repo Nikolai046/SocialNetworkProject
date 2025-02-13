@@ -5,45 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SocialNetwork - @ViewData["Title"]</title>
     @await Html.PartialAsync("_ScriptCssPartial.cshtml")
-  
+
 </head>
-<body >
-@* <div class="svg-container">
-    <img class="svg-bg" src="/images/background.svg" alt="Background">
-</div> *@
-<header>
-    <nav class="navbar">
-        <a asp-controller="Home" asp-action="Index"> <div class="toolbar_logo"><img src="/images/logo.png" alt="Logo"><p>SocialNetwork</p></div></a>
-        <div class="search-wrapper">
-            <label class="label-input">
-                <input type="text" class="input" autocomplete="off" name="st.query" placeholder="Поиск" maxlength="255" data-error="false" value="" wfd-id="id1">
-                <button type="submit" class="button-clean">
-                    <img src="/images/search_ico.svg"/>
-                </button>
-            </label>
-        </div>
+<body>
+    <header>
+        <nav class="navbar">
+            <a asp-controller="Home" asp-action="Index"> <div class="toolbar_logo"><img src="/images/logo.png" alt="Logo"><p>SocialNetwork</p></div></a>
+            <div class="search-wrapper">
+                <label class="label-input">
+                    <input type="text" class="input" autocomplete="off" name="st.query" placeholder="Поиск" maxlength="255" data-error="false" value="" wfd-id="id1">
+                    <button type="submit" class="button-clean">
+                        <img src="/images/search_ico.svg" />
+                    </button>
+                </label>
+            </div>
             <form class="toolbar_logout" asp-controller="AccountManager" asp-action="Logout" method="post">
                 @Html.AntiForgeryToken()
-            <button type="submit">
-                <p>Выйти</p>
-                <img src="/images/logout.svg" alt="Logo">
-            </button>
-        </form>
-    </nav>
-</header>
+                <button type="submit">
+                    <p>Выйти</p>
+                    <img src="/images/logout.svg" alt="Logo">
+                </button>
+            </form>
+        </nav>
+    </header>
 
-<div class="container">
-    <main role="main">
+    <div class="container">
+        <main role="main">
             <div class="spacer-container"></div>
-        @RenderBody()
+            @RenderBody()
             <div class="spacer-container"></div>
-    </main>
-</div>
 
-<footer>
-    <div class="footer-container">
-        &copy; 2025 - SocialNetwork 
+        </main>
     </div>
-</footer>
+    <footer>
+        <div class="footer-container">
+            &copy; 2025 - SocialNetwork
+        </div>
+    </footer>
 </body>
 </html>

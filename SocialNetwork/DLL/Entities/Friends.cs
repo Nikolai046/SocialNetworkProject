@@ -7,4 +7,5 @@ public class Friend
     public User? User { get; set; }
     public string? CurrentFriendId { get; set; }
     public User? CurrentFriend { get; set; }
+
 }

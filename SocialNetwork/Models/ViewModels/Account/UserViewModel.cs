@@ -1,6 +1,6 @@
 ﻿using SocialNetwork.DLL.Entities;
 
-namespace SocialNetwork.ViewModels.Account;
+namespace SocialNetwork.Models.ViewModels.Account;
 
 public class UserViewModel
 {

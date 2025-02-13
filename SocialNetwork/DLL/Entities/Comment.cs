@@ -1,6 +1,6 @@
 ﻿namespace SocialNetwork.DLL.Entities;
 
-public class Message
+public class Comment
 {
     public int Id { get; set; }
     public string? Text { get; set; }
@@ -9,9 +9,7 @@ public class Message
     public string? SenderId { get; set; }
     public User? Sender { get; set; }
 
-    public string? RecipientId { get; set; }
-    public User? Recipient { get; set; }
-
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public int InitialMessageId { get; set; }
+    public Message? Message { get; set; }
 
 }

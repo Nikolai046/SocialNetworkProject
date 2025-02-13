@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SocialNetwork.ViewModels.Account;
+namespace SocialNetwork.Models.ViewModels.Account;
 
 public class LoginViewModel
 {

@@ -6,6 +6,9 @@ namespace SocialNetwork.DLL.DB;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Friend> Friends { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         Database.EnsureCreated();
@@ -13,7 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<User>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
 

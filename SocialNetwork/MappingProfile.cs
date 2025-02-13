@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using SocialNetwork.DLL.Entities;
-using SocialNetwork.ViewModels.Account;
+using SocialNetwork.Models.ViewModels.Account;
 
 namespace SocialNetwork;
 

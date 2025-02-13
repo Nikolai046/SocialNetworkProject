@@ -18,6 +18,10 @@ public class User : IdentityUser
 
     public string About { get; set; }
 
+    public ICollection<Message> SentMessages { get; set; } = new List<Message>();
+    public ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
+    public ICollection<Friend> Friends { get; set; } = new List<Friend>();
+
     public string GetFullName()
     {
         return FirstName + " " + MiddleName + " " + LastName;

@@ -8,12 +8,22 @@ public class MessageConfiguration : IEntityTypeConfiguration<Message>
 {
     public void Configure(EntityTypeBuilder<Message> builder)
     {
-        builder.ToTable("Mesages").HasKey(p => p.Id);
-        builder.Property(x => x.Id).UseIdentityColumn();
+        builder.ToTable("Messages");
+        builder.HasKey(m => m.Id);
+        builder.Property(m => m.Id).UseIdentityColumn();
+
+        // Настраиваем связь отправителя
         builder
             .HasOne(m => m.Sender)
-            .WithMany()
+            .WithMany(u => u.SentMessages)
             .HasForeignKey(m => m.SenderId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        // Настраиваем связь получателя
+        builder
+            .HasOne(m => m.Recipient)
+            .WithMany(u => u.ReceivedMessages)
+            .HasForeignKey(m => m.RecipientId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 }
