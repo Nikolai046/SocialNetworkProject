@@ -21,7 +21,7 @@ public class Repository<T> : IRepository<T> where T : class
 
     public async Task<int> Create(T item)
     {
-        Set.Add(item);
+         Set.Add(item);
         return await _db.SaveChangesAsync();
     }
 
@@ -36,7 +36,7 @@ public class Repository<T> : IRepository<T> where T : class
         return await Set.FindAsync(id);
     }
 
-    public IEnumerable<T> GetAll()
+    public IQueryable<T> GetAll()
     {
         return Set;
     }

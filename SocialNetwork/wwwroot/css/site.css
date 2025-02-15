@@ -19,6 +19,7 @@ body {
 }
 
 /* Исправленный фон */
+
 .svg-container {
     position: fixed;
     top: 0;
@@ -41,6 +42,7 @@ body {
 }
 
 /* Навигационная панель */
+
 header {
     background-color: #ffffff;
     box-shadow: 0 10px 4px rgba(0, 0, 0, 0.1);
@@ -78,7 +80,9 @@ header {
         margin-right: 1em;
         font-size: 1.5em;
     }
+
 /*Кнопка Logout*/
+
 .toolbar_logout {
     margin-right: 2vH;
     display: flex;
@@ -87,12 +91,13 @@ header {
     position: fixed;
     right: 0;
 }
-.toolbar_logout button{
-    background: none;
-    border: none;
-    display: flex;
-    cursor: pointer;
-}
+
+    .toolbar_logout button {
+        background: none;
+        border: none;
+        display: flex;
+        cursor: pointer;
+    }
 
     .toolbar_logout p {
         margin-right: 0.5em;
@@ -110,6 +115,7 @@ header {
 }
 
 /* Стили для label */
+
 .label-input {
     display: flex;
     align-items: center;
@@ -118,6 +124,7 @@ header {
 }
 
 /* Стили для поля ввода */
+
 .input {
     width: 100%;
     height: 35px;
@@ -131,6 +138,7 @@ header {
 }
 
 /* Стили для кнопки отправки */
+
 .button-clean {
     background-color: transparent;
     border-color: transparent;
@@ -145,7 +153,7 @@ header {
     justify-content: center;
 }
 
-.container{
+.container {
     display: flex;
     align-items: center;
     transform: translateY(75px);
@@ -154,6 +162,7 @@ header {
 
 
 /* Форма входа */
+
 main {
     flex: 1;
     display: flex;
@@ -237,18 +246,21 @@ main {
         }
 
 /* Контейнер для группы элементов формы */
+
 .form-group {
     position: relative;
     /*margin-bottom: 20px;*/ /* Отступ между группами */
 }
 
 /* Обертка для input и сообщения */
+
 .input-wrapper {
     display: inline-block; /* Чтобы ограничить ширину контейнера */
     width: 100%; /* Занимает доступное пространство */
 }
 
     /* Стиль для input */
+
     .input-wrapper input {
         width: 100%;
         padding: 10px;
@@ -258,6 +270,7 @@ main {
     }
 
 /* Стиль для всплывающего сообщения */
+
 .field-validation-error,
 .field-validation-valid {
     display: none; /* Скрываем сообщение */
@@ -280,18 +293,21 @@ main {
 }
 
 /* Для корректных полей */
+
 .field-validation-valid {
     background-color: rgba(76, 175, 80, 0.2); /* Полупрозрачный зеленый фон */
     display: none;
 }
 
     /* Показываем только ошибки и корректные сообщения после отправки формы */
+
     .field-validation-error.show,
     .field-validation-valid.show {
         display: inline-block; /* Показываем сообщение об ошибке */
     }
 
 /* Стили для контейнера чекбокса */
+
 .remember-me {
     display: flex;
     align-items: center;
@@ -299,6 +315,7 @@ main {
 }
 
     /* Стили для чекбокса */
+
     .remember-me input[type="checkbox"] {
         margin: 0; /* Убираем отступы вокруг чекбокса */
         margin-right: 8px; /* Отступ между чекбоксом и текстом */
@@ -308,6 +325,7 @@ main {
     }
 
     /* Стили для текста рядом с чекбоксом */
+
     .remember-me label {
         margin: 0;
         font-size: 0.9em;
@@ -321,11 +339,12 @@ main {
     font-size: clamp(0.7em, 2.5vw, 1em);
 }
 
-.error-container h1 {
-    font-size: clamp(17px, 2.5vw, 25px);
-}
+    .error-container h1 {
+        font-size: clamp(17px, 2.5vw, 25px);
+    }
 
 /* Стили для контейнера ошибок */
+
 .text-danger.validation-summary-errors {
     font-size: 0.8em;
     color: #d67070;
@@ -334,11 +353,11 @@ main {
     transform: translateY(-5px);
 }
 
-.text-danger.validation-summary-errors ul {
-    display: contents;
-    list-style-type: none;
-    padding-left: 0;
-}
+    .text-danger.validation-summary-errors ul {
+        display: contents;
+        list-style-type: none;
+        padding-left: 0;
+    }
 
 footer {
     margin-top: auto;
@@ -354,6 +373,7 @@ footer {
 }
 
 /* Адаптация для мобильных */
+
 @media (max-width: 768px) {
     .toolbar_logo p,
     .toolbar_logout p {
@@ -370,5 +390,4 @@ footer {
         padding: 20px;
         margin: 10px;
     }
-
 }

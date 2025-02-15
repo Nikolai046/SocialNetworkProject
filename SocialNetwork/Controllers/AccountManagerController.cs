@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
-using SocialNetwork.Models.ViewModels;
+using SocialNetwork.Models;
 using SocialNetwork.Models.ViewModels.Account;
+using SocialNetwork.Models.Helper;
+
 
 
 public class AccountManagerController : Controller
@@ -38,20 +40,24 @@ public class AccountManagerController : Controller
     [HttpGet]
     public async Task<IActionResult> MyPage()
     {
-        var result = await _userManager.GetUserAsync(User);
+        var currentUser = await _userManager.GetUserAsync(User);
 
-        var autorizedUser = new UserViewModel(result);
-        //model.Friends = await GetAllFriend(model.User);
+        if (currentUser == null) return Challenge();
 
-        //return View("User", model);
-        return View("Mypage", autorizedUser);
+        var messages = await new GetCommentViewModel(_unitOfWork, _userManager, currentUser).GetMessagesWithComments();
+
+        var authorizedUser = new UserViewModel(currentUser, messages);
+
+        return View("Mypage", authorizedUser);`1`
     }
+
+    /// <summary>
+    /// Метод сохранения сообщений в БД
+    /// </summary>
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddMessage([FromBody] MessageDto messageDto)
     {
-        _logger.LogInformation($"Received text: {messageDto?.Text}");
-
         if (string.IsNullOrEmpty(messageDto?.Text))
             return BadRequest("Текст сообщения обязателен");
 
@@ -70,11 +76,14 @@ public class AccountManagerController : Controller
         {
             id = message.Id,
             text = message.Text,
-            timestamp = message.Timestamp.ToString("g"),
+            timestamp = message.Timestamp.ToString("G"),
             author = user.GetFullName()
         });
     }
 
+    /// <summary>
+    /// Метод сохранения комментариев к сообщениям в БД
+    /// </summary>
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddComment([FromBody] CommentDto commentDto)
@@ -95,8 +104,10 @@ public class AccountManagerController : Controller
         return Json(new
         {
             text = comment.Text,
-            timestamp = comment.Timestamp.ToString("g"),
+            timestamp = comment.Timestamp.ToString("G"),
             author = user.GetFullName()
         });
     }
+
+
 }

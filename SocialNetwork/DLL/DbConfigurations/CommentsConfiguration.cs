@@ -18,5 +18,9 @@ public class CommentsConfiguration : IEntityTypeConfiguration<Comment>
             .WithMany(m => m.Comments)
             .HasForeignKey(c => c.InitialMessageId)
             .OnDelete(DeleteBehavior.NoAction);
+        builder
+            .HasOne(c => c.Sender)
+            .WithMany()
+            .HasForeignKey(c => c.SenderId);
     }
 }

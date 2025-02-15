@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace SocialNetwork.DLL.Entities;
 
@@ -24,7 +25,7 @@ public class User : IdentityUser
 
     public string GetFullName()
     {
-        return FirstName + " " + MiddleName + " " + LastName;
+        return $"{FirstName} {LastName}";
     }
 
     public User()

@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Models.ViewModels;
+﻿namespace SocialNetwork.Models;
 
 public class CommentDto
 {
