@@ -1,0 +1,25 @@
+﻿@model SocialNetwork.Models.ViewModels.Account.UserViewModel
+
+@{
+    Layout = "_Layout"; // используем макет _Layout.cshtml как базовый
+}
+
+<div class="main-container">
+    <div class="user-container">
+        <h2>@Model._user.FirstName @Model._user.LastName</h2>
+        <div class="portrait-box">
+            <img src="@Model._user.Image"/>
+        </div>
+        <div class="friens-container">
+            <ul>
+                <li><img src="/images/person-unknown.svg"/>Первый друг</li>
+                <li><img src="/images/person-unknown.svg"/>Второй друг</li>
+                <li><img src="/images/person-unknown.svg"/>Третий друг</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="content-container">
+        @RenderBody()
+    </div>
+</div>

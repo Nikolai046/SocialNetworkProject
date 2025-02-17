@@ -6,6 +6,7 @@ using SocialNetwork.Models.ViewModels.Account;
 
 namespace SocialNetwork.Controllers;
 
+[Route("[controller]")]
 public class RegisterController : Controller
 {
     private IMapper _mapper;

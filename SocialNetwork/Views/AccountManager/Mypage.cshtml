@@ -1,11 +1,11 @@
-﻿@using SocialNetwork.Models.ViewModels.Account
-@model UserViewModel;
+﻿@* @using SocialNetwork.Models.ViewModels.Account
+@model UserViewModel; *@
 
 @{
     ViewData["Title"] = $"{Model._user.GetFullName()} page";
 }
 
-<div class="main-container">
+@* div class="main-container">
     <div class="user-container">
         <h2>@Model._user.FirstName @Model._user.LastName</h2>
         <div>
@@ -13,9 +13,9 @@
         </div>
         <div class="friens-container">
             <ul>
-                <li><img src="images/person-unknown.svg"/>Первый друг</li>
-                <li><img src="images/person-unknown.svg"/>Второй друг</li>
-                <li><img src="images/person-unknown.svg"/>Третий друг</li>
+                <li><img src="/images/person-unknown.svg"/>Первый друг</li>
+                <li><img src="/images/person-unknown.svg"/>Второй друг</li>
+                <li><img src="/images/person-unknown.svg"/>Третий друг</li>
             </ul>
         </div>
     </div>
@@ -28,43 +28,111 @@
             <button id="sendMessage" class="btn-primary">Отправить</button>
         </div>
 
-        <div id="messageSection">
-
-            @if (Model.Messages.Any())
-            {
-                foreach (var message in Model.Messages)
-                {
-                    <div class="card" data-message-id="@message.MessageId">
-                        <div class="card-body">
-                            <div class="card-subtitle">
-                                <h6 class="card-subtitle-author">@message.AuthorFullName</h6>
-                                <h6 class="card-subtitle-date">@message.CreatedAt.ToString("G")</h6>
-                            </div>
-                            <p class="card-text">@message.Text</p>
-                        </div>
-                        <div class="comment-section">
-
-                            @if (message.Comments.Any())
-                                foreach (var comment in message.Comments)
-                                {
-                                    <div class="card-comment">
-                                        <div class="card-subtitle">
-                                            <h6 class="card-subtitle-author">@comment.Author</h6>
-                                            <h6 class="card-subtitle-date">@comment.CreatedAt.ToString("G")</h6>
-                                        </div>
-                                        <p class="card-text">@comment.Text</p>
-                                    </div>
-                                }
-                        </div>
-                        <button class="btn-primary addComment">Добавить комментарий</button>
-                    </div>
-                }
-            }
+        <div id="messageSection"></div>
+        <div id="loading" style="display: none; text-align: center;">
+            Загрузка...
         </div>
 
     </div>
+</div> *@
+
+<h2>Моя лента</h2>
+<div class="inputMessageSection-body">
+    <h5 class="card-title">Напишите сообщение</h5>
+    <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
+    <button id="sendMessage" class="btn-primary">Отправить</button>
 </div>
 
+<div id="messageSection"></div>
+<div id="loading" style="display: none; text-align: center">
+    Загрузка...
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentPage = 1;
+        let hasMore = true;
+        let loading = false;
+        const pageSize = 10;
+    
+        // Создаем триггер для загрузки
+        const loadTrigger = document.createElement('div');
+        loadTrigger.id = 'load-trigger';
+        loadTrigger.style.height = '1px';
+        loadTrigger.style.visibility = 'hidden';
+        document.getElementById('messageSection').appendChild(loadTrigger);
+
+        // Наблюдатель за триггером
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && hasMore && !loading) {
+                    loadMessages();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(loadTrigger);
+
+        async function loadMessages() {
+            loading = true;
+        
+            try {
+                const response = await fetch(`/AccountManager/load-messages?page=${currentPage}`);
+                const result = await response.json();
+            
+                if (result.data && result.data.length > 0) {
+                    // Добавляем сообщения
+                    const messageSection = document.getElementById('messageSection');
+                    result.data.forEach(message => {
+                    const messageHtml = `
+<div class="card" data-message-id="${message.messageId}">
+    <div class="card-body">
+        <div class="card-subtitle">
+            <h6 class="card-subtitle-author">${message.authorFullName}</h6>
+            <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
+        </div>
+        <p class="card-text">${message.text}</p>
+        <div class="comment-section">
+            ${message.comments.map(comment => `
+            <div class="card-comment">
+                <div class="card-subtitle">
+                    <h6 class="card-subtitle-author">${comment.author}</h6>
+                    <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
+                </div>
+                <p class="card-text">${comment.text}</p>
+            </div>
+            `).join('')}
+        </div>
+        <button class="btn-primary addComment">Добавить комментарий</button>
+    </div>
+</div>`;
+                   
+                    messageSection.insertAdjacentHTML('beforeend', messageHtml);
+                    });
+
+                    // Обновляем флаг и страницу
+                    hasMore = result.hasMore;
+                    currentPage++;
+
+                    // Перемещаем триггер в конец
+                    messageSection.appendChild(loadTrigger);
+                } else {
+                    hasMore = false;
+                    loadTrigger.remove();
+                }
+
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+            } finally {
+                loading = false;
+            }
+        }
+
+        // Первоначальная загрузка
+        loadMessages();
+    });
+
+</script>
 
 <script>
     // Обработчик отправки сообщения
@@ -76,7 +144,7 @@
             if (!text) return;
 
             try {
-                const response = await fetch('/AccountManager/AddMessage',
+                    const response = await fetch('/AccountManager/add-message',
                     {
                         method: 'POST',
                         headers: {
@@ -133,7 +201,7 @@
                 if (!text) return;
 
                 try {
-                    const response = await fetch('/AccountManager/AddComment',
+                        const response = await fetch('/AccountManager/add-comment',
                         {
                             method: 'POST',
                             headers: {

@@ -12,14 +12,16 @@
         <nav class="navbar">
             <a asp-controller="Home" asp-action="Index"> <div class="toolbar_logo"><img src="/images/logo.png" alt="Logo"><p>SocialNetwork</p></div></a>
             <div class="search-wrapper">
+                <form  asp-controller="Search" asp-action="Search" method="get">
                 <label class="label-input">
-                    <input type="text" class="input" autocomplete="off" name="st.query" placeholder="Поиск" maxlength="255" data-error="false" value="" wfd-id="id1">
+                        <input type="text" class="input" placeholder="Поиск" name="query" maxlength="255" data-error="false" value="" wfd-id="id1">
                     <button type="submit" class="button-clean">
                         <img src="/images/search_ico.svg" />
                     </button>
                 </label>
+                </form>
             </div>
-            <form class="toolbar_logout" asp-controller="AccountManager" asp-action="Logout" method="post">
+            <form class="toolbar_logout" asp-controller="AccountManager" asp-action="logout" method="post">
                 @Html.AntiForgeryToken()
                 <button type="submit">
                     <p>Выйти</p>

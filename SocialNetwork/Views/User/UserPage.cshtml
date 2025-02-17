@@ -1,0 +1,22 @@
+﻿@using SocialNetwork.DLL.Entities
+@model SocialNetwork.Models.ViewModels.Account.UserViewModel
+
+@{
+    Layout = "_UserLayout";
+}
+
+@{
+    ViewData["Title"] = $"{ViewBag.targetUser?.GetFullName() ?? "Неизвестный пользователь"} page";
+}
+
+<h2>Лента</h2>
+<div class="inputMessageSection-body">
+    <h5 class="card-title">Напишите сообщение</h5>
+    <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
+    <button id="sendMessage" class="btn-primary">Отправить</button>
+</div>
+
+<div id="messageSection"></div>
+<div id="loading" style="display: none; text-align: center">
+    Загрузка...
+</div>

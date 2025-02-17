@@ -90,14 +90,17 @@ header {
     max-width: 450px; /* Максимальная ширина формы поиска */
 }
 
-/* Стили для label */
-
-.label-input {
-    display: flex;
-    align-items: center;
-    position: relative;
+.search-wrapper form {
     width: 100%;
 }
+
+    /* Стили для label */
+    .label-input {
+        display: flex;
+        align-items: center;
+        position: relative;
+        width: 100%;
+    }
 
 /* Стили для поля ввода */
 

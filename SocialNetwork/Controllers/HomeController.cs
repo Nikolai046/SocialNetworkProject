@@ -9,6 +9,7 @@ using SocialNetwork.Models.ViewModels.Account;
 
 namespace SocialNetwork.Controllers;
 
+[Route("[controller]")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -26,8 +27,8 @@ public class HomeController : Controller
     }
 
 
-    
-    [HttpPost]
+
+    [HttpPost("login")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(LoginViewModel model)
     {
@@ -55,11 +56,13 @@ public class HomeController : Controller
         return View(model);
     }
 
-    [HttpGet]
+
+    [HttpGet("Index")]
     public async Task<IActionResult> Index()
     {
         if (_signInManager.IsSignedIn(User))
         {
+
             return RedirectToAction("MyPage", "AccountManager");
         }
         else

@@ -2,14 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
 using SocialNetwork.Models;
 using SocialNetwork.Models.ViewModels.Account;
-using SocialNetwork.Models.Helper;
+using SocialNetwork.Models.ViewModels;
 
-
-
+[Route("[controller]")]
 public class AccountManagerController : Controller
 {
     private IMapper _mapper;
@@ -27,7 +27,7 @@ public class AccountManagerController : Controller
         _logger = logger;
     }
 
-    [HttpPost]
+    [HttpPost("logout")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
@@ -36,25 +36,61 @@ public class AccountManagerController : Controller
     }
 
     [Authorize]
-    [Route("my_page")]
-    [HttpGet]
+    [HttpGet("my-page")]
     public async Task<IActionResult> MyPage()
     {
         var currentUser = await _userManager.GetUserAsync(User);
+        return View("Mypage", new UserViewModel(currentUser));
+    }
 
-        if (currentUser == null) return Challenge();
+    [HttpGet]
+    [Route("load-messages")]
+    public async Task<IActionResult> LoadMessages([FromQuery] int page)
+    {
+        int pageSize = 10;
+        var user = await _userManager.GetUserAsync(User);
 
-        var messages = await new GetCommentViewModel(_unitOfWork, _userManager, currentUser).GetMessagesWithComments();
+        var allmessages = await _unitOfWork.GetRepository<Message>()
+            .GetAll()
+            .Where(m => m.SenderId == user.Id)
+            .Include(m => m.Comments)
+            .ThenInclude(c => c.Sender)
+            .OrderByDescending(m => m.Timestamp)
+            .ToListAsync();
 
-        var authorizedUser = new UserViewModel(currentUser, messages);
+        var messages = allmessages
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize);
 
-        return View("Mypage", authorizedUser);`1`
+        var result = messages.Select(m => new MessageViewModel
+        {
+            MessageId = m.Id,
+            Text = m.Text,
+            AuthorFullName = user.GetFullName(),
+            CreatedAt = m.Timestamp,
+            Comments = m.Comments.Select(c => new CommentViewModel
+            {
+                Text = c.Text,
+                Author = c.Sender?.GetFullName() ?? "Аноним",
+                CreatedAt = c.Timestamp
+            })
+        });
+
+        var x = (allmessages.Count / pageSize - page) >= 0;
+        _logger.LogInformation("\nLoadMessages called with page {Page} of {2}", page, allmessages.Count / pageSize);
+        _logger.LogInformation($"{x}\n");
+
+        return Json(new
+        {
+            data = result,
+            hasMore = x
+        });
     }
 
     /// <summary>
     /// Метод сохранения сообщений в БД
     /// </summary>
-    [HttpPost]
+    [HttpPost("add-message")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddMessage([FromBody] MessageDto messageDto)
     {
@@ -84,7 +120,7 @@ public class AccountManagerController : Controller
     /// <summary>
     /// Метод сохранения комментариев к сообщениям в БД
     /// </summary>
-    [HttpPost]
+    [HttpPost("add-comment")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddComment([FromBody] CommentDto commentDto)
     {

@@ -1,0 +1,102 @@
+﻿@using SocialNetwork.DLL.Entities
+@model SocialNetwork.Models.ViewModels.Account.UserViewModel
+
+@{
+    ViewData["Title"] = "Результаты поиска";
+}
+
+<h2>Результаты поиска</h2>
+
+@if (ViewBag.Users != null && ((List<User>)ViewBag.Users).Any())
+{
+    <ul class="search_user_container">
+        @foreach (var user in (List<User>)ViewBag.Users)
+        {
+            <li class="search_currentuser_container">
+                <a asp-controller="User" asp-action="UserPage" asp-route-userID="@user.Id">
+                <div class="div_search_user_container">
+                    <div class="search_avatar">
+                        <img src="@user.Image" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;"/>
+                    </div>
+                    <ul>
+                        <li>
+                            <p>Пользователь:</p> @user.FirstName @user.LastName</li>
+                        <li>
+                            <p>email:</p> @user.Email</li>
+                        <li>
+                            <p>Статус:</p> @user.Status</li>
+                    </ul>
+                </div>
+                <div class="search_followme"></div>
+                </a>
+            </li>
+            }
+    </ul>
+}
+else
+{
+    <p>Ничего не найдено.</p>
+}
+
+<style>
+    .search_user_container {
+        list-style-type: none;
+        padding: 0 15px;
+    }
+
+    .search_currentuser_container {
+        background-color: antiquewhite;
+        padding: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .div_search_user_container{
+        display: inline-flex;
+        width: 90%;
+    }
+
+    .search_avatar{
+        width: 60px;
+        height: 60px;
+        background-color: #fefaf5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    }
+
+    .search_avatar img{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+    .div_search_user_container ul{
+        list-style-type: none;
+        padding-left: 15px;
+        display: inline-flex;
+        flex-direction: column;
+    }
+
+    .div_search_user_container li{
+        display: inline-flex;
+        margin-bottom: 5px;
+    }
+
+    .div_search_user_container p{
+        font-weight: bold;
+        margin: 0 5px 0 0;
+    }
+    .search_followme{
+        /* background-color: aqua; */
+        width: 10%;
+        display: flex;
+    }
+    
+</style>

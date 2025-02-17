@@ -8,100 +8,220 @@
 <div class="main-container">
     <div class="user-container">
         <h2>@Model._user.FirstName @Model._user.LastName</h2>
-        <div class="portrait-box">
-            <img src="@Model._user.Image" />
+        <div>
+            <img src="@Model._user.Image"/>
         </div>
         <div class="friens-container">
             <ul>
-                <li><img src="images/person-unknown.svg" />Первый друг</li>
-                <li><img src="images/person-unknown.svg" />Второй друг</li>
-                <li><img src="images/person-unknown.svg" />Третий друг</li>
+                <li><img src="images/person-unknown.svg"/>Первый друг</li>
+                <li><img src="images/person-unknown.svg"/>Второй друг</li>
+                <li><img src="images/person-unknown.svg"/>Третий друг</li>
             </ul>
         </div>
     </div>
 
     <div class="content-container">
         <h2>Моя лента</h2>
-
         <div class="inputMessageSection-body">
             <h5 class="card-title">Напишите сообщение</h5>
             <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
             <button id="sendMessage" class="btn-primary">Отправить</button>
         </div>
-        <div id="messageSection">
-        </div>
-    </div>
 
+        <div id="messageSection">
+
+            @if (Model.Messages.Any())
+            {
+                foreach (var message in Model.Messages)
+                {
+                    <div class="card" data-message-id="@message.MessageId">
+                        <div class="card-body">
+                            <div class="card-subtitle">
+                                <h6 class="card-subtitle-author">@message.AuthorFullName</h6>
+                                <h6 class="card-subtitle-date">@message.CreatedAt.ToString("G")</h6>
+                            </div>
+                            <p class="card-text">@message.Text</p>
+                        </div>
+                        <div class="comment-section">
+
+                            @if (message.Comments.Any())
+                                foreach (var comment in message.Comments)
+                                {
+                                    <div class="card-comment">
+                                        <div class="card-subtitle">
+                                            <h6 class="card-subtitle-author">@comment.Author</h6>
+                                            <h6 class="card-subtitle-date">@comment.CreatedAt.ToString("G")</h6>
+                                        </div>
+                                        <p class="card-text">@comment.Text</p>
+                                    </div>
+                                }
+                        </div>
+                        <button class="btn-primary addComment">Добавить комментарий</button>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('sendMessage').addEventListener('click', function() {
-            const messageInput = document.getElementById('messageInput');
-            const message = messageInput.value.trim();
-            if (message === "") return;
 
-            const messageHtml = `
-                <div class="card">
+<script>
+    // Обработчик отправки сообщения
+    document.getElementById('sendMessage').addEventListener('click',
+        async function() {
+            const messageInput = document.getElementById('messageInput');
+            const text = messageInput.value.trim();
+
+            if (!text) return;
+
+            try {
+                const response = await fetch('/AccountManager/AddMessage',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        },
+                        body: JSON.stringify({ Text: text })
+                    });
+
+                const messageData = await response.json();
+
+                // Добавляем сообщение в интерфейс
+                const messageHtml = `
+                <div class="card" data-message-id="${messageData.id}">
                     <div class="card-body">
-                    <div class="card-subtitle">
-                        <h6 class="card-subtitle-author">@Model._user.GetFullName()</h6>
-                        <h6 class="card-subtitle-date">${new Date().toLocaleString()}</h6>
+                        <div class="card-subtitle">
+                            <h6 class="card-subtitle-author">${messageData.author}</h6>
+                            <h6 class="card-subtitle-date">${messageData.timestamp}</h6>
                         </div>
-                        <p class="card-text">${message}</p>
+                        <p class="card-text">${messageData.text}</p>
                         <div class="comment-section"></div>
                         <button class="btn-primary addComment">Добавить комментарий</button>
                     </div>
                 </div>`;
 
-            const messageSection = document.getElementById('messageSection');
-            messageSection.insertAdjacentHTML('afterbegin', messageHtml);
-            messageInput.value = ''; // Очистить поле
-            messageInput.style.height = 'auto';
+                document.getElementById('messageSection').insertAdjacentHTML('afterbegin', messageHtml);
+                messageInput.value = '';
+                messageInput.style.height = 'auto';
 
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
         });
 
-        // Обработчик для добавления комментария
-        document.addEventListener('click', function(e) {
+// Обработчик комментариев
+    document.addEventListener('click',
+        async function(e) {
+            // Добавление поля для комментария
             if (e.target.classList.contains('addComment')) {
                 const commentInput = `
-                    <textarea class="form-control coomment-area" rows="2" placeholder="Введите комментарий..."></textarea>
-                    <button class="btn-primary submitComment">Добавить</button>`;
+                <textarea class="form-control comment-area" rows="2" placeholder="Введите комментарий..."></textarea>
+                <button class="btn-primary submitComment">Отправить</button>`;
                 const commentSection = e.target.previousElementSibling;
                 commentSection.insertAdjacentHTML('beforeend', commentInput);
                 e.target.remove();
             }
-        });
 
-        // Обработчик для отправки комментария
-        document.addEventListener('click', function(e) {
+            // Отправка комментария
             if (e.target.classList.contains('submitComment')) {
                 const textarea = e.target.previousElementSibling;
-                const comment = textarea.value.trim();
-                if (comment === "") return;
+                const text = textarea.value.trim();
+                const messageId = e.target.closest('.card').dataset.messageId;
 
-                const commentHtml =`
+                if (!text) return;
+
+                try {
+                    const response = await fetch('/AccountManager/AddComment',
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                            },
+                            body: JSON.stringify({
+                                MessageId: parseInt(messageId),
+                                Text: text
+                            })
+                        });
+
+                    const commentData = await response.json();
+
+                    // Тело комментария
+                    const commentHtml = `
                     <div class="card-comment">
                         <div class="card-subtitle">
-                    <h6 class="card-subtitle-author">@Model._user.GetFullName()</h6>
-                    <h6 class="card-subtitle-date">${new Date().toLocaleString()}</h6>
-                    </div>
-                    <p class="card-text">${comment}</p>
+                            <h6 class="card-subtitle-author">${commentData.author}</h6>
+                            <h6 class="card-subtitle-date">${commentData.timestamp}</h6>
+                        </div>
+                        <p class="card-text">${commentData.text}</p>
                     </div>`;
-                // const commentSection = e.target.previousElementSibling;
-                const commentSection = e.target.parentElement;
-                console.log(commentSection);
-                const buttonSection = e.target.parentElement;
-                const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
-                // Добавляем комментарий
-                commentSection.insertAdjacentHTML('afterbegin', commentHtml);
-                buttonSection.insertAdjacentHTML('afterend', commentButton);
 
 
-                // Удаляем поле ввода и кнопку
-                textarea.remove();
-                e.target.remove();
+                    const commentSection = e.target.parentElement;
+                    const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
+                    // Добавляем комментарий
+                    commentSection.insertAdjacentHTML('afterbegin', commentHtml);
+                    // Добавляем кнопку
+                    commentSection.insertAdjacentHTML('afterend', commentButton);
+
+                    // Удаляем поле ввода
+                    textarea.remove();
+                    e.target.remove();
+
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                }
             }
         });
-    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded',
+        function() {
+            // Функция для настройки textarea
+            function processTextarea(textarea) {
+                // Если обработчик уже прикреплён, пропускаем
+                if (!textarea.hasAttribute('data-autosize-attached')) {
+                    textarea.addEventListener('input',
+                        function() {
+                            textarea.style.height = 'auto';
+                            textarea.style.height = textarea.scrollHeight + 'px';
+                        });
+                    textarea.setAttribute('data-autosize-attached', 'true');
+                }
+                // Первоначальная настройка высоты
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
+
+            // Инициализируем уже существующие textarea
+            document.querySelectorAll('textarea.form-control').forEach(processTextarea);
+
+            // Создаём наблюдатель за изменениями в документе
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        // Если добавлен узел является элементом
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            // Если сам узел является textarea с нужным классом
+                            if (node.matches && node.matches('textarea.form-control')) {
+                                processTextarea(node);
+                            }
+                            // Если внутри добавленного узла есть дочерние textarea
+                            if (node.querySelectorAll) {
+                                node.querySelectorAll('textarea.form-control').forEach(processTextarea);
+                            }
+                        }
+                    });
+                });
+            });
+
+            // Настраиваем наблюдение за всем документом
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+
+
 </script>

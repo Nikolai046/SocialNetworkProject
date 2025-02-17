@@ -44,6 +44,7 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
 
 // Подключаем авто маппинг
 builder.Services.AddAutoMapper(assembly);
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 var app = builder.Build();
 
@@ -57,13 +58,25 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseStatusCodePagesWithReExecute("/Error/{0}");
+app.UseStatusCodePagesWithReExecute("/Error/Error/{0}");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+
+//app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/Home/Index");
+        return;
+    }
+    await next();
+});
 
 app.Run();
