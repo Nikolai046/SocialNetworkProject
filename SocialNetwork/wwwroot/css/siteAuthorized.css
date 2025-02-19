@@ -90,17 +90,17 @@ header {
     max-width: 450px; /* Максимальная ширина формы поиска */
 }
 
-.search-wrapper form {
-    width: 100%;
-}
-
-    /* Стили для label */
-    .label-input {
-        display: flex;
-        align-items: center;
-        position: relative;
+    .search-wrapper form {
         width: 100%;
     }
+
+/* Стили для label */
+.label-input {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
 
 /* Стили для поля ввода */
 
@@ -267,6 +267,22 @@ main {
     padding: 5px;
 }
 
+    .card-subtitle span {
+        background-color: rgba(203, 175, 129, 0.16);
+        margin-left: auto;
+        padding: 1px;
+        display: flex;
+        justify-content: center;
+        border-radius: 5px;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .card-subtitle span img {
+            height: 15px;
+            margin: 2px;
+        }
+
 .card-subtitle-author {
     margin: 0 10px 0 0;
 }
@@ -302,9 +318,36 @@ main {
     margin-top: 10px;
 }
 
-.comment-area {
+/* Контейнер для textarea и кнопки закрыть*/
+.comment-input-container {
+    position: relative; /* Позволяет абсолютное позиционирование дочерних элементов */
+    display: flex;
+    flex-direction: column;
     width: 90%;
 }
+
+.comment-area {
+    padding: 0 18px 0 10px; /* Добавляем отступ справа, чтобы текст не перекрывался иконкой */
+    width: 96%;
+    resize: none; /* Запрещаем изменение размера textarea */
+    overflow: hidden;
+    margin-top: 0;
+}
+/* Стиль для иконки закрытия */
+.close-icon {
+    position: absolute;
+    top: 20px;
+    right: 8px;
+    transform: translateY(-100%);
+    cursor: pointer;
+}
+    /* Стиль для изображения */
+    .close-icon img {
+        height: 10px;
+        width: 10px;
+    }
+
+
 
 footer {
     margin-top: auto;

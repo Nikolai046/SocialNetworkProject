@@ -1,40 +1,16 @@
-﻿@* @using SocialNetwork.Models.ViewModels.Account
+﻿@* @using System.Diagnostics.Eventing.Reader
+@using SocialNetwork.Models.ViewModels.Account
 @model UserViewModel; *@
+
+@{
+    string userId = string.IsNullOrEmpty(ViewBag.targetUser?.Id) ? Model._user.Id : ViewBag.targetUser.Id;
+    string title = string.IsNullOrEmpty(ViewBag.targetUser) ? Model._user.GetFullName() : ViewBag.targetUser.GetFullName();
+
+}
 
 @{
     ViewData["Title"] = $"{Model._user.GetFullName()} page";
 }
-
-@* div class="main-container">
-    <div class="user-container">
-        <h2>@Model._user.FirstName @Model._user.LastName</h2>
-        <div>
-            <img src="@Model._user.Image"/>
-        </div>
-        <div class="friens-container">
-            <ul>
-                <li><img src="/images/person-unknown.svg"/>Первый друг</li>
-                <li><img src="/images/person-unknown.svg"/>Второй друг</li>
-                <li><img src="/images/person-unknown.svg"/>Третий друг</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="content-container">
-        <h2>Моя лента</h2>
-        <div class="inputMessageSection-body">
-            <h5 class="card-title">Напишите сообщение</h5>
-            <textarea id="messageInput" class="form-control" rows="3" placeholder="Введите сообщение..."></textarea>
-            <button id="sendMessage" class="btn-primary">Отправить</button>
-        </div>
-
-        <div id="messageSection"></div>
-        <div id="loading" style="display: none; text-align: center;">
-            Загрузка...
-        </div>
-
-    </div>
-</div> *@
 
 <h2>Моя лента</h2>
 <div class="inputMessageSection-body">
@@ -49,88 +25,94 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        let currentPage = 1;
-        let hasMore = true;
-        let loading = false;
-        const pageSize = 10;
-    
-        // Создаем триггер для загрузки
-        const loadTrigger = document.createElement('div');
-        loadTrigger.id = 'load-trigger';
-        loadTrigger.style.height = '1px';
-        loadTrigger.style.visibility = 'hidden';
-        document.getElementById('messageSection').appendChild(loadTrigger);
+    document.addEventListener('DOMContentLoaded',
+        () => {
+            let currentPage = 1;
+            let hasMore = true;
+            let loading = false;
+            const pageSize = 10;
 
-        // Наблюдатель за триггером
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && hasMore && !loading) {
-                    loadMessages();
-                }
-            });
-        }, { threshold: 0.1 });
 
-        observer.observe(loadTrigger);
+            // Создаем триггер для загрузки
+            const loadTrigger = document.createElement('div');
+            loadTrigger.id = 'load-trigger';
+            loadTrigger.style.height = '1px';
+            loadTrigger.style.visibility = 'hidden';
+            document.getElementById('messageSection').appendChild(loadTrigger);
 
-        async function loadMessages() {
-            loading = true;
-        
-            try {
-                const response = await fetch(`/AccountManager/load-messages?page=${currentPage}`);
-                const result = await response.json();
-            
-                if (result.data && result.data.length > 0) {
-                    // Добавляем сообщения
-                    const messageSection = document.getElementById('messageSection');
-                    result.data.forEach(message => {
-                    const messageHtml = `
-<div class="card" data-message-id="${message.messageId}">
-    <div class="card-body">
-        <div class="card-subtitle">
-            <h6 class="card-subtitle-author">${message.authorFullName}</h6>
-            <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
-        </div>
-        <p class="card-text">${message.text}</p>
-        <div class="comment-section">
-            ${message.comments.map(comment => `
-            <div class="card-comment">
-                <div class="card-subtitle">
-                    <h6 class="card-subtitle-author">${comment.author}</h6>
-                    <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
-                </div>
-                <p class="card-text">${comment.text}</p>
-            </div>
-            `).join('')}
-        </div>
-        <button class="btn-primary addComment">Добавить комментарий</button>
-    </div>
-</div>`;
-                   
-                    messageSection.insertAdjacentHTML('beforeend', messageHtml);
+            // Наблюдатель за триггером
+            const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && hasMore && !loading) {
+                            loadMessages();
+                        }
                     });
+                },
+                { threshold: 0.1 });
 
-                    // Обновляем флаг и страницу
-                    hasMore = result.hasMore;
-                    currentPage++;
+            observer.observe(loadTrigger);
 
-                    // Перемещаем триггер в конец
-                    messageSection.appendChild(loadTrigger);
-                } else {
-                    hasMore = false;
-                    loadTrigger.remove();
+            async function loadMessages() {
+                loading = true;
+
+                try {
+                    const response = await fetch(`/AccountManager/load-messages?UserID=@userId&page=${currentPage}`);
+                    const result = await response.json();
+
+                    if (result.data && result.data.length > 0) {
+                        // Добавляем сообщения
+                        const messageSection = document.getElementById('messageSection');
+                        result.data.forEach(message => {
+                            const messageHtml = `
+                           <div class="card" data-message-id="${message.messageId}">
+            <div class="card-body">
+                <div class="card-subtitle">
+                    <h6 class="card-subtitle-author">${message.authorFullName}</h6>
+                    <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
+                    ${message.deletable ? '<span><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
+                    </div>
+                <p class="card-text">${message.text}</p>
+                <div class="comment-section">
+    ${message.comments.map(comment => `
+        <div class="card-comment" data-comment-id="${comment.commentId}">
+            <div class="card-subtitle">
+                <h6 class="card-subtitle-author">${comment.author}</h6>
+                <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
+                ${comment.deletable ? '<span><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
+            </div>
+            <p class="card-text">${comment.text}</p>
+        </div>
+    `).join('')}
+
+                </div>
+                <button class="btn-primary addComment">Добавить комментарий</button>
+            </div>
+        </div>`;
+
+                            messageSection.insertAdjacentHTML('beforeend', messageHtml);
+                        });
+
+                        // Обновляем флаг и страницу
+                        hasMore = result.hasMore;
+                        currentPage++;
+
+                        // Перемещаем триггер в конец
+                        messageSection.appendChild(loadTrigger);
+                    } else {
+                        hasMore = false;
+                        loadTrigger.remove();
+                    }
+
+                } catch (error) {
+                    console.error('Ошибка загрузки:', error);
+                } finally {
+                    loading = false;
                 }
-
-            } catch (error) {
-                console.error('Ошибка загрузки:', error);
-            } finally {
-                loading = false;
             }
-        }
 
-        // Первоначальная загрузка
-        loadMessages();
-    });
+            // Первоначальная загрузка
+            loadMessages();
+        });
 
 </script>
 
@@ -144,7 +126,7 @@
             if (!text) return;
 
             try {
-                    const response = await fetch('/AccountManager/add-message',
+                const response = await fetch('/AccountManager/add-message',
                     {
                         method: 'POST',
                         headers: {
@@ -158,17 +140,17 @@
 
                 // Добавляем сообщение в интерфейс
                 const messageHtml = `
-                <div class="card" data-message-id="${messageData.id}">
-                    <div class="card-body">
-                        <div class="card-subtitle">
-                            <h6 class="card-subtitle-author">${messageData.author}</h6>
-                            <h6 class="card-subtitle-date">${messageData.timestamp}</h6>
+                    <div class="card" data-message-id="${messageData.id}">
+                        <div class="card-body">
+                            <div class="card-subtitle">
+                                <h6 class="card-subtitle-author">${messageData.author}</h6>
+                                <h6 class="card-subtitle-date">${messageData.timestamp}</h6>
+                            </div>
+                            <p class="card-text">${messageData.text}</p>
+                            <div class="comment-section"></div>
+                            <button class="btn-primary addComment">Добавить комментарий</button>
                         </div>
-                        <p class="card-text">${messageData.text}</p>
-                        <div class="comment-section"></div>
-                        <button class="btn-primary addComment">Добавить комментарий</button>
-                    </div>
-                </div>`;
+                    </div>`;
 
                 document.getElementById('messageSection').insertAdjacentHTML('afterbegin', messageHtml);
                 messageInput.value = '';
@@ -178,14 +160,19 @@
                 console.error('Ошибка:', error);
             }
         });
+</script>
 
-// Обработчик комментариев
+<script>
+    // Обработчик комментариев
     document.addEventListener('click',
         async function(e) {
             // Добавление поля для комментария
             if (e.target.classList.contains('addComment')) {
                 const commentInput = `
-                <textarea class="form-control comment-area" rows="2" placeholder="Введите комментарий..."></textarea>
+                <div class="comment-input-container">
+                    <textarea class="form-control comment-area" rows="2" placeholder="Введите комментарий..."></textarea>
+                    <span class="close-icon"><img src="@Url.Content("~/images/close.svg")" alt="Close"></span>
+                 </div>
                 <button class="btn-primary submitComment">Отправить</button>`;
                 const commentSection = e.target.previousElementSibling;
                 commentSection.insertAdjacentHTML('beforeend', commentInput);
@@ -201,7 +188,7 @@
                 if (!text) return;
 
                 try {
-                        const response = await fetch('/AccountManager/add-comment',
+                    const response = await fetch('/AccountManager/add-comment',
                         {
                             method: 'POST',
                             headers: {
@@ -218,19 +205,20 @@
 
                     // Тело комментария
                     const commentHtml = `
-                    <div class="card-comment">
-                        <div class="card-subtitle">
-                            <h6 class="card-subtitle-author">${commentData.author}</h6>
-                            <h6 class="card-subtitle-date">${commentData.timestamp}</h6>
-                        </div>
-                        <p class="card-text">${commentData.text}</p>
-                    </div>`;
+                            <div class="card-comment">
+                                <div class="card-subtitle">
+                                    <h6 class="card-subtitle-author">${commentData.author}</h6>
+                                    <h6 class="card-subtitle-date">${commentData.timestamp}</h6>
+                                            <span><img src="@Url.Content("~/images/trashbox.svg")"></span>
+                                    </div>
+                                <p class="card-text">${commentData.text}</p>
+                            </div>`;
 
 
                     const commentSection = e.target.parentElement;
                     const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
                     // Добавляем комментарий
-                    commentSection.insertAdjacentHTML('afterbegin', commentHtml);
+                    commentSection.insertAdjacentHTML('beforeend', commentHtml);
                     // Добавляем кнопку
                     commentSection.insertAdjacentHTML('afterend', commentButton);
 

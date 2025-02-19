@@ -39,20 +39,21 @@ public class AccountManagerController : Controller
     [HttpGet("my-page")]
     public async Task<IActionResult> MyPage()
     {
-        var currentUser = await _userManager.GetUserAsync(User);
-        return View("Mypage", new UserViewModel(currentUser));
+        var authorizedUser = await _userManager.GetUserAsync(User);
+        return View("Mypage", new UserViewModel(authorizedUser));
     }
 
     [HttpGet]
     [Route("load-messages")]
-    public async Task<IActionResult> LoadMessages([FromQuery] int page)
+    public async Task<IActionResult> LoadMessages([FromQuery] string? UserID, int page)
     {
         int pageSize = 10;
-        var user = await _userManager.GetUserAsync(User);
+
+        var authorizedUser = await _userManager.GetUserAsync(User);
 
         var allmessages = await _unitOfWork.GetRepository<Message>()
             .GetAll()
-            .Where(m => m.SenderId == user.Id)
+            .Where(m => m.SenderId == UserID)
             .Include(m => m.Comments)
             .ThenInclude(c => c.Sender)
             .OrderByDescending(m => m.Timestamp)
@@ -62,28 +63,31 @@ public class AccountManagerController : Controller
             .Skip((page - 1) * pageSize)
             .Take(pageSize);
 
-        var result = messages.Select(m => new MessageViewModel
+        var result = await Task.WhenAll(messages.Select(async m => new MessageViewModel
         {
             MessageId = m.Id,
             Text = m.Text,
-            AuthorFullName = user.GetFullName(),
+            AuthorFullName = (await _userManager.FindByIdAsync(m.SenderId)).GetFullName(),
             CreatedAt = m.Timestamp,
+            Deletable = (m.SenderId == authorizedUser.Id),
             Comments = m.Comments.Select(c => new CommentViewModel
             {
+                CommentId = c.Id,
                 Text = c.Text,
                 Author = c.Sender?.GetFullName() ?? "Аноним",
-                CreatedAt = c.Timestamp
-            })
-        });
+                CreatedAt = c.Timestamp,
+                Deletable = (c.SenderId == authorizedUser.Id),
+            }).ToList()
+        }));
 
-        var x = (allmessages.Count / pageSize - page) >= 0;
-        _logger.LogInformation("\nLoadMessages called with page {Page} of {2}", page, allmessages.Count / pageSize);
-        _logger.LogInformation($"{x}\n");
+        var hasMore = (allmessages.Count / pageSize - page) >= 0;
+        //_logger.LogInformation("\nLoadMessages called with page {Page} of {2}", page, allmessages.Count / pageSize);
+        //_logger.LogInformation($"{hasMore}\n");
 
         return Json(new
         {
             data = result,
-            hasMore = x
+            hasMore = hasMore
         });
     }
 

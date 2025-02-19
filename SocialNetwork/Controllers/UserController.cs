@@ -63,6 +63,7 @@ namespace SocialNetwork.Controllers
 
             // Возвращаем представление
             return View("UserPage", model);
+
         }
     }
 }
