@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
 using SocialNetwork.Models;
-using SocialNetwork.Models.ViewModels.Account;
 using SocialNetwork.Models.ViewModels;
+using SocialNetwork.Models.ViewModels.Account;
 
 [Route("[controller]")]
 public class AccountManagerController : Controller
@@ -149,5 +149,18 @@ public class AccountManagerController : Controller
         });
     }
 
+    /// <summary>
+    /// Метод сохранения комментариев к сообщениям в БД
+    /// </summary>
+    [HttpDelete("delete-message")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteMessage([FromQuery] int messageId)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var message = await _unitOfWork.GetRepository<Message>().Get(messageId);
+        if (message.Sender.Id == user.Id) Console.WriteLine($"\n\x1b[42m\x1b[37mСообщение можно удалять\x1b[0m");
+
+        return Ok();
+    }
 
 }

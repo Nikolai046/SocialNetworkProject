@@ -69,7 +69,7 @@
                 <div class="card-subtitle">
                     <h6 class="card-subtitle-author">${message.authorFullName}</h6>
                     <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
-                    ${message.deletable ? '<span><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
+                    ${message.deletable ? '<span class="messageDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
                     </div>
                 <p class="card-text">${message.text}</p>
                 <div class="comment-section">
@@ -78,7 +78,7 @@
             <div class="card-subtitle">
                 <h6 class="card-subtitle-author">${comment.author}</h6>
                 <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
-                ${comment.deletable ? '<span><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
+                ${comment.deletable ? '<span class="commentDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
             </div>
             <p class="card-text">${comment.text}</p>
         </div>
@@ -145,6 +145,7 @@
                             <div class="card-subtitle">
                                 <h6 class="card-subtitle-author">${messageData.author}</h6>
                                 <h6 class="card-subtitle-date">${messageData.timestamp}</h6>
+                                <span class="messageDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>
                             </div>
                             <p class="card-text">${messageData.text}</p>
                             <div class="comment-section"></div>
@@ -160,6 +161,48 @@
                 console.error('Ошибка:', error);
             }
         });
+</script>
+
+<script>
+    // Обработчик удаления сообщения
+    document.addEventListener('click', async function(e) {
+        // Удаление сообщения или комментария
+        if (e.target.closest('.messageDel, .commentDel')) {
+            const isMessage = e.target.closest('.messageDel');
+            const cardElement = isMessage 
+                ? e.target.closest('.card')
+                : e.target.closest('.card-comment');
+
+            const idType = isMessage ? 'message' : 'comment';
+            const elementId = cardElement.dataset[`${idType}Id`];
+            //const endpoint = `/AccountManager/delete-message/${elementId}`;
+            // const endpoint = `/${idType.charAt(0).toUpperCase() + idType.slice(1)}/Delete/${elementId}`;
+            // console.log(endpoint);
+
+            try {
+                const response = await fetch('/AccountManager/DeleteMessage',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        },
+                        body: JSON.stringify({
+                            messageId: parseInt(elementId)
+                        })
+                    });
+
+                if (response.ok) {
+                    cardElement.remove();
+                } else {
+                    console.error('Ошибка удаления:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
+        }
+
+    });
 </script>
 
 <script>
@@ -179,9 +222,26 @@
                 e.target.remove();
             }
 
+
+            // Обработчик закрытия textarea комментария при нажатии на крестик
+        if (e.target.closest('.close-icon')) {
+            const commentInputContainer = e.target.closest('.comment-input-container');
+           const newButtonSection = commentInputContainer.parentElement;
+            const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
+            commentInputContainer.nextElementSibling.remove(); // Удаляем существующую кнопку
+            commentInputContainer.remove(); // Удаляем textarea
+            newButtonSection.insertAdjacentHTML('afterend', commentButton); // вставляем кнопку "Добавить комментарий"
+        }
+
+
             // Отправка комментария
             if (e.target.classList.contains('submitComment')) {
-                const textarea = e.target.previousElementSibling;
+            const textarea = e.target.previousElementSibling.getElementsByClassName('comment-area')[0];
+
+                console.log("textarea");
+                console.log(textarea);
+                console.log(textarea.closest('.comment-input-container'));
+
                 const text = textarea.value.trim();
                 const messageId = e.target.closest('.card').dataset.messageId;
 
@@ -209,7 +269,7 @@
                                 <div class="card-subtitle">
                                     <h6 class="card-subtitle-author">${commentData.author}</h6>
                                     <h6 class="card-subtitle-date">${commentData.timestamp}</h6>
-                                            <span><img src="@Url.Content("~/images/trashbox.svg")"></span>
+                                            <span class="commentDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>
                                     </div>
                                 <p class="card-text">${commentData.text}</p>
                             </div>`;
@@ -223,7 +283,7 @@
                     commentSection.insertAdjacentHTML('afterend', commentButton);
 
                     // Удаляем поле ввода
-                    textarea.remove();
+                    textarea.closest('.comment-input-container').remove();
                     e.target.remove();
 
                 } catch (error) {
