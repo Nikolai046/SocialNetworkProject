@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SocialNetwork - @ViewData["Title"]</title>
-    @await Html.PartialAsync("_ScriptCssPartial.cshtml")
+    @await Html.PartialAsync("_CssPartial.cshtml")
 
 </head>
 <body>
@@ -39,10 +39,11 @@
 
         </main>
     </div>
-    <footer>
-        <div class="footer-container">
-            &copy; 2025 - SocialNetwork
-        </div>
-    </footer>
+<footer>
+    <div class="footer-container">
+        &copy; 2025 - SocialNetwork
+    </div>
+</footer>
+    @await Html.PartialAsync("_ScriptPartial.cshtml")
 </body>
 </html>

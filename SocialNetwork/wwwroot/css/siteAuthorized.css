@@ -95,6 +95,7 @@ header {
     }
 
 /* Стили для label */
+
 .label-input {
     display: flex;
     align-items: center;
@@ -241,7 +242,7 @@ main {
 }
 
 .form-control {
-    resize: vertical;
+    resize: none;
     width: 100%;
     border-radius: 5px;
     border-color: rgb(220 220 220);
@@ -319,6 +320,7 @@ main {
 }
 
 /* Контейнер для textarea и кнопки закрыть*/
+
 .comment-input-container {
     position: relative; /* Позволяет абсолютное позиционирование дочерних элементов */
     display: flex;
@@ -333,7 +335,9 @@ main {
     overflow: hidden;
     margin-top: 0;
 }
+
 /* Стиль для иконки закрытия */
+
 .close-icon {
     position: absolute;
     top: 20px;
@@ -341,7 +345,9 @@ main {
     transform: translateY(-100%);
     cursor: pointer;
 }
+
     /* Стиль для изображения */
+
     .close-icon img {
         height: 10px;
         width: 10px;

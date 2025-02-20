@@ -43,6 +43,7 @@ public class AccountManagerController : Controller
         return View("Mypage", new UserViewModel(authorizedUser));
     }
 
+    [Authorize]
     [HttpGet]
     [Route("load-messages")]
     public async Task<IActionResult> LoadMessages([FromQuery] string? UserID, int page)
@@ -94,6 +95,7 @@ public class AccountManagerController : Controller
     /// <summary>
     /// Метод сохранения сообщений в БД
     /// </summary>
+    [Authorize]
     [HttpPost("add-message")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddMessage([FromBody] MessageDto messageDto)
@@ -124,6 +126,7 @@ public class AccountManagerController : Controller
     /// <summary>
     /// Метод сохранения комментариев к сообщениям в БД
     /// </summary>
+    [Authorize]
     [HttpPost("add-comment")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> AddComment([FromBody] CommentDto commentDto)
@@ -150,17 +153,41 @@ public class AccountManagerController : Controller
     }
 
     /// <summary>
-    /// Метод сохранения комментариев к сообщениям в БД
+    /// Метод удаления сообщений b комментариев в БД
     /// </summary>
-    [HttpDelete("delete-message")]
+    [Authorize]
+    [HttpDelete("delete-post")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteMessage([FromQuery] int messageId)
+    public async Task<IActionResult> DeletePost([FromQuery] string idType, int postId)
     {
         var user = await _userManager.GetUserAsync(User);
-        var message = await _unitOfWork.GetRepository<Message>().Get(messageId);
-        if (message.Sender.Id == user.Id) Console.WriteLine($"\n\x1b[42m\x1b[37mСообщение можно удалять\x1b[0m");
+        if (idType == "message")
+        {
+            var message = await _unitOfWork.GetRepository<Message>().Get(postId);
+            if (message == null || message.SenderId != user.Id)
+            {
+                return Forbid();
+            }
+            //await _unitOfWork.GetRepository<Message>().Delete(message);
+            Console.WriteLine($"\n\x1b[42m\x1b[37mСообщение {postId} удалено\x1b[0m");
+        }
+        else if (idType == "comment")
+        {
+            var comment = await _unitOfWork.GetRepository<Comment>().Get(postId);
+            if (comment == null || comment.SenderId != user.Id)
+            {
+                return Forbid();
+            }
+            //await _unitOfWork.GetRepository<Comment>().Delete(comment);
+            Console.WriteLine($"\n\x1b[42m\x1b[37mКомментарий {postId} удалty\x1b[0m");
+        }
+        else
+        {
+            return BadRequest("Invalid idType");
+        }
 
         return Ok();
     }
 
 }
+

@@ -1,4 +1,6 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿//Обработчик, который показывает ошибки валидатора ASP.NET только после нажатия submit
+
+document.addEventListener("DOMContentLoaded", function () {
     // Ищем форму с id="checkMe"
     const form = document.querySelector("#checkMe");
 

@@ -1,0 +1,16 @@
+﻿@{
+    var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+}
+<!-- Подключение стилей для конкретных контроллеров -->
+@{
+    if (controllerName is "Home" or "Register" or "Error")
+    {
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/hideElementsFromNavbar.css" asp-append-version="true"/>
+    }
+    if (controllerName is "AccountManager" or "Search" or "User")
+    {
+        <link rel="stylesheet" href="~/css/siteAuthorized.css" asp-append-version="true" />
+    }
+}
+}

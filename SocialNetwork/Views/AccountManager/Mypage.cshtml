@@ -1,8 +1,4 @@
-﻿@* @using System.Diagnostics.Eventing.Reader
-@using SocialNetwork.Models.ViewModels.Account
-@model UserViewModel; *@
-
-@{
+﻿@{
     string userId = string.IsNullOrEmpty(ViewBag.targetUser?.Id) ? Model._user.Id : ViewBag.targetUser.Id;
     string title = string.IsNullOrEmpty(ViewBag.targetUser) ? Model._user.GetFullName() : ViewBag.targetUser.GetFullName();
 
@@ -25,13 +21,22 @@
 </div>
 
 <script>
+    console.log('page loaded');
+    console.log(new Date().toISOString());
+    var trashboxUrl = "@Url.Content("~/images/trashbox.svg")";
+    window.userId = "@userId";
+</script>
+
+
+@* <script>
+        //Обработчик для загрузки сообщений и комментариев ленту
+
     document.addEventListener('DOMContentLoaded',
         () => {
             let currentPage = 1;
             let hasMore = true;
             let loading = false;
             const pageSize = 10;
-
 
             // Создаем триггер для загрузки
             const loadTrigger = document.createElement('div');
@@ -42,12 +47,12 @@
 
             // Наблюдатель за триггером
             const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && hasMore && !loading) {
-                            loadMessages();
-                        }
-                    });
-                },
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && hasMore && !loading) {
+                        loadMessages();
+                    }
+                });
+            },
                 { threshold: 0.1 });
 
             observer.observe(loadTrigger);
@@ -64,30 +69,29 @@
                         const messageSection = document.getElementById('messageSection');
                         result.data.forEach(message => {
                             const messageHtml = `
-                           <div class="card" data-message-id="${message.messageId}">
-            <div class="card-body">
-                <div class="card-subtitle">
-                    <h6 class="card-subtitle-author">${message.authorFullName}</h6>
-                    <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
-                    ${message.deletable ? '<span class="messageDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
-                    </div>
-                <p class="card-text">${message.text}</p>
-                <div class="comment-section">
-    ${message.comments.map(comment => `
-        <div class="card-comment" data-comment-id="${comment.commentId}">
-            <div class="card-subtitle">
-                <h6 class="card-subtitle-author">${comment.author}</h6>
-                <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
-                ${comment.deletable ? '<span class="commentDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
-            </div>
-            <p class="card-text">${comment.text}</p>
-        </div>
-    `).join('')}
-
-                </div>
-                <button class="btn-primary addComment">Добавить комментарий</button>
-            </div>
-        </div>`;
+                               <div class="card" data-message-id="${message.messageId}">
+                               <div class="card-body">
+                               <div class="card-subtitle">
+                                 <h6 class="card-subtitle-author">${message.authorFullName}</h6>
+                                 <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
+                                 ${message.deletable ? '<span class="messageDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
+                        </div>
+                             <p class="card-text">${message.text}</p>
+                               <div class="comment-section">
+                        ${message.comments.map(comment => `
+                            <div class="card-comment" data-comment-id="${comment.commentId}">
+                              <div class="card-subtitle">
+                                  <h6 class="card-subtitle-author">${comment.author}</h6>
+                                  <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
+                                  ${comment.deletable ? '<span class="commentDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>' : ''}
+                               </div>
+                                <p class="card-text">${comment.text}</p>
+                           </div>
+                                  `).join('')}
+                                </div>
+                                <button class="btn-primary addComment">Добавить комментарий</button>
+                            </div>
+                        </div>`;
 
                             messageSection.insertAdjacentHTML('beforeend', messageHtml);
                         });
@@ -102,7 +106,6 @@
                         hasMore = false;
                         loadTrigger.remove();
                     }
-
                 } catch (error) {
                     console.error('Ошибка загрузки:', error);
                 } finally {
@@ -114,230 +117,4 @@
             loadMessages();
         });
 
-</script>
-
-<script>
-    // Обработчик отправки сообщения
-    document.getElementById('sendMessage').addEventListener('click',
-        async function() {
-            const messageInput = document.getElementById('messageInput');
-            const text = messageInput.value.trim();
-
-            if (!text) return;
-
-            try {
-                const response = await fetch('/AccountManager/add-message',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        },
-                        body: JSON.stringify({ Text: text })
-                    });
-
-                const messageData = await response.json();
-
-                // Добавляем сообщение в интерфейс
-                const messageHtml = `
-                    <div class="card" data-message-id="${messageData.id}">
-                        <div class="card-body">
-                            <div class="card-subtitle">
-                                <h6 class="card-subtitle-author">${messageData.author}</h6>
-                                <h6 class="card-subtitle-date">${messageData.timestamp}</h6>
-                                <span class="messageDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>
-                            </div>
-                            <p class="card-text">${messageData.text}</p>
-                            <div class="comment-section"></div>
-                            <button class="btn-primary addComment">Добавить комментарий</button>
-                        </div>
-                    </div>`;
-
-                document.getElementById('messageSection').insertAdjacentHTML('afterbegin', messageHtml);
-                messageInput.value = '';
-                messageInput.style.height = 'auto';
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
-        });
-</script>
-
-<script>
-    // Обработчик удаления сообщения
-    document.addEventListener('click', async function(e) {
-        // Удаление сообщения или комментария
-        if (e.target.closest('.messageDel, .commentDel')) {
-            const isMessage = e.target.closest('.messageDel');
-            const cardElement = isMessage 
-                ? e.target.closest('.card')
-                : e.target.closest('.card-comment');
-
-            const idType = isMessage ? 'message' : 'comment';
-            const elementId = cardElement.dataset[`${idType}Id`];
-            //const endpoint = `/AccountManager/delete-message/${elementId}`;
-            // const endpoint = `/${idType.charAt(0).toUpperCase() + idType.slice(1)}/Delete/${elementId}`;
-            // console.log(endpoint);
-
-            try {
-                const response = await fetch('/AccountManager/DeleteMessage',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        },
-                        body: JSON.stringify({
-                            messageId: parseInt(elementId)
-                        })
-                    });
-
-                if (response.ok) {
-                    cardElement.remove();
-                } else {
-                    console.error('Ошибка удаления:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
-        }
-
-    });
-</script>
-
-<script>
-    // Обработчик комментариев
-    document.addEventListener('click',
-        async function(e) {
-            // Добавление поля для комментария
-            if (e.target.classList.contains('addComment')) {
-                const commentInput = `
-                <div class="comment-input-container">
-                    <textarea class="form-control comment-area" rows="2" placeholder="Введите комментарий..."></textarea>
-                    <span class="close-icon"><img src="@Url.Content("~/images/close.svg")" alt="Close"></span>
-                 </div>
-                <button class="btn-primary submitComment">Отправить</button>`;
-                const commentSection = e.target.previousElementSibling;
-                commentSection.insertAdjacentHTML('beforeend', commentInput);
-                e.target.remove();
-            }
-
-
-            // Обработчик закрытия textarea комментария при нажатии на крестик
-        if (e.target.closest('.close-icon')) {
-            const commentInputContainer = e.target.closest('.comment-input-container');
-           const newButtonSection = commentInputContainer.parentElement;
-            const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
-            commentInputContainer.nextElementSibling.remove(); // Удаляем существующую кнопку
-            commentInputContainer.remove(); // Удаляем textarea
-            newButtonSection.insertAdjacentHTML('afterend', commentButton); // вставляем кнопку "Добавить комментарий"
-        }
-
-
-            // Отправка комментария
-            if (e.target.classList.contains('submitComment')) {
-            const textarea = e.target.previousElementSibling.getElementsByClassName('comment-area')[0];
-
-                console.log("textarea");
-                console.log(textarea);
-                console.log(textarea.closest('.comment-input-container'));
-
-                const text = textarea.value.trim();
-                const messageId = e.target.closest('.card').dataset.messageId;
-
-                if (!text) return;
-
-                try {
-                    const response = await fetch('/AccountManager/add-comment',
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                            },
-                            body: JSON.stringify({
-                                MessageId: parseInt(messageId),
-                                Text: text
-                            })
-                        });
-
-                    const commentData = await response.json();
-
-                    // Тело комментария
-                    const commentHtml = `
-                            <div class="card-comment">
-                                <div class="card-subtitle">
-                                    <h6 class="card-subtitle-author">${commentData.author}</h6>
-                                    <h6 class="card-subtitle-date">${commentData.timestamp}</h6>
-                                            <span class="commentDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>
-                                    </div>
-                                <p class="card-text">${commentData.text}</p>
-                            </div>`;
-
-
-                    const commentSection = e.target.parentElement;
-                    const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
-                    // Добавляем комментарий
-                    commentSection.insertAdjacentHTML('beforeend', commentHtml);
-                    // Добавляем кнопку
-                    commentSection.insertAdjacentHTML('afterend', commentButton);
-
-                    // Удаляем поле ввода
-                    textarea.closest('.comment-input-container').remove();
-                    e.target.remove();
-
-                } catch (error) {
-                    console.error('Ошибка:', error);
-                }
-            }
-        });
-</script>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded',
-        function() {
-            // Функция для настройки textarea
-            function processTextarea(textarea) {
-                // Если обработчик уже прикреплён, пропускаем
-                if (!textarea.hasAttribute('data-autosize-attached')) {
-                    textarea.addEventListener('input',
-                        function() {
-                            textarea.style.height = 'auto';
-                            textarea.style.height = textarea.scrollHeight + 'px';
-                        });
-                    textarea.setAttribute('data-autosize-attached', 'true');
-                }
-                // Первоначальная настройка высоты
-                textarea.style.height = 'auto';
-                textarea.style.height = textarea.scrollHeight + 'px';
-            }
-
-            // Инициализируем уже существующие textarea
-            document.querySelectorAll('textarea.form-control').forEach(processTextarea);
-
-            // Создаём наблюдатель за изменениями в документе
-            const observer = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    mutation.addedNodes.forEach(function(node) {
-                        // Если добавлен узел является элементом
-                        if (node.nodeType === Node.ELEMENT_NODE) {
-                            // Если сам узел является textarea с нужным классом
-                            if (node.matches && node.matches('textarea.form-control')) {
-                                processTextarea(node);
-                            }
-                            // Если внутри добавленного узла есть дочерние textarea
-                            if (node.querySelectorAll) {
-                                node.querySelectorAll('textarea.form-control').forEach(processTextarea);
-                            }
-                        }
-                    });
-                });
-            });
-
-            // Настраиваем наблюдение за всем документом
-            observer.observe(document.body, { childList: true, subtree: true });
-        });
-
-
-</script>
+</script> *@
