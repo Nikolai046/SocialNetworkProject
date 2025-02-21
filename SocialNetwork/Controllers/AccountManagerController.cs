@@ -168,7 +168,7 @@ public class AccountManagerController : Controller
             {
                 return Forbid();
             }
-            //await _unitOfWork.GetRepository<Message>().Delete(message);
+            await _unitOfWork.GetRepository<Message>().Delete(message);
             Console.WriteLine($"\n\x1b[42m\x1b[37mСообщение {postId} удалено\x1b[0m");
         }
         else if (idType == "comment")
@@ -178,7 +178,7 @@ public class AccountManagerController : Controller
             {
                 return Forbid();
             }
-            //await _unitOfWork.GetRepository<Comment>().Delete(comment);
+            await _unitOfWork.GetRepository<Comment>().Delete(comment);
             Console.WriteLine($"\n\x1b[42m\x1b[37mКомментарий {postId} удалty\x1b[0m");
         }
         else

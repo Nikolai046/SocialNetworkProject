@@ -1,10 +1,6 @@
 ﻿@{
-    string userId = string.IsNullOrEmpty(ViewBag.targetUser?.Id) ? Model._user.Id : ViewBag.targetUser.Id;
-    string title = string.IsNullOrEmpty(ViewBag.targetUser) ? Model._user.GetFullName() : ViewBag.targetUser.GetFullName();
-
-}
-
-@{
+    string userId = ViewBag.targetUser?.Id ?? Model._user.Id;
+    string title = ViewBag.targetUser?.GetFullName() ?? Model._user.GetFullName();
     ViewData["Title"] = $"{Model._user.GetFullName()} page";
 }
 
@@ -23,6 +19,5 @@
 <script>
     console.log('page loaded');
     console.log(new Date().toISOString());
-    var trashboxUrl = "@Url.Content("~/images/trashbox.svg")";
     window.userId = "@userId";
 </script>
