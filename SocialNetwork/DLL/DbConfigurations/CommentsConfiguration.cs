@@ -8,7 +8,7 @@ public class CommentsConfiguration : IEntityTypeConfiguration<Comment>
 {
     public void Configure(EntityTypeBuilder<Comment> builder)
     {
-     
+
         builder.ToTable("Comments");
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Id).UseIdentityColumn();
@@ -17,10 +17,16 @@ public class CommentsConfiguration : IEntityTypeConfiguration<Comment>
             .HasOne(c => c.Message)
             .WithMany(m => m.Comments)
             .HasForeignKey(c => c.InitialMessageId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder
             .HasOne(c => c.Sender)
-            .WithMany()
-            .HasForeignKey(c => c.SenderId);
+            .WithMany(u => u.Comments)
+            .HasForeignKey(c => c.SenderId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasIndex(c => c.SenderId);
+
+        builder.HasIndex(c => c.InitialMessageId);
     }
 }

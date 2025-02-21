@@ -23,6 +23,8 @@ public class User : IdentityUser
     public ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
     public ICollection<Friend> Friends { get; set; } = new List<Friend>();
 
+    public ICollection<Comment> Comments { get; set; }
+
     public string GetFullName()
     {
         return $"{FirstName} {LastName}";

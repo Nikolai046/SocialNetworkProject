@@ -15,11 +15,11 @@ var assembly = Assembly.GetAssembly(typeof(MappingProfile));
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .UseLoggerFactory(builder.Services.BuildServiceProvider()
-           .GetRequiredService<ILoggerFactory>()))
+            .UseLoggerFactory(builder.Services.BuildServiceProvider()
+            .GetRequiredService<ILoggerFactory>()))
             .AddCustomRepository<Message, MessagesRepository>()
             .AddCustomRepository<Comment, CommentsRepository>()
-            .AddTransient<IUnitOfWork, UnitOfWork>(); ;
+            .AddTransient<IUnitOfWork, UnitOfWork>();
 
 
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
@@ -52,6 +52,18 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+
+    // Запретить кэширование статических файлов в режиме разработки
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        OnPrepareResponse = ctx =>
+        {
+            ctx.Context.Response.Headers.Append("Cache-Control", "no-cache, no-store, must-revalidate");
+            ctx.Context.Response.Headers.Append("Pragma", "no-cache");
+            ctx.Context.Response.Headers.Append("Expires", "0");
+        }
+    });
+
 }
 
 app.UseHttpsRedirection();
@@ -63,6 +75,12 @@ app.UseStatusCodePagesWithReExecute("/Error/Error/{0}");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Автоматическое применение миграций при запуске приложения
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
+}
 
 //app.MapControllers();
 app.MapControllerRoute(

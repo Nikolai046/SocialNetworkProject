@@ -3,33 +3,33 @@
     var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
 }
 @{
-    <script src="~/js/setFooterWidth.js" defer></script>
+    <script src="~/js/setFooterWidth.js" defer asp-append-version="true"></script>
 
     if (controllerName is "Home" or "Register")
     {
-        <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" defer></script>
-        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" defer></script>
-        <script src="~/js/formChecker.js" defer></script>
+        <script src="~/lib/jquery/dist/jquery.min.js" defer asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" defer asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" defer asp-append-version="true"></script>
+        <script src="~/js/formChecker.js" defer asp-append-version="true"></script>
     }
 
     if (controllerName is "AccountManager")
     {
-        <script src="~/js/messagesLoader.js" defer></script>
-        <script src="~/js/addMessage.js" defer></script>
-        <script src="~/js/addComment.js" defer></script>
-        <script src="~/js/textareaAutosize.js" defer></script>
+        <script src="~/js/messagesLoader.js" defer asp-append-version="true"></script>
+        <script src="~/js/addMessage.js" defer asp-append-version="true"></script>
+        <script src="~/js/addComment.js" defer asp-append-version="true"></script>
+        <script src="~/js/textareaAutosize.js" defer asp-append-version="true"></script>
         <script src="~/js/showConfirmModal.js"></script>
-        <script src="~/js/postDelete.js" defer></script>
+        <script src="~/js/postDelete.js" defer asp-append-version="true"></script>
     }
 
     if (controllerName is "User")
     {
-        <script src="~/js/messagesLoader.js" defer></script>
-        <script src="~/js/addComment.js" defer></script>
-        <script src="~/js/textareaAutosize.js" defer></script>
+        <script src="~/js/messagesLoader.js" defer asp-append-version="true"></script>
+        <script src="~/js/addComment.js" defer asp-append-version="true"></script>
+        <script src="~/js/textareaAutosize.js" defer asp-append-version="true"></script>
         <script src="~/js/showConfirmModal.js"></script>
-        <script src="~/js/postDelete.js" defer></script>
+        <script src="~/js/postDelete.js" defer asp-append-version="true"></script>
         
     }
 

@@ -4,7 +4,7 @@ using SocialNetwork.DLL.UoW;
 
 namespace SocialNet.Extentions
 {
-    public static class ServiceExtentions
+    public static class ServiceExtensions
     {
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
