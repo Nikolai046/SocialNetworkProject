@@ -1,32 +1,33 @@
-// Обработчик удаления сообщения или комментария
-document.addEventListener('click', async function (e) {
-    // Удаление сообщения или комментария
-    if (e.target.closest('.messageDel, .commentDel')) {
-        const isMessage = e.target.closest('.messageDel');
-        const cardElement = isMessage
-            ? e.target.closest('.card')
-            : e.target.closest('.card-comment');
+// Обработчик модального окна "Да/Отмена"
+function showConfirmModal(message, confirmCallback) {
+    const modal = document.getElementById('confirmModal');
+    const modalText = document.getElementById('modalText');
+    const confirmButton = document.getElementById('confirmButton');
+    const cancelButton = document.getElementById('cancelButton');
 
-        const idType = isMessage ? 'message' : 'comment';
-        const elementId = cardElement.dataset[`${idType}Id`];
-        try {
-            const response = await fetch(`/AccountManager/delete-post?idType=${idType}&postId=${parseInt(elementId)}`,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    }
-                });
+    modalText.textContent = message;
+    modal.style.display = 'flex';
 
-            if (response.ok) {
-                cardElement.remove();
-            } else {
-                console.error('Ошибка удаления:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-        }
-    }
+    const closeModal = () => {
+        modal.style.display = 'none';
+        confirmButton.removeEventListener('click', confirmHandler);
+        cancelButton.removeEventListener('click', closeModal);
+        window.removeEventListener('keydown', handleEscape);
+    };
 
-});
+    const confirmHandler = () => {
+        confirmCallback();
+        closeModal();
+    };
+
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') closeModal();
+    };
+
+    confirmButton.addEventListener('click', confirmHandler);
+    cancelButton.addEventListener('click', closeModal);
+    window.addEventListener('keydown', handleEscape);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+}
