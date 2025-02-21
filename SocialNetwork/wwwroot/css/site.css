@@ -18,7 +18,7 @@ body {
     flex-direction: column;
 }
 
-/* Исправленный фон */
+/* РСЃРїСЂР°РІР»РµРЅРЅС‹Р№ С„РѕРЅ */
 
 .svg-container {
     position: fixed;
@@ -41,7 +41,7 @@ body {
     height: auto;
 }
 
-/* Навигационная панель */
+/* РќР°РІРёРіР°С†РёРѕРЅРЅР°СЏ РїР°РЅРµР»СЊ */
 
 header {
     background-color: #ffffff;
@@ -62,9 +62,9 @@ header {
 }
 
     .navbar a {
-        text-decoration: none; /* Убирает подчеркивание */
-        color: inherit; /* Наследует цвет текста */
-        display: flex; /* Чтобы содержимое ссылки оставалось блочным */
+        text-decoration: none; /* РЈР±РёСЂР°РµС‚ РїРѕРґС‡РµСЂРєРёРІР°РЅРёРµ */
+        color: inherit; /* РќР°СЃР»РµРґСѓРµС‚ С†РІРµС‚ С‚РµРєСЃС‚Р° */
+        display: flex; /* Р§С‚РѕР±С‹ СЃРѕРґРµСЂР¶РёРјРѕРµ СЃСЃС‹Р»РєРё РѕСЃС‚Р°РІР°Р»РѕСЃСЊ Р±Р»РѕС‡РЅС‹Рј */
         align-items: center;
     }
 
@@ -81,7 +81,7 @@ header {
         font-size: 1.5em;
     }
 
-/*Кнопка Logout*/
+/*РљРЅРѕРїРєР° Logout*/
 
 .toolbar_logout {
     margin-right: 2vH;
@@ -111,10 +111,10 @@ header {
     display: flex;
     align-items: center;
     width: 70%;
-    max-width: 450px; /* Максимальная ширина формы поиска */
+    max-width: 450px; /* РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° С„РѕСЂРјС‹ РїРѕРёСЃРєР° */
 }
 
-/* Стили для label */
+/* РЎС‚РёР»Рё РґР»СЏ label */
 
 .label-input {
     display: flex;
@@ -123,7 +123,7 @@ header {
     width: 100%;
 }
 
-/* Стили для поля ввода */
+/* РЎС‚РёР»Рё РґР»СЏ РїРѕР»СЏ РІРІРѕРґР° */
 
 .input {
     width: 100%;
@@ -132,12 +132,12 @@ header {
     font-size: 1.5em;
     border: transparent;
     background-color: #f7f4f2;
-    border-radius: 100px; /* Закругление левого края */
-    outline: none; /* Убираем стандартное выделение */
-    transition: border-color 0.3s ease; /* Плавный переход */
+    border-radius: 100px; /* Р—Р°РєСЂСѓРіР»РµРЅРёРµ Р»РµРІРѕРіРѕ РєСЂР°СЏ */
+    outline: none; /* РЈР±РёСЂР°РµРј СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ РІС‹РґРµР»РµРЅРёРµ */
+    transition: border-color 0.3s ease; /* РџР»Р°РІРЅС‹Р№ РїРµСЂРµС…РѕРґ */
 }
 
-/* Стили для кнопки отправки */
+/* РЎС‚РёР»Рё РґР»СЏ РєРЅРѕРїРєРё РѕС‚РїСЂР°РІРєРё */
 
 .button-clean {
     background-color: transparent;
@@ -147,7 +147,7 @@ header {
     right: 0;
     width: 32px;
     height: 100%;
-    border-radius: 100px; /* Закругление правого края */
+    border-radius: 100px; /* Р—Р°РєСЂСѓРіР»РµРЅРёРµ РїСЂР°РІРѕРіРѕ РєСЂР°СЏ */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -161,7 +161,7 @@ header {
 }
 
 
-/* Форма входа */
+/* Р¤РѕСЂРјР° РІС…РѕРґР° */
 
 main {
     flex: 1;
@@ -171,17 +171,17 @@ main {
 
 .spacer-container {
     flex: 1;
-    min-height: 80px; /* Минимальный отступ */
+    min-height: 80px; /* РњРёРЅРёРјР°Р»СЊРЅС‹Р№ РѕС‚СЃС‚СѓРї */
 }
 
 .main-container {
-    flex-shrink: 0; /* Запрещаем сжатие */
+    flex-shrink: 0; /* Р—Р°РїСЂРµС‰Р°РµРј СЃР¶Р°С‚РёРµ */
     background: white;
     padding: 10px 30px 30px 30px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Центрирование по горизонтали */
-    max-width: 400px; /* Фиксируем максимальную ширину */
+    margin: 0 auto; /* Р¦РµРЅС‚СЂРёСЂРѕРІР°РЅРёРµ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё */
+    max-width: 400px; /* Р¤РёРєСЃРёСЂСѓРµРј РјР°РєСЃРёРјР°Р»СЊРЅСѓСЋ С€РёСЂРёРЅСѓ */
 }
 
     .login-form h2,
@@ -245,21 +245,21 @@ main {
             text-decoration: underline;
         }
 
-/* Контейнер для группы элементов формы */
+/* РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ РіСЂСѓРїРїС‹ СЌР»РµРјРµРЅС‚РѕРІ С„РѕСЂРјС‹ */
 
 .form-group {
     position: relative;
-    /*margin-bottom: 20px;*/ /* Отступ между группами */
+    /*margin-bottom: 20px;*/ /* РћС‚СЃС‚СѓРї РјРµР¶РґСѓ РіСЂСѓРїРїР°РјРё */
 }
 
-/* Обертка для input и сообщения */
+/* РћР±РµСЂС‚РєР° РґР»СЏ input Рё СЃРѕРѕР±С‰РµРЅРёСЏ */
 
 .input-wrapper {
-    display: inline-block; /* Чтобы ограничить ширину контейнера */
-    width: 100%; /* Занимает доступное пространство */
+    display: inline-block; /* Р§С‚РѕР±С‹ РѕРіСЂР°РЅРёС‡РёС‚СЊ С€РёСЂРёРЅСѓ РєРѕРЅС‚РµР№РЅРµСЂР° */
+    width: 100%; /* Р—Р°РЅРёРјР°РµС‚ РґРѕСЃС‚СѓРїРЅРѕРµ РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ */
 }
 
-    /* Стиль для input */
+    /* РЎС‚РёР»СЊ РґР»СЏ input */
 
     .input-wrapper input {
         width: 100%;
@@ -269,11 +269,11 @@ main {
         box-sizing: border-box;
     }
 
-/* Стиль для всплывающего сообщения */
+/* РЎС‚РёР»СЊ РґР»СЏ РІСЃРїР»С‹РІР°СЋС‰РµРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ */
 
 .field-validation-error,
 .field-validation-valid {
-    display: none; /* Скрываем сообщение */
+    display: none; /* РЎРєСЂС‹РІР°РµРј СЃРѕРѕР±С‰РµРЅРёРµ */
     position: absolute;
     top: 50%;
     transform: translateY(-42%);
@@ -292,39 +292,39 @@ main {
     z-index: 10;
 }
 
-/* Для корректных полей */
+/* Р”Р»СЏ РєРѕСЂСЂРµРєС‚РЅС‹С… РїРѕР»РµР№ */
 
 .field-validation-valid {
-    background-color: rgba(76, 175, 80, 0.2); /* Полупрозрачный зеленый фон */
+    background-color: rgba(76, 175, 80, 0.2); /* РџРѕР»СѓРїСЂРѕР·СЂР°С‡РЅС‹Р№ Р·РµР»РµРЅС‹Р№ С„РѕРЅ */
     display: none;
 }
 
-    /* Показываем только ошибки и корректные сообщения после отправки формы */
+    /* РџРѕРєР°Р·С‹РІР°РµРј С‚РѕР»СЊРєРѕ РѕС€РёР±РєРё Рё РєРѕСЂСЂРµРєС‚РЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕСЃР»Рµ РѕС‚РїСЂР°РІРєРё С„РѕСЂРјС‹ */
 
     .field-validation-error.show,
     .field-validation-valid.show {
-        display: inline-block; /* Показываем сообщение об ошибке */
+        display: inline-block; /* РџРѕРєР°Р·С‹РІР°РµРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ */
     }
 
-/* Стили для контейнера чекбокса */
+/* РЎС‚РёР»Рё РґР»СЏ РєРѕРЅС‚РµР№РЅРµСЂР° С‡РµРєР±РѕРєСЃР° */
 
 .remember-me {
     display: flex;
     align-items: center;
-    margin-bottom: 15px; /* Отступ перед кнопкой */
+    margin-bottom: 15px; /* РћС‚СЃС‚СѓРї РїРµСЂРµРґ РєРЅРѕРїРєРѕР№ */
 }
 
-    /* Стили для чекбокса */
+    /* РЎС‚РёР»Рё РґР»СЏ С‡РµРєР±РѕРєСЃР° */
 
     .remember-me input[type="checkbox"] {
-        margin: 0; /* Убираем отступы вокруг чекбокса */
-        margin-right: 8px; /* Отступ между чекбоксом и текстом */
-        width: 16px; /* Размер чекбокса */
+        margin: 0; /* РЈР±РёСЂР°РµРј РѕС‚СЃС‚СѓРїС‹ РІРѕРєСЂСѓРі С‡РµРєР±РѕРєСЃР° */
+        margin-right: 8px; /* РћС‚СЃС‚СѓРї РјРµР¶РґСѓ С‡РµРєР±РѕРєСЃРѕРј Рё С‚РµРєСЃС‚РѕРј */
+        width: 16px; /* Р Р°Р·РјРµСЂ С‡РµРєР±РѕРєСЃР° */
         height: 16px;
         cursor: pointer;
     }
 
-    /* Стили для текста рядом с чекбоксом */
+    /* РЎС‚РёР»Рё РґР»СЏ С‚РµРєСЃС‚Р° СЂСЏРґРѕРј СЃ С‡РµРєР±РѕРєСЃРѕРј */
 
     .remember-me label {
         margin: 0;
@@ -343,7 +343,7 @@ main {
         font-size: clamp(17px, 2.5vw, 25px);
     }
 
-/* Стили для контейнера ошибок */
+/* РЎС‚РёР»Рё РґР»СЏ РєРѕРЅС‚РµР№РЅРµСЂР° РѕС€РёР±РѕРє */
 
 .text-danger.validation-summary-errors {
     font-size: 0.8em;
@@ -372,7 +372,68 @@ footer {
     color: rgba(46, 47, 51, .639);
 }
 
-/* Адаптация для мобильных */
+/* РЎС‚РёР»Рё РґР»СЏ РјРѕРґР°Р»СЊРЅРѕРіРѕ РѕРєРЅР° "Р”Р°/РћС‚РјРµРЅР°" */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: rgb(236, 214, 188);
+        border: 15px solid rgb(255, 228, 196);
+        padding: 18px;
+        border-radius: 20px;
+        width: auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-content: space-around;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+        gap: 10px;
+    }
+
+    .btn-confirm {
+        background-color: rgba(76,175,80,0.54);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-cancel {
+        background-color: rgba(244, 67, 54, 0.59);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #modalText {
+        margin: 0 0 15px 0;
+        font-weight: bolder;
+        justify-content: center;
+    }
+
+
+/* РђРґР°РїС‚Р°С†РёСЏ РґР»СЏ РјРѕР±РёР»СЊРЅС‹С… */
 
 @media (max-width: 768px) {
     .toolbar_logo p,

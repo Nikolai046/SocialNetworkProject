@@ -44,6 +44,15 @@
         &copy; 2025 - SocialNetwork
     </div>
 </footer>
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p id="modalText">Вы уверены, что хотите выполнить это действие?</p>
+            <div class="modal-buttons">
+                <button id="confirmButton" class="btn-confirm">Да</button>
+                <button id="cancelButton" class="btn-cancel">Отмена</button>
+            </div>
+        </div>
+    </div>
     @await Html.PartialAsync("_ScriptPartial.cshtml")
 </body>
 </html>

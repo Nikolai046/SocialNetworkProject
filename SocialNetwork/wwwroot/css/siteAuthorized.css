@@ -18,7 +18,7 @@ body {
 }
 
 
-/* Навигационная панель */
+/* РќР°РІРёРіР°С†РёРѕРЅРЅР°СЏ РїР°РЅРµР»СЊ */
 
 header {
     background-color: #ffffff;
@@ -38,9 +38,9 @@ header {
 }
 
     .navbar a {
-        text-decoration: none; /* Убирает подчеркивание */
-        color: inherit; /* Наследует цвет текста */
-        display: flex; /* Чтобы содержимое ссылки оставалось блочным */
+        text-decoration: none; /* РЈР±РёСЂР°РµС‚ РїРѕРґС‡РµСЂРєРёРІР°РЅРёРµ */
+        color: inherit; /* РќР°СЃР»РµРґСѓРµС‚ С†РІРµС‚ С‚РµРєСЃС‚Р° */
+        display: flex; /* Р§С‚РѕР±С‹ СЃРѕРґРµСЂР¶РёРјРѕРµ СЃСЃС‹Р»РєРё РѕСЃС‚Р°РІР°Р»РѕСЃСЊ Р±Р»РѕС‡РЅС‹Рј */
         align-items: center;
     }
 
@@ -57,7 +57,7 @@ header {
         font-size: 1.5em;
     }
 
-/*Кнопка Logout*/
+/*РљРЅРѕРїРєР° Logout*/
 
 .toolbar_logout {
     margin-right: 2vH;
@@ -87,14 +87,14 @@ header {
     display: flex;
     align-items: center;
     width: 70%;
-    max-width: 450px; /* Максимальная ширина формы поиска */
+    max-width: 450px; /* РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ С€РёСЂРёРЅР° С„РѕСЂРјС‹ РїРѕРёСЃРєР° */
 }
 
     .search-wrapper form {
         width: 100%;
     }
 
-/* Стили для label */
+/* РЎС‚РёР»Рё РґР»СЏ label */
 
 .label-input {
     display: flex;
@@ -103,7 +103,7 @@ header {
     width: 100%;
 }
 
-/* Стили для поля ввода */
+/* РЎС‚РёР»Рё РґР»СЏ РїРѕР»СЏ РІРІРѕРґР° */
 
 .input {
     width: 100%;
@@ -112,12 +112,12 @@ header {
     font-size: 1.5em;
     border: transparent;
     background-color: #f7f4f2;
-    border-radius: 100px; /* Закругление левого края */
-    outline: none; /* Убираем стандартное выделение */
-    transition: border-color 0.3s ease; /* Плавный переход */
+    border-radius: 100px; /* Р—Р°РєСЂСѓРіР»РµРЅРёРµ Р»РµРІРѕРіРѕ РєСЂР°СЏ */
+    outline: none; /* РЈР±РёСЂР°РµРј СЃС‚Р°РЅРґР°СЂС‚РЅРѕРµ РІС‹РґРµР»РµРЅРёРµ */
+    transition: border-color 0.3s ease; /* РџР»Р°РІРЅС‹Р№ РїРµСЂРµС…РѕРґ */
 }
 
-/* Стили для кнопки отправки */
+/* РЎС‚РёР»Рё РґР»СЏ РєРЅРѕРїРєРё РѕС‚РїСЂР°РІРєРё */
 
 .button-clean {
     background-color: transparent;
@@ -127,7 +127,7 @@ header {
     right: 0;
     width: 32px;
     height: 100%;
-    border-radius: 100px; /* Закругление правого края */
+    border-radius: 100px; /* Р—Р°РєСЂСѓРіР»РµРЅРёРµ РїСЂР°РІРѕРіРѕ РєСЂР°СЏ */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,15 +151,15 @@ main {
 
 .spacer-container {
     flex: 1;
-    min-height: 80px; /* Минимальный отступ */
+    min-height: 80px; /* РњРёРЅРёРјР°Р»СЊРЅС‹Р№ РѕС‚СЃС‚СѓРї */
 }
 
 .main-container {
-    flex-shrink: 0; /* Запрещаем сжатие */
+    flex-shrink: 0; /* Р—Р°РїСЂРµС‰Р°РµРј СЃР¶Р°С‚РёРµ */
     padding: 12px 12px 12px 12px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Центрирование по горизонтали */
+    margin: 0 auto; /* Р¦РµРЅС‚СЂРёСЂРѕРІР°РЅРёРµ РїРѕ РіРѕСЂРёР·РѕРЅС‚Р°Р»Рё */
     display: inline-flex
 }
 
@@ -319,24 +319,24 @@ main {
     margin-top: 10px;
 }
 
-/* Контейнер для textarea и кнопки закрыть*/
+/* РљРѕРЅС‚РµР№РЅРµСЂ РґР»СЏ textarea Рё РєРЅРѕРїРєРё Р·Р°РєСЂС‹С‚СЊ*/
 
 .comment-input-container {
-    position: relative; /* Позволяет абсолютное позиционирование дочерних элементов */
+    position: relative; /* РџРѕР·РІРѕР»СЏРµС‚ Р°Р±СЃРѕР»СЋС‚РЅРѕРµ РїРѕР·РёС†РёРѕРЅРёСЂРѕРІР°РЅРёРµ РґРѕС‡РµСЂРЅРёС… СЌР»РµРјРµРЅС‚РѕРІ */
     display: flex;
     flex-direction: column;
     width: 90%;
 }
 
 .comment-area {
-    padding: 3px 18px 0 10px; /* Добавляем отступ справа, чтобы текст не перекрывался иконкой */
+    padding: 3px 18px 0 10px; /* Р”РѕР±Р°РІР»СЏРµРј РѕС‚СЃС‚СѓРї СЃРїСЂР°РІР°, С‡С‚РѕР±С‹ С‚РµРєСЃС‚ РЅРµ РїРµСЂРµРєСЂС‹РІР°Р»СЃСЏ РёРєРѕРЅРєРѕР№ */
     width: 96%;
-    resize: none; /* Запрещаем изменение размера textarea */
+    resize: none; /* Р—Р°РїСЂРµС‰Р°РµРј РёР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂР° textarea */
     overflow: hidden;
     margin-top: 0;
 }
 
-/* Стиль для иконки закрытия */
+/* РЎС‚РёР»СЊ РґР»СЏ РёРєРѕРЅРєРё Р·Р°РєСЂС‹С‚РёСЏ */
 
 .close-icon {
     position: absolute;
@@ -346,7 +346,7 @@ main {
     cursor: pointer;
 }
 
-    /* Стиль для изображения */
+    /* РЎС‚РёР»СЊ РґР»СЏ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ */
 
     .close-icon img {
         height: 10px;
@@ -368,7 +368,67 @@ footer {
     color: rgba(46, 47, 51, .639);
 }
 
-/* Адаптация для мобильных */
+/* РЎС‚РёР»Рё РґР»СЏ РјРѕРґР°Р»СЊРЅРѕРіРѕ РѕРєРЅР° "Р”Р°/РћС‚РјРµРЅР°" */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: rgb(236, 214, 188);
+        border: 15px solid rgb(255, 228, 196);
+        padding: 18px;
+        border-radius: 20px;
+        width: auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-content: space-around;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+        gap: 10px;
+    }
+
+    .btn-confirm {
+        background-color: rgba(76,175,80,0.54);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .btn-cancel {
+        background-color: rgba(244, 67, 54, 0.59);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    #modalText {
+        margin: 0 0 15px 0;
+        font-weight: bolder;
+        justify-content: center;
+    }
+
+/* РђРґР°РїС‚Р°С†РёСЏ РґР»СЏ РјРѕР±РёР»СЊРЅС‹С… */
 
 @media (max-width: 768px) {
     .toolbar_logo p,
