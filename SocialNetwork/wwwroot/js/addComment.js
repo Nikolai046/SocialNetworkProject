@@ -4,10 +4,11 @@ document.addEventListener('click',
     async function (e) {
         // Добавление поля для комментария
         if (e.target.classList.contains('addComment')) {
+            const closeUrl = window.closeUrl; //прием адреса иконки закрыть из представления
             const commentInput = `
                 <div class="comment-input-container">
                     <textarea class="form-control comment-area" rows="2" placeholder="Введите комментарий..."></textarea>
-                    <span class="close-icon"><img src="@Url.Content("~/images/close.svg")" alt="Close"></span>
+                    <span class="close-icon"><img src="${closeUrl}" alt="Close"></span>
                  </div>
                 <button class="btn-primary submitComment">Отправить</button>`;
             const commentSection = e.target.previousElementSibling;
@@ -55,14 +56,14 @@ document.addEventListener('click',
                     });
 
                 const commentData = await response.json();
-
+                const trashboxUrl = window.trashboxUrl;
                 // Тело комментария
                 const commentHtml = `
                             <div class="card-comment">
                                 <div class="card-subtitle">
                                     <h6 class="card-subtitle-author">${commentData.author}</h6>
                                     <h6 class="card-subtitle-date">${commentData.timestamp}</h6>
-                                            <span class="commentDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>
+                                            <span class="commentDel"><img src="${trashboxUrl}"></span>
                                     </div>
                                 <p class="card-text">${commentData.text}</p>
                             </div>`;

@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded',
                            <div class="card-subtitle">
                              <h6 class="card-subtitle-author">${message.authorFullName}</h6>
                              <h6 class="card-subtitle-date">${new Date(message.createdAt).toLocaleString()}</h6>
-                             ${message.deletable ? `<span class="messageDel"><img src="${trashboxUrl} "></span>` : ''}
+                             ${message.deletable ? `<span class="messageDel"><img src="${trashboxUrl}"></span>` : ''}
                     </div >
                          <p class="card-text">${message.text}</p>
                            <div class="comment-section">
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded',
                           <div class="card-subtitle">
                               <h6 class="card-subtitle-author">${comment.author}</h6>
                               <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
-                              ${comment.deletable ? `<span class="commentDel"><img src="\${trashboxUrl}"></span>` : ''}
+                              ${comment.deletable ? `<span class="commentDel"><img src="${trashboxUrl}"></span>` : ''}
                            </div>
                             <p class="card-text">${comment.text}</p>
                        </div >
