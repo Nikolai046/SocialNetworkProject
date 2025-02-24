@@ -8,7 +8,10 @@
     <div class="user-container">
         <h2>@Model._user.FirstName @Model._user.LastName</h2>
         <div class="portrait-box">
-            <img src="@Model._user.Image"/>
+            <img id="user_photo" src="@Model._user.Image" />
+            <a asp-controller="AccountManager" asp-action="UpdateUserData">
+                <img src="~/images/edit.svg" alt="Редактировать данные пользователя">
+            </a>
         </div>
         <div class="friens-container">
             <ul>

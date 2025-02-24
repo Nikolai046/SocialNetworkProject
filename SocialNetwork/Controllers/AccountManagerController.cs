@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection.Metadata.Ecma335;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -189,5 +190,123 @@ public class AccountManagerController : Controller
         return Ok();
     }
 
-}
+    [Authorize]
+    [HttpGet("update-user-data")]
+    public async Task<IActionResult> UpdateUserData()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        var editingUser = _mapper.Map<UpdateViewModel>(user);
 
+        return View(editingUser);
+    }
+
+    //[Authorize]
+    //[HttpPost("upload-photo")]
+    //[ValidateAntiForgeryToken]
+    //public async Task<IActionResult> UploadPhoto(IFormFile photo)
+    //{
+    //    var user = await _userManager.GetUserAsync(User);
+    //    if (user == null)
+    //    {
+    //        return NotFound("Пользователь не найден.");
+    //    }
+
+    //    // Проверка размера файла
+    //    if (photo.Length > 1048576) // 1 MB = 1048576 bytes
+    //    {
+    //        ModelState.AddModelError("photo", "Размер файла не должен превышать 1 МБ.");
+    //        return RedirectToAction("UpdateUserData");
+    //    }
+
+    //    // Проверка формата файла
+    //    if (!photo.ContentType.StartsWith("image/jpeg"))
+    //    {
+    //        ModelState.AddModelError("photo", "Файл должен быть в формате JPG или JPEG.");
+    //        return RedirectToAction("UpdateUserData");
+    //    }
+
+    //    // Генерация уникального имени файла
+    //    var fileName = user.Id + Path.GetExtension(photo.FileName);
+
+    //    // Путь к папке для сохранения изображений
+    //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto", fileName);
+
+    //    // Сохранение файла
+    //    using (var stream = new FileStream(filePath, FileMode.Create))
+    //    {
+    //        await photo.CopyToAsync(stream);
+    //    }
+
+    //    // Обновление пути к изображению в модели пользователя
+    //    user.Image = $"/images/userphoto/{fileName}";
+    //    await _userManager.UpdateAsync(user);
+
+    //    return RedirectToAction("UpdateUserData");
+    //}
+
+    [Authorize]
+    [HttpPost("update-profile")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateProfile(UpdateViewModel model, IFormFile photo)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return NotFound("Пользователь не найден.");
+        }
+
+        // Обновление данных пользователя
+        user.FirstName = model.FirstName;
+        user.LastName = model.LastName;
+        user.Id = model.Login;
+        user.Status = model.Status;
+        user.About = model.About;
+        user.BirthDate = new DateTime(model.Year, model.Month, model.Date);
+
+        // Проверка пароля
+        var passwordCheck = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
+        if (!passwordCheck)
+        {
+            ModelState.AddModelError("CurrentPassword", "Текущий пароль неверен.");
+            return View("UpdateUserData", model);
+        }
+
+        // Обработка загрузки фотографии
+        if (photo != null)
+        {
+            if (photo.Length > 1048576) // 1 MB = 1048576 bytes
+            {
+                ModelState.AddModelError("photo", "Размер файла не должен превышать 1 МБ.");
+                return View("UpdateUserData", model);
+            }
+
+            if (!photo.ContentType.StartsWith("image/jpeg"))
+            {
+                ModelState.AddModelError("photo", "Файл должен быть в формате JPG или JPEG.");
+                return View("UpdateUserData", model);
+            }
+
+            // Генерация уникального имени файла
+            var fileName = user.Id + Path.GetExtension(photo.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto", fileName);
+
+            // Сохранение файла
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await photo.CopyToAsync(stream);
+            }
+
+            // Обновление пути к изображению
+            user.Image = $"/images/userphoto/{fileName}";
+        }
+
+        // Сохранение изменений в базе данных
+        await _userManager.UpdateAsync(user);
+
+        return RedirectToAction("MyPage");
+    }
+
+
+
+
+}

@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     // Ищем форму с id="checkMe"
-    const form = document.querySelector("#checkMe");
+    const form = document.querySelector("#editForm");
 
     // Проверяем, что форма найдена, чтобы избежать ошибок, если элемента нет
     if (form) {

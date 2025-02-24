@@ -1,0 +1,319 @@
+﻿@model SocialNetwork.Models.ViewModels.Account.UpdateViewModel
+
+@{
+    Layout = "_ClearLayout";
+}
+
+@{
+    ViewData["Title"] = $"{Model.GetFullName()} page";
+}
+
+<div class="user-container">
+    <h2>@Model.GetFullName()</h2>
+    <div class="portrait-box">
+        <img id="user_photo" alt="" src="@Model.Image" />
+    </div>
+
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
+        <div>
+            <input type="file" id="photo" name="photo" accept=".jpg,.jpeg" required style="display: none;">
+            <button id="select_a_file" type="button" class="add-photo-button" onclick="document.getElementById('photo').click();">Выбрать файл</button>
+        </div>
+        @* <button class="add-photo-button" type="submit">Загрузить</button> *@
+    </form>
+</div>
+
+<div class="content-container">
+    <h2>Изменение данных пользователя</h2>
+    <form id="editForm" method="post">
+
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <div class="input-wrapper">
+                <input asp-for="FirstName">
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <div class="input-wrapper">
+                <input asp-for="LastName">
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Login"></label>
+            <div class="input-wrapper">
+                <input asp-for="Login">
+                <span asp-validation-for="Login"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <div class="input-wrapper">
+                <input style="background-color: aliceblue" asp-for="Email" readonly>
+                <span class="field-validation-valid"></span>
+            </div>
+        </div>
+
+        <label>Дата рождения</label>
+        <div style="display: flex; gap: 8px;">
+            <select id="birth-year" asp-for="Year" onchange="updateDays()" required>
+                <option value="">Год</option>
+            </select>
+            <select id="birth-month" asp-for="Month" onchange="updateDays()" required>
+                <option value="">Месяц</option>
+            </select>
+            <select id="birth-day" asp-for="Date" required>
+                <option value="">День</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Status"></label>
+            <div class="input-wrapper">
+                <input asp-for="Status">
+                <span asp-validation-for="Status"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="About"></label>
+            <div class="input-wrapper">
+                <input asp-for="About">
+                <span asp-validation-for="About"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CurrentPassword"></label>
+            <div class="input-wrapper">
+                <input asp-for="CurrentPassword">
+                <span asp-validation-for="CurrentPassword"></span>
+            </div>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <button id="submitButton" class="submit-button" type="button">Подтвердить изменения</button>
+
+
+    </form>
+</div>
+
+<style>
+    .login-form input,
+    .main-container input,
+    .main-container select {
+        width: 100%;
+        box-sizing: border-box;
+        max-width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    /* Обертка для input и сообщения */
+
+    .input-wrapper {
+        display: inline-block; /* Чтобы ограничить ширину контейнера */
+        width: 100%; /* Занимает доступное пространство */
+    }
+
+        /* Стиль для input */
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+    /* Стиль для всплывающего сообщения */
+
+    .field-validation-error,
+    .field-validation-valid {
+        display: none; /* Скрываем сообщение */
+        position: absolute;
+        top: 50%;
+        transform: translateY(-42%);
+        right: 0;
+        align-content: center;
+        max-width: 40%;
+        min-height: 19px;
+        font-size: 0.8em;
+        color: #d67070;
+        background-color: rgba(255, 99, 71, 0.2);
+        padding: 8px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        white-space: normal;
+        word-wrap: break-word;
+        z-index: 10;
+    }
+
+    /* Для корректных полей */
+
+    .field-validation-valid {
+        background-color: rgba(76, 175, 80, 0.2); /* Полупрозрачный зеленый фон */
+        display: none;
+    }
+
+        /* Показываем только ошибки и корректные сообщения после отправки формы */
+
+        .field-validation-error.show,
+        .field-validation-valid.show {
+            display: inline-block; /* Показываем сообщение об ошибке */
+        }
+
+    .submit-button {
+        padding: 10px;
+        background-color: #ff7700;
+        border: none;
+        border-radius: 100px;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    .add-photo-button {
+        padding: 2px 10px 2px 10px;
+        background-color: #ff7700;
+        border: none;
+        border-radius: 100px;
+        color: white;
+        font-size: 1em;
+        cursor: pointer;
+        margin-top: 6px;
+    }
+
+    .submit-button:hover {
+        background-color: #d66400;
+    }
+</style>
+
+<script src="~/lib/jquery/dist/jquery.min.js" defer asp-append-version="true"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" defer asp-append-version="true"></script>
+<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" defer asp-append-version="true"></script>
+<script src="~/js/formChecker.js" defer asp-append-version="true"></script>
+<script src="~/js/monthChoiser.js" defer asp-append-version="true"></script>
+
+<script>
+    window.existingYear = @Model.Year;
+    window.existingMonth = @Model.Month;
+    window.existingDay = @Model.Date;
+</script>
+
+<script>
+    //Обработчик проверки загружаемой фотографии
+
+    // Сохраняем исходный src изображения для возможности отмены
+    const defaultImageSrc = document.getElementById('user_photo').src;
+
+    // Обработчик проверки загружаемой фотографии
+    document.getElementById('photo').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            // Проверка формата файла
+            if (!['image/jpeg', 'image/jpg'].includes(file.type)) {
+                alert('Файл должен быть в формате JPG или JPEG.');
+                return;
+            }
+
+            // Проверка размера файла
+            if (file.size > 1048576) { // 1 MB = 1048576 bytes
+                alert('Размер файла не должен превышать 1 МБ.');
+                return;
+            }
+
+            // Предварительный просмотр изображения
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const previewImage = document.getElementById('user_photo');
+                const selectFileButton = document.getElementById('select_a_file');
+
+                // Устанавливаем источник изображения
+                previewImage.src = e.target.result;
+
+                // Заменяем кнопку "Выбрать файл" на "Отменить"
+                selectFileButton.textContent = 'Отменить';
+                selectFileButton.onclick = function () {
+                    // Возвращаем исходное изображение
+                    previewImage.src = defaultImageSrc;
+
+                    // Возвращаем кнопку "Выбрать файл"
+                    selectFileButton.textContent = 'Выбрать файл';
+                    selectFileButton.onclick = function () {
+                        document.getElementById('photo').click();
+                    };
+
+                    // Очищаем поле выбора файла
+                    document.getElementById('photo').value = '';
+                    document.getElementById('fileName').textContent = 'Файл не выбран';
+                };
+            };
+            reader.readAsDataURL(file); // Читаем файл как Data URL
+
+            // Отображаем имя выбранного файла
+            document.getElementById('fileName').textContent = file.name;
+        } else {
+            // Если файл не выбран, сбрасываем состояние
+            document.getElementById('fileName').textContent = 'Файл не выбран';
+        }
+    });
+</script>
+
+<script>
+
+    //Обработчик для сбора данные из обеих форм и отправки их в одном запросе
+
+    document.getElementById('submitButton').addEventListener('click', async function () {
+        // Создаем объект FormData для сбора данных
+        const formData = new FormData();
+
+        // Добавляем данные из формы редактирования данных пользователя
+        const editForm = document.getElementById('editForm');
+        const editFormData = new FormData(editForm);
+        editFormData.forEach((value, key) => {
+            formData.append(key, value);
+        });
+
+        // Добавляем файл из формы загрузки фотографии
+        // const photoInput = document.getElementById('photo');
+        // if (photoInput.files.length > 0) {
+        //     formData.append('photo', photoInput.files[0]);
+        // }
+        console.log(formData);
+        // // Отправляем данные на сервер
+        // try {
+        //     const response = await fetch('/AccountManager/UpdateProfile', {
+        //         method: 'POST',
+        //         body: formData,
+        //         headers: {
+        //             'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+        //         }
+        //     });
+
+        //     if (response.ok) {
+        //         // Обработка успешного ответа
+        //         window.location.href = '/AccountManager/MyPage'; // Перенаправление на страницу профиля
+        //     } else {
+        //         // Обработка ошибки
+        //         const errorData = await response.json();
+        //         alert('Ошибка: ' + errorData.message);
+        //     }
+        // } catch (error) {
+        //     console.error('Ошибка при отправке данных:', error);
+        // }
+    });
+</script>

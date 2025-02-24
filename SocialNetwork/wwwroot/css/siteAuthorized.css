@@ -167,11 +167,32 @@ main {
     width: 150px;
     height: 150px;
     background-color: #fefaf5;
+    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+#user_photo {
+    max-width: 145px;
+    height: 145px;
+    border-radius: 5px;
+}
+
+.portrait-box a {
+    position: absolute;
+    padding: 2px 2px 0 2px;
+    background-color: rgba(255,255,255,0.70);
+    bottom: 6px;
+    border-radius: 5px;
+    right: 6px;
+}
+
+    .portrait-box a img {
+        opacity: 0.3;
+    }
 
 .user-container {
     display: flex;
@@ -237,7 +258,6 @@ main {
 
 .card-title {
     margin: 0;
-    /* padding: 0 0 10px 0;*/
     font-size: 1em;
 }
 
@@ -302,12 +322,8 @@ main {
 
 .card-comment {
     background-color: rgba(251, 231, 205, 0.48);
-    /*    display: flex;
-    justify-self: right;*/
     width: 90%;
     margin: 0 0 10px 0;
-    /* padding: 10p*/
-    x;
     border: 1px solid rgb(220, 220, 220);
     border-radius: 5px;
 }
@@ -358,7 +374,6 @@ main {
 footer {
     margin-top: auto;
     padding: 20px 0;
-    /*width: 100%;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -369,64 +384,64 @@ footer {
 }
 
 /* Стили для модального окна "Да/Отмена" */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 2000;
-        justify-content: center;
-        align-items: center;
-    }
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
 
-    .modal-content {
-        background-color: rgb(236, 214, 188);
-        border: 15px solid rgb(255, 228, 196);
-        padding: 18px;
-        border-radius: 20px;
-        width: auto;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-        align-content: space-around;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: nowrap;
-    }
+.modal-content {
+    background-color: rgb(236, 214, 188);
+    border: 15px solid rgb(255, 228, 196);
+    padding: 18px;
+    border-radius: 20px;
+    width: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
 
-    .modal-buttons {
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 15px;
-        gap: 10px;
-    }
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    gap: 10px;
+}
 
-    .btn-confirm {
-        background-color: rgba(76,175,80,0.54);
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.btn-confirm {
+    background-color: rgba(76,175,80,0.54);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-    .btn-cancel {
-        background-color: rgba(244, 67, 54, 0.59);
-        color: white;
-        padding: 8px 16px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
+.btn-cancel {
+    background-color: rgba(244, 67, 54, 0.59);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-    #modalText {
-        margin: 0 0 15px 0;
-        font-weight: bolder;
-        justify-content: center;
-    }
+#modalText {
+    margin: 0 0 15px 0;
+    font-weight: bolder;
+    justify-content: center;
+}
 
 /* Адаптация для мобильных */
 

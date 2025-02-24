@@ -1,7 +1,7 @@
 ﻿@{
     if (User.Identity is { IsAuthenticated: true })
     {
-        Layout = "_RegisterLayout"; // Для зарегистрированных пользователей
+        Layout = "_RegistredLayout"; // Для зарегистрированных пользователей
     }
     else
     {
