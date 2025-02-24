@@ -14,18 +14,18 @@
         <img id="user_photo" alt="" src="@Model.Image" />
     </div>
 
-    <form id="uploadForm" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" method="post" enctype="multipart/form-data" asp-action="UploadPhoto" asp-controller="AccountManager">
         <div>
             <input type="file" id="photo" name="photo" accept=".jpg,.jpeg" required style="display: none;">
             <button id="select_a_file" type="button" class="add-photo-button" onclick="document.getElementById('photo').click();">Выбрать файл</button>
         </div>
-        @* <button class="add-photo-button" type="submit">Загрузить</button> *@
+        <button style="display: none"  class="add-photo-button" type="submit">Загрузить</button>
     </form>
 </div>
 
 <div class="content-container">
     <h2>Изменение данных пользователя</h2>
-    <form id="editForm" method="post">
+    <form id="editForm" method="post" asp-action="update-profile" asp-controller="AccountManager">
 
         <div class="form-group">
             <label asp-for="FirstName"></label>
@@ -97,9 +97,7 @@
         </div>
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <button id="submitButton" class="submit-button" type="button">Подтвердить изменения</button>
-
-
+        <button id="submitButton" class="submit-button" type="submit">Подтвердить изменения</button>
     </form>
 </div>
 
@@ -142,7 +140,7 @@
 
     .field-validation-error,
     .field-validation-valid {
-        display: none; /* Скрываем сообщение */
+        /* display: none; */
         position: absolute;
         top: 50%;
         transform: translateY(-42%);
@@ -200,13 +198,23 @@
     .submit-button:hover {
         background-color: #d66400;
     }
+
+    .text-danger.validation-summary-errors {
+        font-size: 0.8em;
+        color: #d67070;
+        background-color: rgba(255, 99, 71, 0.2);
+        position: absolute;
+        transform: translateY(-5px);
+    }
+
+        .text-danger.validation-summary-errors ul {
+            display: contents;
+            list-style-type: none;
+            padding-left: 0;
+        }
+
 </style>
 
-<script src="~/lib/jquery/dist/jquery.min.js" defer asp-append-version="true"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js" defer asp-append-version="true"></script>
-<script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" defer asp-append-version="true"></script>
-<script src="~/js/formChecker.js" defer asp-append-version="true"></script>
-<script src="~/js/monthChoiser.js" defer asp-append-version="true"></script>
 
 <script>
     window.existingYear = @Model.Year;
@@ -241,86 +249,33 @@
             reader.onload = function (e) {
                 const previewImage = document.getElementById('user_photo');
                 const selectFileButton = document.getElementById('select_a_file');
+                const submitButton = document.querySelector('.add-photo-button[type="submit"]');
 
                 // Устанавливаем источник изображения
                 previewImage.src = e.target.result;
 
                 // Заменяем кнопку "Выбрать файл" на "Отменить"
+                submitButton.style.display = "inline-block";
                 selectFileButton.textContent = 'Отменить';
                 selectFileButton.onclick = function () {
                     // Возвращаем исходное изображение
                     previewImage.src = defaultImageSrc;
+                    
 
                     // Возвращаем кнопку "Выбрать файл"
+                    submitButton.style.display = "none";
                     selectFileButton.textContent = 'Выбрать файл';
                     selectFileButton.onclick = function () {
                         document.getElementById('photo').click();
                     };
 
-                    // Очищаем поле выбора файла
+                    // // Очищаем поле выбора файла
                     document.getElementById('photo').value = '';
-                    document.getElementById('fileName').textContent = 'Файл не выбран';
+                 
                 };
             };
             reader.readAsDataURL(file); // Читаем файл как Data URL
 
-            // Отображаем имя выбранного файла
-            document.getElementById('fileName').textContent = file.name;
-        } else {
-            // Если файл не выбран, сбрасываем состояние
-            document.getElementById('fileName').textContent = 'Файл не выбран';
-        }
+        } 
     });
-</script>
-
-<script>
-    document.getElementById('submitButton').addEventListener('click',
-        async function() {
-            const formData = new FormData();
-            const editForm = document.getElementById('editForm');
-
-// Добавляем данные из основной формы
-            new FormData(editForm).forEach((value, key) => {
-                formData.append(key, value);
-                // console.log('');
-                // console.log(key);
-                //     console.log(value);
-                //     console.log('');
-            });
-
-// Добавляем файл из формы загрузки фото
-            const photoInput = document.getElementById('photo');
-            if (photoInput.files[0]) {
-                formData.append('photo', photoInput.files[0]);
-            }
-
-// Добавляем токен безопасности
-            // const token = editForm.querySelector('input[name="__RequestVerificationToken"]').value;
-            // formData.append('__RequestVerificationToken', token);
-
-            try {
-                const response = await fetch('/AccountManager/update-profile',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        },
-                        body: formData
-                    });
-                    
-
-                if (response.redirected) {
-                    window.location.href = response.url;
-                } else if (!response.ok) {
-                    const errorText = await response.text();
-                    const parser = new DOMParser();
-                    const htmlDoc = parser.parseFromString(errorText, 'text/html');
-                    const validationSummary = htmlDoc.querySelector('.validation-summary-errors');
-                    alert(validationSummary ? validationSummary.innerText : 'Ошибка при обновлении данных');
-                }
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
-        });
 </script>

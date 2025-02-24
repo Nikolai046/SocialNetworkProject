@@ -199,54 +199,10 @@ public class AccountManagerController : Controller
         return View(editingUser);
     }
 
-    //[Authorize]
-    //[HttpPost("upload-photo")]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> UploadPhoto(IFormFile photo)
-    //{
-    //    var user = await _userManager.GetUserAsync(User);
-    //    if (user == null)
-    //    {
-    //        return NotFound("Пользователь не найден.");
-    //    }
-
-    //    // Проверка размера файла
-    //    if (photo.Length > 1048576) // 1 MB = 1048576 bytes
-    //    {
-    //        ModelState.AddModelError("photo", "Размер файла не должен превышать 1 МБ.");
-    //        return RedirectToAction("UpdateUserData");
-    //    }
-
-    //    // Проверка формата файла
-    //    if (!photo.ContentType.StartsWith("image/jpeg"))
-    //    {
-    //        ModelState.AddModelError("photo", "Файл должен быть в формате JPG или JPEG.");
-    //        return RedirectToAction("UpdateUserData");
-    //    }
-
-    //    // Генерация уникального имени файла
-    //    var fileName = user.Id + Path.GetExtension(photo.FileName);
-
-    //    // Путь к папке для сохранения изображений
-    //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto", fileName);
-
-    //    // Сохранение файла
-    //    using (var stream = new FileStream(filePath, FileMode.Create))
-    //    {
-    //        await photo.CopyToAsync(stream);
-    //    }
-
-    //    // Обновление пути к изображению в модели пользователя
-    //    user.Image = $"/images/userphoto/{fileName}";
-    //    await _userManager.UpdateAsync(user);
-
-    //    return RedirectToAction("UpdateUserData");
-    //}
-
     [Authorize]
-    [HttpPost("update-profile")]
+    [HttpPost("upload-photo")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> UpdateProfile(UpdateViewModel model, IFormFile photo)
+    public async Task<IActionResult> UploadPhoto(IFormFile photo)
     {
         var user = await _userManager.GetUserAsync(User);
         if (user == null)
@@ -254,58 +210,62 @@ public class AccountManagerController : Controller
             return NotFound("Пользователь не найден.");
         }
 
-        // Обновление данных пользователя
-        user.FirstName = model.FirstName;
-        user.LastName = model.LastName;
-        user.Id = model.Login;
-        user.Status = model.Status;
-        user.About = model.About;
-        user.BirthDate = new DateTime(model.Year, model.Month, model.Date);
+        // Проверка размера файла
+        if (photo.Length > 1048576) // 1 MB = 1048576 bytes
+        {
+            ModelState.AddModelError("photo", "Размер файла не должен превышать 1 МБ.");
+            return RedirectToAction("UpdateUserData");
+        }
 
-        // Проверка пароля
-        var passwordCheck = await _userManager.CheckPasswordAsync(user, model.CurrentPassword);
-        if (!passwordCheck)
+        // Проверка формата файла
+        if (!photo.ContentType.StartsWith("image/jpeg"))
+        {
+            ModelState.AddModelError("photo", "Файл должен быть в формате JPG или JPEG.");
+            return RedirectToAction("UpdateUserData");
+        }
+
+        // Генерация имени файла
+        var fileName = user.Id + Path.GetExtension(photo.FileName);
+
+        // Путь к папке для сохранения изображений
+        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto", fileName);
+
+        // Сохранение файла
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await photo.CopyToAsync(stream);
+        }
+
+        // Обновление пути к изображению в модели пользователя
+        user.Image = $"/images/userphoto/{fileName}";
+        await _userManager.UpdateAsync(user);
+
+        return RedirectToAction("UpdateUserData");
+    }
+
+    [Authorize]
+    [HttpPost("update-profile")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UpdateProfile(UpdateViewModel model)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null) return NotFound("Пользователь не найден.");
+        model.Image = user.Image;
+
+        if (!await _userManager.CheckPasswordAsync(user, model.CurrentPassword))
         {
             ModelState.AddModelError("CurrentPassword", "Текущий пароль неверен.");
             return View("UpdateUserData", model);
         }
 
-        // Обработка загрузки фотографии
-        if (photo != null)
-        {
-            if (photo.Length > 1048576) // 1 MB = 1048576 bytes
-            {
-                ModelState.AddModelError("photo", "Размер файла не должен превышать 1 МБ.");
-                return View("UpdateUserData", model);
-            }
+        _mapper.Map(model, user);
+        var result = await _userManager.UpdateAsync(user);
+        if (result.Succeeded) return RedirectToAction("MyPage");
 
-            if (!photo.ContentType.StartsWith("image/jpeg"))
-            {
-                ModelState.AddModelError("photo", "Файл должен быть в формате JPG или JPEG.");
-                return View("UpdateUserData", model);
-            }
+        foreach (var error in result.Errors)
+            ModelState.AddModelError(string.Empty, error.Description);
 
-            // Генерация уникального имени файла
-            var fileName = user.Id + Path.GetExtension(photo.FileName);
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto", fileName);
-
-            // Сохранение файла
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await photo.CopyToAsync(stream);
-            }
-
-            // Обновление пути к изображению
-            user.Image = $"/images/userphoto/{fileName}";
-        }
-
-        // Сохранение изменений в базе данных
-        await _userManager.UpdateAsync(user);
-
-        return RedirectToAction("MyPage");
+        return View("UpdateUserData", model);
     }
-
-
-
 
 }
