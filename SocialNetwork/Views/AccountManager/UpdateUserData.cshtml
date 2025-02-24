@@ -274,46 +274,53 @@
 </script>
 
 <script>
+    document.getElementById('submitButton').addEventListener('click',
+        async function() {
+            const formData = new FormData();
+            const editForm = document.getElementById('editForm');
 
-    //Обработчик для сбора данные из обеих форм и отправки их в одном запросе
+// Добавляем данные из основной формы
+            new FormData(editForm).forEach((value, key) => {
+                formData.append(key, value);
+                // console.log('');
+                // console.log(key);
+                //     console.log(value);
+                //     console.log('');
+            });
 
-    document.getElementById('submitButton').addEventListener('click', async function () {
-        // Создаем объект FormData для сбора данных
-        const formData = new FormData();
+// Добавляем файл из формы загрузки фото
+            const photoInput = document.getElementById('photo');
+            if (photoInput.files[0]) {
+                formData.append('photo', photoInput.files[0]);
+            }
 
-        // Добавляем данные из формы редактирования данных пользователя
-        const editForm = document.getElementById('editForm');
-        const editFormData = new FormData(editForm);
-        editFormData.forEach((value, key) => {
-            formData.append(key, value);
+// Добавляем токен безопасности
+            // const token = editForm.querySelector('input[name="__RequestVerificationToken"]').value;
+            // formData.append('__RequestVerificationToken', token);
+
+            try {
+                const response = await fetch('/AccountManager/update-profile',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        },
+                        body: formData
+                    });
+                    
+
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else if (!response.ok) {
+                    const errorText = await response.text();
+                    const parser = new DOMParser();
+                    const htmlDoc = parser.parseFromString(errorText, 'text/html');
+                    const validationSummary = htmlDoc.querySelector('.validation-summary-errors');
+                    alert(validationSummary ? validationSummary.innerText : 'Ошибка при обновлении данных');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+            }
         });
-
-        // Добавляем файл из формы загрузки фотографии
-        // const photoInput = document.getElementById('photo');
-        // if (photoInput.files.length > 0) {
-        //     formData.append('photo', photoInput.files[0]);
-        // }
-        console.log(formData);
-        // // Отправляем данные на сервер
-        // try {
-        //     const response = await fetch('/AccountManager/UpdateProfile', {
-        //         method: 'POST',
-        //         body: formData,
-        //         headers: {
-        //             'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-        //         }
-        //     });
-
-        //     if (response.ok) {
-        //         // Обработка успешного ответа
-        //         window.location.href = '/AccountManager/MyPage'; // Перенаправление на страницу профиля
-        //     } else {
-        //         // Обработка ошибки
-        //         const errorData = await response.json();
-        //         alert('Ошибка: ' + errorData.message);
-        //     }
-        // } catch (error) {
-        //     console.error('Ошибка при отправке данных:', error);
-        // }
-    });
 </script>

@@ -3,6 +3,7 @@
         async function() {
             const messageInput = document.getElementById('messageInput');
             const text = messageInput.value.trim();
+            const trashboxUrl = window.trashboxUrl;
 
             if (!text) return;
 
@@ -26,7 +27,7 @@
                             <div class="card-subtitle">
                                 <h6 class="card-subtitle-author">${messageData.author}</h6>
                                 <h6 class="card-subtitle-date">${messageData.timestamp}</h6>
-                                <span class="messageDel"><img src="@Url.Content("~/images/trashbox.svg")"></span>
+                                <span class="messageDel"><img src="${trashboxUrl}"></span>
                             </div>
                             <p class="card-text">${messageData.text}</p>
                             <div class="comment-section"></div>

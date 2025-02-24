@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded',
                           <div class="card-subtitle">
                               <h6 class="card-subtitle-author">${comment.author}</h6>
                               <h6 class="card-subtitle-date">${new Date(comment.createdAt).toLocaleString()}</h6>
-                              ${comment.deletable ? `<span class="commentDel"><img src="${String(trashboxUrl)}"></span>` : ''}
+                              ${comment.deletable ? `<span class="commentDel"><img src="${trashboxUrl}"></span>` : ''}
                            </div>
                             <p class="card-text">${comment.text}</p>
                        </div >

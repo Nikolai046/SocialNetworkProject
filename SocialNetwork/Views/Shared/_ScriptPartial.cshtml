@@ -1,9 +1,10 @@
 ﻿<!-- Подключение скриптов для конкретных контроллеров -->
 @{
     var controllerName = ViewContext.RouteData.Values["controller"]?.ToString();
+    var actionName = ViewContext.RouteData.Values["action"]?.ToString();
 }
 @{
-    <script src="~/js/setFooterWidth.js" defer asp-append-version="true"></script>
+    <script src="~/js/setFooterWidth.js" defer asp-append-version="true"></script> // Обработчик для подгонки ширины футора на мобильных устройствах.
 
     if (controllerName is "Home" or "Register")
     {
@@ -15,13 +16,24 @@
 
     if (controllerName is "AccountManager")
     {
-        <script src="~/js/messagesLoader.js" defer asp-append-version="true"></script>
-        <script src="~/js/addMessage.js" defer asp-append-version="true"></script>
-        <script src="~/js/addComment.js" defer asp-append-version="true"></script>
-        <script src="~/js/textareaAutosize.js" defer asp-append-version="true"></script>
-        <script src="~/js/showConfirmModal.js"></script>
-        <script src="~/js/postDelete.js" defer asp-append-version="true"></script>
+        if (actionName is "UpdateUserData" or "UpdateProfile")
+        {
+            //Обработчик для формы выбора даты рождения
+        }
+        else
+        {
+            <script src="~/js/messagesLoader.js" defer asp-append-version="true"></script> // Обработчик для загрузки сообщений и комментариев ленту
+            <script src="~/js/addMessage.js" defer asp-append-version="true"></script> // Обработчик сообщений
+            <script src="~/js/addComment.js" defer asp-append-version="true"></script> // Обработчик комментариев
+            <script src="~/js/textareaAutosize.js" defer asp-append-version="true"></script> // Обработчик автоматической подгонки высоты textarea
+            <script src="~/js/showConfirmModal.js" asp-append-version="true"></script> // Обработчик модального окна "Да/Отмена"
+            <script src="~/js/postDelete.js" defer asp-append-version="true"></script> // Обработчик удаления сообщения или комментария
+        }
+
+
     }
+
+
 
     if (controllerName is "User")
     {
