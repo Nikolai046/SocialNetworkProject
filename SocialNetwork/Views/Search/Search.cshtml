@@ -1,4 +1,5 @@
-﻿@using SocialNetwork.DLL.Entities
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SocialNetwork.Models.ViewModels
 @model SocialNetwork.Models.ViewModels.Account.UserViewModel
 
 @{
@@ -7,36 +8,107 @@
 
 <h2>Результаты поиска</h2>
 
-@if (ViewBag.Users != null && ((List<User>)ViewBag.Users).Any())
+@if (ViewBag.Users != null && ((List<UserlistDto>)ViewBag.Users).Any())
 {
     <ul class="search_user_container">
-        @foreach (var user in (List<User>)ViewBag.Users)
+        @foreach (var userDto in (List<UserlistDto>)ViewBag.Users)
         {
             <li class="search_currentuser_container">
-                <a asp-controller="User" asp-action="UserPage" asp-route-userID="@user.Id">
+                <a asp-controller="User" asp-action="UserPage" asp-route-userID="@userDto.user.Id">
                 <div class="div_search_user_container">
                     <div class="search_avatar">
-                        <img src="@user.Image" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;"/>
+                        <img src="@userDto.user.Image" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;" />
                     </div>
                     <ul>
                         <li>
-                            <p>Пользователь:</p> @user.FirstName @user.LastName</li>
+                            <p>Пользователь:</p> @userDto.user.FirstName @userDto.user.LastName
+                        </li>
                         <li>
-                            <p>email:</p> @user.Email</li>
+                            <p>email:</p> @userDto.user.Email
+                        </li>
                         <li>
-                            <p>Статус:</p> @user.Status</li>
+                            <p>Статус:</p> @userDto.user.Status
+                        </li>
                     </ul>
                 </div>
-                <div class="search_followme"></div>
                 </a>
+                    <div class="search_followme">
+                        @if (userDto.IsMyFriend)
+                        {
+                            <button class="btn btn-primary" onclick="unfollow('@userDto.user.Id')">Отписаться</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary" onclick="follow('@userDto.user.Id')">Подписаться</button>
+                        }
+
+                    </div>
+                
             </li>
-            }
+        }
     </ul>
 }
 else
 {
     <p>Ничего не найдено.</p>
 }
+
+
+    <script>
+    async function follow(userId) {
+        try {
+            const response = await fetch(`/AccountManager/FollowUser/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            });
+
+            if (response.ok) {
+                // Обновляем кнопку после успешной подписки
+                const button = document.querySelector(`button[onclick="follow('${userId}')"]`);
+                if (button) {
+                    button.textContent = 'Отписаться';
+                    button.setAttribute('onclick', `unfollow('${userId}')`);
+                }
+            } else {
+                alert('Ошибка при подписке.');
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+
+    async function unfollow(userId) {
+        try {
+            const response = await fetch(`/AccountManager/UnfollowUser/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            });
+
+            if (response.ok) {
+                // Обновляем кнопку после успешной отписки
+                const button = document.querySelector(`button[onclick="unfollow('${userId}')"]`);
+                if (button) {
+                    button.textContent = 'Подписаться';
+                    button.setAttribute('onclick', `follow('${userId}')`);
+                }
+            } else {
+                alert('Ошибка при отписке.');
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    }
+</script>
+
+
+
+
+
+
 
 <style>
     .search_user_container {
@@ -53,12 +125,18 @@ else
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .div_search_user_container{
+        .search_currentuser_container:hover {
+            background-color: #faeddd;
+            border: 1px solid rgba(128, 128, 128, 0.3);
+            box-shadow: 0px 0px 9px 9px rgba(0, 0, 0, 0.1)
+        }
+
+    .div_search_user_container {
         display: inline-flex;
         width: 90%;
     }
 
-    .search_avatar{
+    .search_avatar {
         width: 60px;
         height: 60px;
         background-color: #fefaf5;
@@ -68,16 +146,15 @@ else
         justify-content: center;
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
     }
 
-    .search_avatar img{
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
+        .search_avatar img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
 
-    .div_search_user_container ul{
+    .div_search_user_container ul {
         list-style-type: none;
         padding-left: 15px;
         display: inline-flex;
@@ -90,19 +167,19 @@ else
         text-decoration: none;
     }
 
-    .div_search_user_container li{
+    .div_search_user_container li {
         display: inline-flex;
         margin-bottom: 5px;
     }
 
-    .div_search_user_container p{
+    .div_search_user_container p {
         font-weight: bold;
         margin: 0 5px 0 0;
     }
-    .search_followme{
+
+    .search_followme {
         /* background-color: aqua; */
         width: 10%;
         display: flex;
     }
-    
 </style>

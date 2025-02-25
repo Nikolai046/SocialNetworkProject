@@ -279,4 +279,48 @@ public class AccountManagerController : Controller
         return View("UpdateUserData", model);
     }
 
+
+    [HttpPost("FollowUser/{userId}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> FollowUser(string userId)
+    {
+        var currentUser = await _userManager.GetUserAsync(User);
+        if (currentUser == null)
+        {
+            return Unauthorized();
+        }
+
+        var friend = new Friend
+        {
+            UserId = currentUser.Id,
+            CurrentFriendId = userId
+        };
+
+        await _unitOfWork.GetRepository<Friend>().Create(friend);
+        return Ok();
+    }
+
+    [HttpPost("UnfollowUser/{userId}")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UnfollowUser(string userId)
+    {
+        var currentUser = await _userManager.GetUserAsync(User);
+        if (currentUser == null)
+        {
+            return Unauthorized();
+        }
+
+        var friendship = await _unitOfWork.GetRepository<Friend>()
+            .GetAll()
+            .FirstOrDefaultAsync(f => f.UserId == currentUser.Id && f.CurrentFriendId == userId);
+
+        if (friendship != null)
+        {
+            await _unitOfWork.GetRepository<Friend>().Delete(friendship);
+        }
+
+        return Ok();
+    }
+
+
 }

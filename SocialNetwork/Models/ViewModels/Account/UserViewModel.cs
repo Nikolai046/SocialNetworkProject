@@ -5,11 +5,10 @@ namespace SocialNetwork.Models.ViewModels.Account;
 public class UserViewModel
 {
     public User _user;
-    public List<MessageViewModel> Messages { get; set; }
-    public UserViewModel(User user, List<MessageViewModel> messages=null)
+    public List<Friend> Friends { get; set; }
+    public UserViewModel(User user, List<MessageViewModel> messages = null, List<Friend> friends = null)
     {
         _user = user;
-        Messages = messages ?? [];
+        Friends = friends ?? [];
     }
-
 }

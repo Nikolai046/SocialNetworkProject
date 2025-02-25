@@ -19,6 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
             .GetRequiredService<ILoggerFactory>()))
             .AddCustomRepository<Message, MessagesRepository>()
             .AddCustomRepository<Comment, CommentsRepository>()
+            .AddCustomRepository<Friend, FriendsRepository>()
             .AddTransient<IUnitOfWork, UnitOfWork>();
 
 

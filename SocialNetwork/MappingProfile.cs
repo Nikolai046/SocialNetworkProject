@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SocialNetwork.DLL.Entities;
+using SocialNetwork.Models.ViewModels;
 using SocialNetwork.Models.ViewModels.Account;
 
 namespace SocialNetwork;
@@ -31,6 +32,7 @@ public class MappingProfile : Profile
             .ForMember(x => x.Status, opt => opt.MapFrom(c => c.Status))
             .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Date)))
             .ForMember(x => x.About, opt => opt.MapFrom(c => c.About));
+
 
     }
 }

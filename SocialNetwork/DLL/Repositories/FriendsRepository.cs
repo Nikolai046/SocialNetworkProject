@@ -3,9 +3,9 @@ using SocialNetwork.DLL.Entities;
 
 namespace SocialNetwork.DLL.Repositories;
 
-public class FriendsRepository : Repository<Friend>
+public class MessagesRepository : Repository<Message>
 {
-    public FriendsRepository(ApplicationDbContext db) : base(db)
+    public MessagesRepository(ApplicationDbContext db) : base(db)
     {
     }
 

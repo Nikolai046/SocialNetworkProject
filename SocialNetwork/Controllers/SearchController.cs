@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using SocialNet.Data.UoW;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
+using SocialNetwork.Models.ViewModels;
 using SocialNetwork.Models.ViewModels.Account;
 
 namespace SocialNetwork.Controllers;
@@ -29,6 +30,11 @@ public class SearchController : Controller
         _unitOfWork = unitOfWork;
     }
 
+
+
+    /// <summary>
+    /// Контроллер для поиска пользователей по запросу
+    /// </summary>
     [Authorize]
     [HttpGet("search_results")]
     public async Task<IActionResult> Search(string query)
@@ -43,19 +49,42 @@ public class SearchController : Controller
         var currentUser = await _userManager.GetUserAsync(User);
         var model = new UserViewModel(currentUser);
 
-        // Разделяем запрос на части
+        // Разделяем запрос на части (на случай если в запросе Имя и Фамилия)
         var queryParts = query?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
         // Поиск пользователей по запросу
         var users = (query == "*")
-            ? await _userManager.Users.ToListAsync()
+            ? await _userManager.Users
+                .Where(u => u != currentUser)
+                .ToListAsync()
             : await _userManager.Users
-                .Where(u => queryParts.All(part =>
+                .Where(u => u != currentUser && queryParts.All(part =>
                     u.FirstName.ToLower().Contains(part.ToLower()) ||
                     u.LastName.ToLower().Contains(part.ToLower())))
                 .ToListAsync();
 
-        ViewBag.Users = users; // Передаем результаты поиска в представление
+        // Создаем список UserlistDto
+        var userlist = new List<UserlistDto>();
+        foreach (var user in users)
+        {
+            // Проверяем, является ли пользователь другом текущего пользователя
+            var isFriend = await _unitOfWork.GetRepository<Friend>()
+                .GetAll()
+                .AnyAsync(f =>
+                    (f.UserId == currentUser.Id && f.CurrentFriendId == user.Id) ||
+                    (f.CurrentFriendId == currentUser.Id && f.UserId == user.Id));
+
+            // Добавляем пользователя в список
+            userlist.Add(new UserlistDto
+            {
+                user = user,
+                IsMyFriend = isFriend
+            });
+        }
+
+        // Передаем результаты поиска в ViewBag
+        ViewBag.Users = userlist;
+
         return View("Search", model);
     }
 }
