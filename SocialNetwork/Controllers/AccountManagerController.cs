@@ -189,6 +189,9 @@ public class AccountManagerController : Controller
         return Ok();
     }
 
+    /// <summary>
+    /// Контроллер для страницы редактирования пользовательских данных
+    /// </summary>
     [Authorize]
     [HttpGet("update-user-data")]
     public async Task<IActionResult> UpdateUserData()
@@ -199,6 +202,10 @@ public class AccountManagerController : Controller
         return View(editingUser);
     }
 
+
+    /// <summary>
+    /// Метод для обновления фотографии пользователя
+    /// </summary>
     [Authorize]
     [HttpPost("upload-photo")]
     [ValidateAntiForgeryToken]
@@ -243,6 +250,10 @@ public class AccountManagerController : Controller
         return RedirectToAction("UpdateUserData");
     }
 
+
+    /// <summary>
+    /// Метод для обновления пользовательских данных
+    /// </summary>
     [Authorize]
     [HttpPost("update-profile")]
     [ValidateAntiForgeryToken]
