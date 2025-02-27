@@ -322,5 +322,34 @@ public class AccountManagerController : Controller
         return Ok();
     }
 
+    [HttpGet("get-friends")]
+    public async Task<IActionResult> GetFriends([FromQuery] string UserID)
+    {
+        var friends = await _unitOfWork.GetRepository<Friend>()
+        .GetAll()
+        .Where(f => f.UserId == UserID || f.CurrentFriendId == UserID)
+        .Include(f => f.User)
+        .Include(f => f.CurrentFriend)
+        .Select(f => f.UserId == UserID
+            ? new FriendDto
+            {
+                FriendId = f.CurrentFriend.Id,
+                FriendFullName = f.CurrentFriend.FirstName + " " + f.CurrentFriend.LastName,
+                Image = f.CurrentFriend.Image
+            }
+            : new FriendDto
+            {
+                FriendId = f.User.Id,
+                FriendFullName = f.User.FirstName + " " + f.User.LastName,
+                Image = f.User.Image
+            })
+        .Distinct()
+        .ToListAsync();
 
+        return Json(new
+        {
+            data = friends
+        });
+
+    }
 }

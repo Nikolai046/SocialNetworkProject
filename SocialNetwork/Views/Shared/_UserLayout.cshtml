@@ -9,10 +9,7 @@
             <img id="user_photo" src="@ViewBag.targetUser?.Image" />
         </div>
         <div class="friens-container">
-            <ul>
-                <li><img src="/images/person-unknown.svg" />Первый друг</li>
-                <li><img src="/images/person-unknown.svg" />Второй друг</li>
-                <li><img src="/images/person-unknown.svg" />Третий друг</li>
+            <ul id="friendsSection">
             </ul>
         </div>
     </div>
@@ -21,3 +18,8 @@
         @RenderBody()
     </div>
 </div>
+
+<script>
+    console.log('Layout:_UserLayout');
+    console.log(Model);
+</script>

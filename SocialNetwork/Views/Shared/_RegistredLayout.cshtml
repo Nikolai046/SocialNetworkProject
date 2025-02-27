@@ -2,6 +2,7 @@
 
 @{
     Layout = "_Layout"; // используем макет _Layout.cshtml как базовый
+    string userId = ViewBag.targetUser?.Id ?? Model._user.Id;
 }
 
 <div class="main-container">
@@ -14,10 +15,8 @@
             </a>
         </div>
         <div class="friens-container">
-            <ul>
-                <li><img src="/images/person-unknown.svg"/>Первый друг</li>
-                <li><img src="/images/person-unknown.svg"/>Второй друг</li>
-                <li><img src="/images/person-unknown.svg"/>Третий друг</li>
+            <ul id="friendsSection">
+  
             </ul>
         </div>
     </div>
@@ -26,3 +25,39 @@
         @RenderBody()
     </div>
 </div>
+
+<script>
+    console.log('Layout:_RegistredLayout');
+    console.log(Model);
+</script>
+
+
+@* <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            // Получаем UserID из Razor-модели
+            const userId = window.userId;
+
+            // Запрашиваем данные с сервера
+            const response = await fetch(`/AccountManager/get-friends?UserID=${userId}`);
+            const result = await response.json();
+            console.log(result.data);
+            if (result.data && result.data.length > 0) {
+           // Добавляем друзей
+                const friendsSection = document.getElementById('friendsSection');
+                result.data.forEach(friend => {
+                    const friendHtml = `
+                           <li>
+                            <a href="/user_page?userID=${friend.friendId}">
+                            <img src="${friend.image}" />
+                            ${friend.friendFullName}
+                            </a>
+                        </li>`;
+                    friendsSection.insertAdjacentHTML('beforeend', friendHtml);
+                });
+            }
+        } catch (error) {
+            console.error('Ошибка при загрузке друзей:', error);
+        }
+    });
+</script> *@

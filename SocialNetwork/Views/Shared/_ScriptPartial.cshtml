@@ -5,6 +5,8 @@
 }
 @{
     <script src="~/js/setFooterWidth.js" defer asp-append-version="true"></script> // Обработчик для подгонки ширины футора на мобильных устройствах.
+    <script src="~/js/getFriends.js" defer asp-append-version="true"></script>
+
 
     if (controllerName is "Home" or "Register")
     {
@@ -16,6 +18,8 @@
 
     if (controllerName is "AccountManager")
     {
+        
+        
         if (actionName is "UpdateUserData" or "UpdateProfile")
         {
             <script src="~/lib/jquery/dist/jquery.min.js" defer asp-append-version="true"></script>
