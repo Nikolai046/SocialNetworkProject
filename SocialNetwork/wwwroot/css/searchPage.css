@@ -1,0 +1,71 @@
+.search_user_container {
+    list-style-type: none;
+    padding: 0 15px;
+}
+
+.search_currentuser_container {
+    background-color: antiquewhite;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .search_currentuser_container:hover {
+        background-color: #faeddd;
+        border: 1px solid rgba(128, 128, 128, 0.3);
+        box-shadow: 0px 0px 9px 9px rgba(0, 0, 0, 0.1)
+    }
+
+.div_search_user_container {
+    display: inline-flex;
+    width: 90%;
+}
+
+.search_avatar {
+    width: 60px;
+    height: 60px;
+    background-color: #fefaf5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .search_avatar img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+
+.div_search_user_container ul {
+    list-style-type: none;
+    padding-left: 15px;
+    display: inline-flex;
+    flex-direction: column;
+}
+
+.search_currentuser_container a {
+    width: 100%;
+    color: black;
+    text-decoration: none;
+}
+
+.div_search_user_container li {
+    display: inline-flex;
+    margin-bottom: 5px;
+}
+
+.div_search_user_container p {
+    font-weight: bold;
+    margin: 0 5px 0 0;
+}
+
+.search_followme {
+    /* background-color: aqua; */
+    width: 10%;
+    display: flex;
+}

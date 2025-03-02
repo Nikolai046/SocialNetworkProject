@@ -164,8 +164,8 @@ main {
 }
 
 .portrait-box {
-    width: 150px;
-    height: 150px;
+    width: 175px;
+    height: 175px;
     background-color: #fefaf5;
     position: relative;
     display: flex;
@@ -184,7 +184,7 @@ main {
 .portrait-box a {
     position: absolute;
     padding: 2px 2px 0 2px;
-    background-color: rgba(255,255,255,0.70);
+    background-color: rgba(255, 255, 255, 0.70);
     bottom: 6px;
     border-radius: 5px;
     right: 6px;
@@ -209,11 +209,22 @@ main {
     padding-left: 10px;
 }
 
+.about-user-container {
+    width: 175px;
+}
+
+    .about-user-container p {
+        margin-bottom: 0;
+    }
+
+    .about-user-container span {
+        font-weight: bold;
+    }
+
 .friens-container {
     display: flex;
-    background-color: white;
-    margin-top: 15px;
-    width: 150px;
+    background-color: rgb(254 251 248);
+    width: 175px;
     height: 200px;
     border-radius: 5px;
     border: 1px solid gray;
@@ -223,30 +234,44 @@ main {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
     .friens-container a {
         text-decoration: none;
         white-space: nowrap;
         text-overflow: ellipsis;
         color: black;
-    }
-
-    .friens-container ul {
-        list-style-type: none;
-        padding: 0 5px 0 5px;
-        margin: 0;
-    }
-
-    .friens-container li {
         display: flex;
+        flex-direction: row;
         align-items: center;
-        margin-top: 4px;
     }
 
-    .friens-container img {
-        margin-right: 5px;
-        max-height: 32px;
-        max-width: 32px;
+.friens-container-header {
+    font-size: 1.2em;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.friens-container ul {
+    list-style-type: none;
+    padding: 0 5px 0 5px;
+    margin: 0;
+}
+
+.friens-container li {
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+    .friens-container li:hover {
+        background-color: rgba(252, 244, 236, 255)
     }
+
+.friens-container img {
+    margin-right: 5px;
+    max-height: 32px;
+    max-width: 32px;
+}
 
 .inputMessageSection-body {
     padding: 0 25px 0 25px;
@@ -391,6 +416,7 @@ footer {
 }
 
 /* Стили для модального окна "Да/Отмена" */
+
 .modal {
     display: none;
     position: fixed;
@@ -427,7 +453,7 @@ footer {
 }
 
 .btn-confirm {
-    background-color: rgba(76,175,80,0.54);
+    background-color: rgba(76, 175, 80, 0.54);
     color: white;
     padding: 8px 16px;
     border: none;

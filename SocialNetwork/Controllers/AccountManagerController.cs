@@ -82,8 +82,6 @@ public class AccountManagerController : Controller
         }));
 
         var hasMore = (allmessages.Count / pageSize - page) >= 0;
-        //_logger.LogInformation("\nLoadMessages called with page {Page} of {2}", page, allmessages.Count / pageSize);
-        //_logger.LogInformation($"{hasMore}\n");
 
         return Json(new
         {

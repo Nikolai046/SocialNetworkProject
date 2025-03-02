@@ -14,6 +14,12 @@
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" defer asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" defer asp-append-version="true"></script>
         <script src="~/js/formChecker.js" defer asp-append-version="true"></script>
+
+        if (actionName is "Register")
+        {
+            <script src="~/js/monthChoiser.js" defer asp-append-version="true"></script>
+           }
+
     }
 
     if (controllerName is "AccountManager")
@@ -42,7 +48,13 @@
 
     }
 
+    if (controllerName is "Search")
+    {
+        <script src="~/js/followButton.js" defer asp-append-version="true"></script>
 
+    }
+
+    
 
     if (controllerName is "User")
     {
