@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.DLL.Entities;
 
 public class User : IdentityUser
 {
-    public string FirstName { get; set; }
 
-    public string LastName { get; set; }
+    public required string FirstName { get; set; }
+
+    public required string LastName { get; set; }
 
     //public string? MiddleName { get; set; }
 
@@ -23,7 +25,7 @@ public class User : IdentityUser
     public ICollection<Message> ReceivedMessages { get; set; } = new List<Message>();
     public ICollection<Friend> Friends { get; set; } = new List<Friend>();
 
-    public ICollection<Comment> Comments { get; set; }
+    public ICollection<Comment>? Comments { get; set; }
 
     public string GetFullName()
     {

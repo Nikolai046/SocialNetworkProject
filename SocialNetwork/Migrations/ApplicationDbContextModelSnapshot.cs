@@ -236,6 +236,23 @@ namespace SocialNetwork.Migrations
                     b.ToTable("Messages", (string)null);
                 });
 
+            modelBuilder.Entity("SocialNetwork.DLL.Entities.ServiceData", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("Key")
+                        .IsUnique();
+
+                    b.ToTable("ServiceData", (string)null);
+                });
+
             modelBuilder.Entity("SocialNetwork.DLL.Entities.User", b =>
                 {
                     b.Property<string>("Id")

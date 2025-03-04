@@ -34,14 +34,14 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email!);
             if (user == null)
             {
                 ModelState.AddModelError("", "Ќеправильный логин и (или) пароль");
                 return View(model); // возвращаем представление, чтобы отобразились ошибки
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName!, model.Password!, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 return RedirectToAction("MyPage", "AccountManager");
@@ -58,25 +58,24 @@ public class HomeController : Controller
 
 
     [HttpGet("Index")]
-    public async Task<IActionResult> Index()
+    public Task<IActionResult> Index()
     {
         if (_signInManager.IsSignedIn(User))
         {
 
-            return RedirectToAction("MyPage", "AccountManager");
+            return Task.FromResult<IActionResult>(RedirectToAction("MyPage", "AccountManager"));
         }
         else
         {
-            return View();
+            return Task.FromResult<IActionResult>(View());
         }
     }
 
 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> Error()
+    public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-
     }
 }

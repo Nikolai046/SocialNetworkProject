@@ -19,19 +19,19 @@ public class Repository<T> : IRepository<T> where T : class
         Set = set;
     }
 
-    public async Task<int> Create(T item)
+    public async Task<int> CreateAsync(T item)
     {
-         Set.Add(item);
+        Set.Add(item);
         return await _db.SaveChangesAsync();
     }
 
-    public async Task<int> Delete(T item)
+    public async Task<int> DeleteAsync(T item)
     {
         Set.Remove(item);
         return await _db.SaveChangesAsync();
     }
 
-    public async Task<T> Get(int id)
+    public async Task<T?> GetAsync(int id)
     {
         return await Set.FindAsync(id);
     }
@@ -41,7 +41,7 @@ public class Repository<T> : IRepository<T> where T : class
         return Set;
     }
 
-    public async Task<int> Update(T item)
+    public async Task<int> UpdateAsync(T item)
     {
         Set.Update(item);
         return await _db.SaveChangesAsync();

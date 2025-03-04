@@ -4,10 +4,10 @@ using System.Reflection;
 using SocialNetwork;
 using SocialNetwork.DLL.DB;
 using SocialNetwork.DLL.Entities;
-using SocialNet.Data.UoW;
+using SocialNetwork.DLL.Extensions;
 using SocialNetwork.DLL.UoW;
-using SocialNet.Extentions;
 using SocialNetwork.DLL.Repositories;
+using SocialNetwork.DLL.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = Assembly.GetAssembly(typeof(MappingProfile));
@@ -20,6 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
             .AddCustomRepository<Message, MessagesRepository>()
             .AddCustomRepository<Comment, CommentsRepository>()
             .AddCustomRepository<Friend, FriendsRepository>()
+            .AddCustomRepository<ServiceData, ServiceDataRepository>()
             .AddTransient<IUnitOfWork, UnitOfWork>();
 
 
@@ -46,6 +47,7 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
 // Подключаем авто маппинг
 builder.Services.AddAutoMapper(assembly);
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddScoped<TestDataGenerator>();
 
 var app = builder.Build();
 
@@ -80,7 +82,10 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var dataGen = scope.ServiceProvider.GetRequiredService<TestDataGenerator>();
     db.Database.Migrate();
+    await dataGen.Generate(30);
+
 }
 
 //app.MapControllers();

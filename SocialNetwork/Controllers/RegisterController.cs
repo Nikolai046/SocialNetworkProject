@@ -23,16 +23,16 @@ public class RegisterController : Controller
 
     [Route("register")]
     [HttpGet]
-    public async Task<IActionResult> Register()
+    public Task<IActionResult> Register()
     {
-        return View("Register");
+        return Task.FromResult<IActionResult>(View("Register"));
     }
 
     [Route("register2")]
     [HttpGet]
-    public async Task<IActionResult> RegisterPart2(RegisterViewModel model)
+    public Task<IActionResult> RegisterPart2(RegisterViewModel model)
     {
-        return View("RegisterPart2");
+        return Task.FromResult<IActionResult>(View("RegisterPart2"));
     }
 
     [Route("register2")]

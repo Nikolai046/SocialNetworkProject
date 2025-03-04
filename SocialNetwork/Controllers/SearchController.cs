@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SocialNet.Data.UoW;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
 using SocialNetwork.Models.ViewModels;
@@ -47,7 +46,7 @@ public class SearchController : Controller
         if (string.IsNullOrEmpty(query)) return RedirectToAction("MyPage", "AccountManager");
 
         var currentUser = await _userManager.GetUserAsync(User);
-        var model = new UserViewModel(currentUser);
+        var model = new UserViewModel(currentUser!);
 
         // Разделяем запрос на части (на случай если в запросе Имя и Фамилия)
         var queryParts = query?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();

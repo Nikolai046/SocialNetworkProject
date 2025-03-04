@@ -1,8 +1,7 @@
-﻿using SocialNet.Data.UoW;
-using SocialNetwork.DLL.Repositories;
+﻿using SocialNetwork.DLL.Repositories;
 using SocialNetwork.DLL.UoW;
 
-namespace SocialNet.Extentions
+namespace SocialNetwork.DLL.Extensions
 {
     public static class ServiceExtensions
     {

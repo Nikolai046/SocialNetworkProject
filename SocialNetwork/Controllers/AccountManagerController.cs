@@ -40,19 +40,21 @@ public class AccountManagerController : Controller
     public async Task<IActionResult> MyPage()
     {
         var authorizedUser = await _userManager.GetUserAsync(User);
-        return View("Mypage", new UserViewModel(authorizedUser));
+        if (authorizedUser != null) return View("Mypage", new UserViewModel(authorizedUser));
+        return RedirectToAction("Index", "Home");
     }
+
 
     [Authorize]
     [HttpGet]
     [Route("load-messages")]
     public async Task<IActionResult> LoadMessages([FromQuery] string? UserID, int page)
     {
-        int pageSize = 10;
+        const int pageSize = 10;
 
         var authorizedUser = await _userManager.GetUserAsync(User);
 
-        var allmessages = await _unitOfWork.GetRepository<Message>()
+        var allMessages = await _unitOfWork.GetRepository<Message>()
             .GetAll()
             .Where(m => m.SenderId == UserID)
             .Include(m => m.Comments)
@@ -60,7 +62,7 @@ public class AccountManagerController : Controller
             .OrderByDescending(m => m.Timestamp)
             .ToListAsync();
 
-        var messages = allmessages
+        var messages = allMessages
             .Skip((page - 1) * pageSize)
             .Take(pageSize);
 
@@ -68,9 +70,9 @@ public class AccountManagerController : Controller
         {
             MessageId = m.Id,
             Text = m.Text,
-            AuthorFullName = (await _userManager.FindByIdAsync(m.SenderId)).GetFullName(),
+            AuthorFullName = ((await _userManager.FindByIdAsync(m.SenderId!))!).GetFullName(),
             CreatedAt = m.Timestamp,
-            Deletable = (m.SenderId == authorizedUser.Id),
+            Deletable = (m.SenderId == authorizedUser!.Id),
             Comments = m.Comments.Select(c => new CommentViewModel
             {
                 CommentId = c.Id,
@@ -81,12 +83,12 @@ public class AccountManagerController : Controller
             }).ToList()
         }));
 
-        var hasMore = (allmessages.Count / pageSize - page) >= 0;
+        var hasMore = (allMessages.Count / pageSize - page) >= 0;
 
         return Json(new
         {
             data = result,
-            hasMore = hasMore
+            hasMore
         });
     }
 
@@ -107,17 +109,17 @@ public class AccountManagerController : Controller
         {
             Text = messageDto.Text,
             Timestamp = DateTime.Now,
-            SenderId = user.Id
+            SenderId = user?.Id
         };
 
-        await _unitOfWork.GetRepository<Message>().Create(message);
+        await _unitOfWork.GetRepository<Message>().CreateAsync(message);
 
         return Json(new
         {
             id = message.Id,
             text = message.Text,
             timestamp = message.Timestamp.ToString("G"),
-            author = user.GetFullName()
+            author = user!.GetFullName()
         });
     }
 
@@ -130,23 +132,23 @@ public class AccountManagerController : Controller
     public async Task<IActionResult> AddComment([FromBody] CommentDto commentDto)
     {
         var user = await _userManager.GetUserAsync(User);
-        var message = await _unitOfWork.GetRepository<Message>().Get(commentDto.MessageId);
+        var message = await _unitOfWork.GetRepository<Message>().GetAsync(commentDto.MessageId);
 
         var comment = new Comment
         {
             Text = commentDto.Text,
             Timestamp = DateTime.Now,
-            InitialMessageId = message.Id,
-            SenderId = user.Id
+            InitialMessageId = message!.Id,
+            SenderId = user?.Id
         };
 
-        await _unitOfWork.GetRepository<Comment>().Create(comment);
+        await _unitOfWork.GetRepository<Comment>().CreateAsync(comment);
 
         return Json(new
         {
             text = comment.Text,
             timestamp = comment.Timestamp.ToString("G"),
-            author = user.GetFullName()
+            author = user?.GetFullName()
         });
     }
 
@@ -161,22 +163,22 @@ public class AccountManagerController : Controller
         var user = await _userManager.GetUserAsync(User);
         if (idType == "message")
         {
-            var message = await _unitOfWork.GetRepository<Message>().Get(postId);
-            if (message == null || message.SenderId != user.Id)
+            var message = await _unitOfWork.GetRepository<Message>().GetAsync(postId);
+            if (message == null || message.SenderId != user?.Id)
             {
                 return Forbid();
             }
-            await _unitOfWork.GetRepository<Message>().Delete(message);
+            await _unitOfWork.GetRepository<Message>().DeleteAsync(message);
             Console.WriteLine($"\n\x1b[42m\x1b[37mСообщение {postId} удалено\x1b[0m");
         }
         else if (idType == "comment")
         {
-            var comment = await _unitOfWork.GetRepository<Comment>().Get(postId);
-            if (comment == null || comment.SenderId != user.Id)
+            var comment = await _unitOfWork.GetRepository<Comment>().GetAsync(postId);
+            if (comment == null || comment.SenderId != user?.Id)
             {
                 return Forbid();
             }
-            await _unitOfWork.GetRepository<Comment>().Delete(comment);
+            await _unitOfWork.GetRepository<Comment>().DeleteAsync(comment);
             Console.WriteLine($"\n\x1b[42m\x1b[37mКомментарий {postId} удалty\x1b[0m");
         }
         else
@@ -294,7 +296,7 @@ public class AccountManagerController : Controller
             CurrentFriendId = userId
         };
 
-        await _unitOfWork.GetRepository<Friend>().Create(friend);
+        await _unitOfWork.GetRepository<Friend>().CreateAsync(friend);
         return Ok();
     }
 
@@ -314,7 +316,7 @@ public class AccountManagerController : Controller
 
         if (friendship != null)
         {
-            await _unitOfWork.GetRepository<Friend>().Delete(friendship);
+            await _unitOfWork.GetRepository<Friend>().DeleteAsync(friendship);
         }
 
         return Ok();
@@ -331,13 +333,13 @@ public class AccountManagerController : Controller
         .Select(f => f.UserId == UserID
             ? new FriendDto
             {
-                FriendId = f.CurrentFriend.Id,
+                FriendId = f.CurrentFriend!.Id,
                 FriendFullName = f.CurrentFriend.FirstName + " " + f.CurrentFriend.LastName,
                 Image = f.CurrentFriend.Image
             }
             : new FriendDto
             {
-                FriendId = f.User.Id,
+                FriendId = f.User!.Id,
                 FriendFullName = f.User.FirstName + " " + f.User.LastName,
                 Image = f.User.Image
             })

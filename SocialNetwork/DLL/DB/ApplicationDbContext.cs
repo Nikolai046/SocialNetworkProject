@@ -6,6 +6,7 @@ namespace SocialNetwork.DLL.DB;
 
 public class ApplicationDbContext : IdentityDbContext<User>
 {
+    public DbSet<ServiceData> ServiceData { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Friend> Friends { get; set; }
