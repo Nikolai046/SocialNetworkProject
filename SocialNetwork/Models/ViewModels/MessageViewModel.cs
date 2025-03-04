@@ -1,5 +1,10 @@
 ﻿namespace SocialNetwork.Models.ViewModels;
 
+/// <summary>
+/// Класс представления сообщения, содержащий информацию о тексте сообщения,
+/// полном имени автора, дате создания, идентификаторе сообщения,
+/// возможности удаления и связанных комментариях.
+/// </summary>
 public class MessageViewModel
 {
     public string? Text { get; set; }

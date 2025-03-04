@@ -2,6 +2,9 @@
 
 namespace SocialNetwork.Models.ViewModels.Account;
 
+/// <summary>
+/// Класс модели представления для регистрации пользователя.
+/// </summary>
 public class RegisterViewModel
 {
     [Required(ErrorMessage = "Заполните это поле")]

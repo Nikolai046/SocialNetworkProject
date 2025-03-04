@@ -25,4 +25,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SocialNetwork.DAL\SocialNetwork.DAL.csproj" />
+    <ProjectReference Include="..\SocialNetwork.BLL\SocialNetwork.BLL.csproj" />
+  </ItemGroup>
+
 </Project>

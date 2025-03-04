@@ -2,6 +2,12 @@
 
 namespace SocialNetwork.Models.ViewModels.Account;
 
+/// <summary>
+/// Класс UpdateViewModel представляет модель данных для обновления информации о пользователе.
+/// Содержит свойства для имени, фамилии, никнейма, email, даты рождения, изображения,
+/// статуса, информации "Обо мне" и текущего пароля.
+/// Все обязательные поля имеют атрибуты валидации для проверки корректности ввода.
+/// </summary>
 public class UpdateViewModel
 {
     [Required(ErrorMessage = "Заполните это поле")]
@@ -46,17 +52,6 @@ public class UpdateViewModel
     [Display(Name = "Текущий пароль")]
     public string CurrentPassword { get; set; }
 
-    //[Required(ErrorMessage = "Заполните это поле")]
-    //[DataType(DataType.Password)]
-    //[Display(Name = "Пароль")]
-    //[StringLength(100, ErrorMessage = "Поле {0} должно иметь минимум {2} и максимум {1} символов.", MinimumLength = 5)]
-    //public string NewPassword { get; set; }
-
-    //[Required(ErrorMessage = "Заполните это поле")]
-    //[Compare("NewPassword", ErrorMessage = "Пароли не совпадают")]
-    //[DataType(DataType.Password)]
-    //[Display(Name = "Подтвердить пароль")]
-    //public string NewPasswordConfirm { get; set; }
 
     public string GetFullName()
     {

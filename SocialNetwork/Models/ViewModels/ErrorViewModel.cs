@@ -1,9 +1,13 @@
-namespace SocialNetwork.Models.ViewModels
-{
-    public class ErrorViewModel
-    {
-        public string? RequestId { get; set; }
+namespace SocialNetwork.Models.ViewModels;
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+/// <summary>
+/// Модель представления ошибки, содержащая информацию о запросе.
+/// </summary>
+/// <param name="RequestId">Идентификатор запроса, который может быть null.</param>
+
+public class ErrorViewModel
+{
+    public string? RequestId { get; set; }
+
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }

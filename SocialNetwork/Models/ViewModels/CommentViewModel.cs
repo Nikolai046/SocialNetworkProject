@@ -1,5 +1,8 @@
 ﻿namespace SocialNetwork.Models.ViewModels;
 
+/// <summary>
+/// Представляет модель представления комментария к сообщению.
+/// </summary>
 public class CommentViewModel
 {
     public int CommentId { get; set; }

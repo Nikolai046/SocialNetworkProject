@@ -4,6 +4,13 @@ using SocialNetwork.Models.ViewModels.Account;
 
 namespace SocialNetwork;
 
+/// <summary>
+/// Класс MappingProfile определяет правила маппинга между различными моделями данных, используя библиотеку AutoMapper.
+/// Он содержит три маппинга: 
+/// 1. Из RegisterViewModel в User, где поля BirthDate, Email и UserName заполняются на основе соответствующих полей из RegisterViewModel.
+/// 2. Из User в UpdateViewModel, где поля FirstName, LastName, Email, Login, Image, Year, Month, Date и Status заполняются на основе соответствующих полей из User.
+/// 3. Из UpdateViewModel в User, где поля FirstName, LastName, Email, UserName, Image, Status, BirthDate и About заполняются на основе соответствующих полей из UpdateViewModel.
+/// </summary>
 public class MappingProfile : Profile
 {
     public MappingProfile()

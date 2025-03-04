@@ -12,6 +12,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 var assembly = Assembly.GetAssembly(typeof(MappingProfile));
 
+// Подключение контроллеров и представлений
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -23,13 +24,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
             .AddCustomRepository<ServiceData, ServiceDataRepository>()
             .AddTransient<IUnitOfWork, UnitOfWork>();
 
+// Настройка Identity с усиленными требованиями к паролям
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
 {
-    opts.Password.RequiredLength = 5;
-    opts.Password.RequireNonAlphanumeric = false;
-    opts.Password.RequireLowercase = false;
-    opts.Password.RequireUppercase = false;
-    opts.Password.RequireDigit = false;
+    opts.Password.RequiredLength = 5;   // Минимальная длина пароля
+    opts.Password.RequireNonAlphanumeric = false;   // Не требовать не алфавитно-цифровых символов
+    opts.Password.RequireLowercase = false; // Не требовать строчных букв
+    opts.Password.RequireUppercase = false; // Не требовать заглавных букв
+    opts.Password.RequireDigit = false; // Не требовать цифр
     opts.User.AllowedUserNameCharacters =
         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
         "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
@@ -37,19 +39,18 @@ builder.Services.AddIdentity<User, IdentityRole>(opts =>
         "-_.";
 }).AddEntityFrameworkStores<ApplicationDbContext>();
 
-//builder.Services.AddMvc()
-//    .AddViewOptions(options =>
-//    {
-//        options.HtmlHelperOptions.ClientValidationEnabled = false;
-//    });
-
-// Подключаем авто маппинг
+// Подключение AutoMapper
 builder.Services.AddAutoMapper(assembly);
+
+// Настройка маршрутизации (URL в нижнем регистре)
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Регистрация генератора тестовых данных
 builder.Services.AddScoped<TestDataGenerator>();
 
 var app = builder.Build();
 
+// Условная настройка в зависимости от окружения
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -66,29 +67,41 @@ if (!app.Environment.IsDevelopment())
         }
     });
 }
+else
+{
+    // В продакшене разрешаем кэширование статических файлов
+    app.UseStaticFiles();
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseRouting();
 
+// Обработка ошибок с перенаправлением на страницу ошибки
 app.UseStatusCodePagesWithReExecute("/Error/Error/{0}");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Автоматическое применение миграций при запуске приложения
+// Применение миграций и генерация тестовых данных
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
-    var dataGen = scope.ServiceProvider.GetRequiredService<TestDataGenerator>();
-    await dataGen.Generate(30);
+    if (app.Environment.IsDevelopment())
+    {
+        var dataGen = scope.ServiceProvider.GetRequiredService<TestDataGenerator>();
+        await dataGen.Generate(30);
+    }
 }
 
+// Настройка маршрута по умолчанию
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Перенаправление с корневого URL на /Home/Index
 app.Use(async (context, next) =>
 {
     if (context.Request.Path == "/")

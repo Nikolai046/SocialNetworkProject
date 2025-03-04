@@ -2,6 +2,9 @@
 
 namespace SocialNetwork.Models.ViewModels.Account;
 
+/// <summary>
+/// Представляет модель представления для входа пользователя в систему.
+/// </summary>
 public class LoginViewModel
 {
     [Required(ErrorMessage = "Заполните это поле")]
