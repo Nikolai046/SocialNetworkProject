@@ -20,6 +20,14 @@ public class SearchController : Controller
     private readonly ILogger<SearchController> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
+    /// <summary>
+    /// Конструктор для создания экземпляра контроллера поиска, инициализирующий необходимые зависимости.
+    /// </summary>
+    /// <param name="userManager">Менеджер пользователей для операций, связанных с пользователями.</param>
+    /// <param name="signInManager">Менеджер входа в систему для управления аутентификацией пользователей.</param>
+    /// <param name="mapper">Маппер для преобразования одних типов данных в другие.</param>
+    /// <param name="unitOfWork">Единица работы, координирующая работу с репозиториями.</param>
+    /// <param name="logger">Логгер для ведения журнала событий или ошибок.</param>
     public SearchController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork, ILogger<SearchController> logger)
     {
         _mapper = mapper;
@@ -29,11 +37,13 @@ public class SearchController : Controller
         _unitOfWork = unitOfWork;
     }
 
-
-
     /// <summary>
-    /// Контроллер для поиска пользователей по запросу
+    /// Асинхронный метод для поиска пользователей по заданному запросу. Метод доступен только для аутентифицированных пользователей.
     /// </summary>
+    /// <param name="query">Строка поиска, которая может содержать имя, фамилию или оба компонента. Специальный символ "*" возвращает всех пользователей, кроме текущего.</param>
+    /// <returns>
+    /// Возвращает представление с результатами поиска, если запрос не пуст. При пустом запросе перенаправляет на страницу аккаунта пользователя. Если пользователь не аутентифицирован, перенаправляет на главную страницу.
+    /// </returns>
     [Authorize]
     [HttpGet("search_results")]
     public async Task<IActionResult> Search(string query)

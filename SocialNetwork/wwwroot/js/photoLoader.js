@@ -36,7 +36,6 @@ document.getElementById('photo').addEventListener('change', function (event) {
                 // Возвращаем исходное изображение
                 previewImage.src = defaultImageSrc;
 
-
                 // Возвращаем кнопку "Выбрать файл"
                 submitButton.style.display = "none";
                 selectFileButton.textContent = 'Выбрать файл';
@@ -46,10 +45,8 @@ document.getElementById('photo').addEventListener('change', function (event) {
 
                 // // Очищаем поле выбора файла
                 document.getElementById('photo').value = '';
-
             };
         };
         reader.readAsDataURL(file); // Читаем файл как Data URL
-
     }
 });

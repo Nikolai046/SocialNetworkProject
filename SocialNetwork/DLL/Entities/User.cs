@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.DLL.Entities;
 
+/// <summary>
+/// Представляет сущность пользователя в системе, наследуя базовые свойства и методы от IdentityUser.
+/// </summary>
 public class User : IdentityUser
 {
+    public string FirstName { get; set; }
 
-    public required string FirstName { get; set; }
-
-    public required string LastName { get; set; }
+    public string LastName { get; set; }
 
     //public string? MiddleName { get; set; }
 
@@ -38,5 +38,4 @@ public class User : IdentityUser
         Status = "Ура! Я в SocialNetWork!";
         About = "Информация обо мне.";
     }
-
 }

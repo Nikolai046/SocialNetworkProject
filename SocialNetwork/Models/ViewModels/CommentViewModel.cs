@@ -6,6 +6,5 @@ public class CommentViewModel
     public string? Text { get; set; }
     public DateTime CreatedAt { get; set; }
     public bool Deletable { get; set; }
-    public required string Author { get; set; }
-
+    public string Author { get; set; }
 }

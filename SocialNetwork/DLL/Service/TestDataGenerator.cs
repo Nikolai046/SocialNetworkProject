@@ -6,6 +6,13 @@ using SocialNetwork.DLL.UoW;
 
 namespace SocialNetwork.DLL.Service;
 
+/// <summary>
+/// Генерирует тестовые данные для пользователей, включая профили, друзей, сообщения и комментарии.
+/// </summary>
+/// <param name="userCount">Количество пользователей для генерации.</param>
+/// <returns>
+/// Задача, представляющая асинхронную операцию генерации данных, не возвращает значений.
+/// </returns>
 public class TestDataGenerator
 {
     private readonly IRepository<ServiceData> _serviceDataRepo;
@@ -126,32 +133,35 @@ public class TestDataGenerator
         foreach (var user in allUsers)
         {
             var randomUsers = allUsers
-                .Where(u => u.Id != user.Id)
-                .OrderBy(x => random.Next())
-                .Take(10)
+                .Where(u => u.Id != user.Id) // Исключаем текущего пользователя
+                .OrderBy(x => random.Next()) // Перемешиваем пользователей
+                .Take(10) // Берем 10 случайных пользователей
                 .ToList();
 
             foreach (var targetUser in randomUsers)
             {
-                var message = await _unitOfWork.GetRepository<Message>()
+                // Получаем все сообщения целевого пользователя
+                var messages = await _unitOfWork.GetRepository<Message>()
                     .GetAll()
                     .Where(m => m.SenderId == targetUser.Id)
-                    .OrderByDescending(m => m.Timestamp)
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
-                if (message != null)
+                if (messages.Any()) // Проверяем, есть ли сообщения у пользователя
                 {
+                    // Выбираем случайное сообщение
+                    var randomMessage = messages[random.Next(messages.Count)];
+
+                    // Создаем комментарий к выбранному сообщению
                     await _unitOfWork.GetRepository<Comment>().CreateAsync(new Comment
                     {
-                        Text = _comments[random.Next(_comments.Length)],
-                        Timestamp = DateTime.Now,
-                        InitialMessageId = message.Id,
-                        SenderId = user.Id
+                        Text = _comments[random.Next(_comments.Length)], // Случайный текст комментария
+                        Timestamp = DateTime.Now, // Текущее время
+                        InitialMessageId = randomMessage.Id, // ID выбранного сообщения
+                        SenderId = user.Id // ID отправителя комментария
                     });
                 }
             }
         }
-
 
         // Сохраняем флаг
         if (testDataFlag == null)
@@ -166,10 +176,9 @@ public class TestDataGenerator
         {
             testDataFlag.Data = "true";
             await _serviceDataRepo.UpdateAsync(testDataFlag);
-
         }
-
     }
+
     private DateTime RandomDate(DateTime from, DateTime to)
     {
         var random = new Random();

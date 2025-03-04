@@ -1,13 +1,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using SocialNetwork;
 using SocialNetwork.DLL.DB;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.Extensions;
-using SocialNetwork.DLL.UoW;
 using SocialNetwork.DLL.Repositories;
 using SocialNetwork.DLL.Service;
+using SocialNetwork.DLL.UoW;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = Assembly.GetAssembly(typeof(MappingProfile));
@@ -22,7 +22,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
             .AddCustomRepository<Friend, FriendsRepository>()
             .AddCustomRepository<ServiceData, ServiceDataRepository>()
             .AddTransient<IUnitOfWork, UnitOfWork>();
-
 
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
 {
@@ -66,7 +65,6 @@ if (!app.Environment.IsDevelopment())
             ctx.Context.Response.Headers.Append("Expires", "0");
         }
     });
-
 }
 
 app.UseHttpsRedirection();
@@ -82,13 +80,11 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var dataGen = scope.ServiceProvider.GetRequiredService<TestDataGenerator>();
     db.Database.Migrate();
+    var dataGen = scope.ServiceProvider.GetRequiredService<TestDataGenerator>();
     await dataGen.Generate(30);
-
 }
 
-//app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,5 +1,8 @@
 ﻿namespace SocialNetwork.DLL.Entities;
 
+/// <summary>
+/// Представляет собой модель для хранения любой служебной информации.
+/// </summary>
 public class ServiceData
 {
     public string Key { get; set; } = string.Empty;

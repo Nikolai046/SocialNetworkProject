@@ -1,4 +1,3 @@
-
 // Обработчик комментариев
 document.addEventListener('click',
     async function (e) {
@@ -16,7 +15,6 @@ document.addEventListener('click',
             e.target.remove();
         }
 
-
         // Обработчик закрытия textarea комментария при нажатии на крестик
         if (e.target.closest('.close-icon')) {
             const commentInputContainer = e.target.closest('.comment-input-container');
@@ -26,7 +24,6 @@ document.addEventListener('click',
             commentInputContainer.remove(); // Удаляем textarea
             newButtonSection.insertAdjacentHTML('afterend', commentButton); // вставляем кнопку "Добавить комментарий"
         }
-
 
         // Отправка комментария
         if (e.target.classList.contains('submitComment')) {
@@ -68,7 +65,6 @@ document.addEventListener('click',
                                 <p class="card-text">${commentData.text}</p>
                             </div>`;
 
-
                 const commentSection = e.target.parentElement;
                 const commentButton = '<button class="btn-primary addComment">Добавить комментарий</button>';
                 // Добавляем комментарий
@@ -79,7 +75,6 @@ document.addEventListener('click',
                 // Удаляем поле ввода
                 textarea.closest('.comment-input-container').remove();
                 e.target.remove();
-
             } catch (error) {
                 console.error('Ошибка:', error);
             }

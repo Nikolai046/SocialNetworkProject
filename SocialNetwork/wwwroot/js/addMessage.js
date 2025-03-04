@@ -1,27 +1,27 @@
-    // Обработчик отправки сообщения
-    document.getElementById('sendMessage').addEventListener('click',
-        async function() {
-            const messageInput = document.getElementById('messageInput');
-            const text = messageInput.value.trim();
-            const trashboxUrl = window.trashboxUrl;
+// Обработчик отправки сообщения
+document.getElementById('sendMessage').addEventListener('click',
+    async function () {
+        const messageInput = document.getElementById('messageInput');
+        const text = messageInput.value.trim();
+        const trashboxUrl = window.trashboxUrl;
 
-            if (!text) return;
+        if (!text) return;
 
-            try {
-                const response = await fetch('/AccountManager/add-message',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                        },
-                        body: JSON.stringify({ Text: text })
-                    });
+        try {
+            const response = await fetch('/AccountManager/add-message',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ Text: text })
+                });
 
-                const messageData = await response.json();
+            const messageData = await response.json();
 
-                // Добавляем сообщение в интерфейс
-                const messageHtml = `
+            // Добавляем сообщение в интерфейс
+            const messageHtml = `
                     <div class="card" data-message-id="${messageData.id}">
                         <div class="card-body">
                             <div class="card-subtitle">
@@ -35,11 +35,10 @@
                         </div>
                     </div>`;
 
-                document.getElementById('messageSection').insertAdjacentHTML('afterbegin', messageHtml);
-                messageInput.value = '';
-                messageInput.style.height = 'auto';
-
-            } catch (error) {
-                console.error('Ошибка:', error);
-            }
-        });
+            document.getElementById('messageSection').insertAdjacentHTML('afterbegin', messageHtml);
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+        } catch (error) {
+            console.error('Ошибка:', error);
+        }
+    });

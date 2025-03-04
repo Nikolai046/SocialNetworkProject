@@ -1,7 +1,4 @@
-﻿using Microsoft.Identity.Client;
-using SocialNetwork.DLL.Entities;
-
-namespace SocialNetwork.Models.ViewModels;
+﻿namespace SocialNetwork.Models.ViewModels;
 
 public class MessageViewModel
 {

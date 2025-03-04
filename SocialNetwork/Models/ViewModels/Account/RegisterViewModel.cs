@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace SocialNetwork.Models.ViewModels.Account;
 
 public class RegisterViewModel
 {
-
     [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Имя")]
     public string FirstName { get; set; }

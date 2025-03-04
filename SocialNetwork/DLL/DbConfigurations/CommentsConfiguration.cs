@@ -4,11 +4,16 @@ using SocialNetwork.DLL.Entities;
 
 namespace SocialNetwork.DLL.DbConfigurations;
 
+/// <summary>
+/// Класс конфигурации сущности Comment для настройки маппинга модели к базе данных с использованием Entity Framework.
+/// </summary>
 public class CommentsConfiguration : IEntityTypeConfiguration<Comment>
 {
+    /// <summary>
+    /// Конфигурирует сущность Comment для использования в базе данных, задавая параметры таблицы, ключей, связей и индексов.
+    /// </summary>
     public void Configure(EntityTypeBuilder<Comment> builder)
     {
-
         builder.ToTable("Comments");
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Id).UseIdentityColumn();

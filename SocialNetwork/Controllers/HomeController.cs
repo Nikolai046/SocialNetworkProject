@@ -1,14 +1,16 @@
-using System.Diagnostics;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.Models.ViewModels;
 using SocialNetwork.Models.ViewModels.Account;
-
+using System.Diagnostics;
 
 namespace SocialNetwork.Controllers;
 
+/// <summary>
+/// Главный контроллер приложения
+/// </summary>
 [Route("[controller]")]
 public class HomeController : Controller
 {
@@ -16,7 +18,6 @@ public class HomeController : Controller
     private IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
-
 
     public HomeController(ILogger<HomeController> logger, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
     {
@@ -26,8 +27,13 @@ public class HomeController : Controller
         _signInManager = signInManager;
     }
 
-
-
+    /// <summary>
+    /// Асинхронный метод для аутентификации пользователя.
+    /// </summary>
+    /// <param name="model">Модель данных для входа, содержащая электронную почту, пароль и флаг запоминания пользователя.</param>
+    /// <returns>
+    /// Перенаправление на страницу пользователя в случае успешной аутентификации или возвращение представления с ошибками в случае неудачи.
+    /// </returns>
     [HttpPost("login")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Index(LoginViewModel model)
@@ -56,13 +62,19 @@ public class HomeController : Controller
         return View(model);
     }
 
-
+    /// <summary>
+    /// Обрабатывает GET-запрос к методу Index. Перенаправляет аутентифицированных пользователей на их персональную страницу,
+    /// а неаутентифицированных пользователей возвращает на главную страницу.
+    /// </summary>
+    /// <returns>
+    /// Task<IActionResult>, который выполняет перенаправление на страницу пользователя, если пользователь аутентифицирован,
+    /// или возвращает представление главной страницы, если пользователь не аутентифицирован.
+    /// </returns>
     [HttpGet("Index")]
     public Task<IActionResult> Index()
     {
         if (_signInManager.IsSignedIn(User))
         {
-
             return Task.FromResult<IActionResult>(RedirectToAction("MyPage", "AccountManager"));
         }
         else
@@ -71,8 +83,12 @@ public class HomeController : Controller
         }
     }
 
-
-
+    /// <summary>
+    /// Метод действия для обработки ошибок в приложении. Отключает кэширование для данного метода.
+    /// </summary>
+    /// <returns>
+    /// Возвращает представление с моделью ErrorViewModel, содержащей идентификатор запроса.
+    /// </returns>
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

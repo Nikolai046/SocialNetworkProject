@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+
 namespace SocialNetwork.Models.ViewModels.Account;
 
 public class UpdateViewModel
 {
-
     [Required(ErrorMessage = "Заполните это поле")]
     [Display(Name = "Имя")]
     public string FirstName { get; set; }
@@ -62,6 +62,4 @@ public class UpdateViewModel
     {
         return $"{FirstName} {LastName}";
     }
-
-
 }

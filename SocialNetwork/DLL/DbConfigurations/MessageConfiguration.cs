@@ -4,8 +4,14 @@ using SocialNetwork.DLL.Entities;
 
 namespace SocialNetwork.DLL.DbConfigurations;
 
+/// <summary>
+/// Класс конфигурации сущности Message для настройки маппинга атрибутов класса на столбцы таблицы в базе данных.
+/// </summary>
 public class MessageConfiguration : IEntityTypeConfiguration<Message>
 {
+    /// <summary>
+    /// Конфигурирует сущность Message для использования в базе данных, задавая параметры таблицы, ключей и связей с другими сущностями.
+    /// </summary>
     public void Configure(EntityTypeBuilder<Message> builder)
     {
         builder.ToTable("Messages");

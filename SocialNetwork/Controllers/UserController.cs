@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
 using SocialNetwork.Models.ViewModels.Account;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SocialNetwork.Controllers
 {
+    /// <summary>
+    /// Контроллер для отображения страницы просматриваемого (не зарегистрированного) пользователя.
+    /// </summary>
     public class UserController : Controller
     {
         private IMapper _mapper;
@@ -18,6 +19,17 @@ namespace SocialNetwork.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<UserController> _logger;
 
+        /// <summary>
+        /// Конструктор для создания экземпляра UserController, инициализирующий необходимые зависимости.
+        /// </summary>
+        /// <param name="userManager">Менеджер для управления пользователями.</param>
+        /// <param name="signInManager">Менеджер для управления процессом входа в систему.</param>
+        /// <param name="mapper">Инструмент для маппинга данных между объектами.</param>
+        /// <param name="unitOfWork">Единица работы для управления транзакциями и репозиториями.</param>
+        /// <param name="logger">Логгер для ведения журнала событий.</param>
+        /// <returns>
+        /// Не возвращает значений.
+        /// </returns>
         public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork, ILogger<UserController> logger)
         {
             _userManager = userManager;
@@ -27,6 +39,13 @@ namespace SocialNetwork.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Получает страницу пользователя на основе предоставленного идентификатора userID.
+        /// </summary>
+        /// <param name="userID">Идентификатор пользователя, страницу которого необходимо отобразить. Если параметр пуст, перенаправляет на страницу текущего пользователя.</param>
+        /// <returns>
+        /// Возвращает представление страницы пользователя, если пользователь найден. В случае отсутствия аутентификации перенаправляет на главную страницу. Если пользователь не найден, перенаправляет на страницу ошибки.
+        /// </returns>
         [Authorize]
         [HttpGet("user_page")]
         public async Task<IActionResult> UserPage(string userID)
@@ -63,7 +82,6 @@ namespace SocialNetwork.Controllers
 
             // Возвращаем представление
             return View("UserPage", model);
-
         }
     }
 }

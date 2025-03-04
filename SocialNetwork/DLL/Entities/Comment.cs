@@ -1,5 +1,8 @@
 ﻿namespace SocialNetwork.DLL.Entities;
 
+/// <summary>
+/// Представляет собой модель для хранения информации о комментариях к сообщениям.
+/// </summary>
 public class Comment
 {
     public int Id { get; set; }
@@ -11,5 +14,4 @@ public class Comment
 
     public int InitialMessageId { get; set; }
     public Message? Message { get; set; }
-
 }
