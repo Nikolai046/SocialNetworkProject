@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.UoW;
-using SocialNetwork.Models.ViewModels;
 using SocialNetwork.Models.ViewModels.Account;
+using SocialNetwork.Models.ViewModels.DTO;
 
 namespace SocialNetwork.Controllers;
 

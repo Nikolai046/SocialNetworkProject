@@ -5,8 +5,8 @@ using SocialNetwork.DLL.DB;
 using SocialNetwork.DLL.Entities;
 using SocialNetwork.DLL.Extensions;
 using SocialNetwork.DLL.Repositories;
-using SocialNetwork.DLL.Service;
 using SocialNetwork.DLL.UoW;
+using SocialNetwork.Service;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
