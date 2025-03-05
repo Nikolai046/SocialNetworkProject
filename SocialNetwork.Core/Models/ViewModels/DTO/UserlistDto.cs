@@ -1,6 +1,6 @@
-﻿using SocialNetwork.DLL.Entities;
+﻿using SocialNetwork.Data.Entities;
 
-namespace SocialNetwork.Models.ViewModels.DTO;
+namespace SocialNetwork.Core.Models.ViewModels.DTO;
 
 /// <summary>
 /// Класс UserlistDto представляет собой объект передачи данных, содержащий информацию о пользователе и статусе дружбы.

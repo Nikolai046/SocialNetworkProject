@@ -1,0 +1,109 @@
+﻿@model SocialNetwork.Core.Models.ViewModels.Account.UpdateViewModel
+
+@{
+    Layout = "_ClearLayout";
+}
+
+@{
+    ViewData["Title"] = $"{Model.GetFullName()} page";
+}
+
+<div class="user-container">
+    <h2>@Model.GetFullName()</h2>
+    <div class="portrait-box">
+        <img id="user_photo" alt="" src="@Model.Image" />
+    </div>
+
+    <form id="uploadForm" method="post" enctype="multipart/form-data" asp-action="UploadPhoto" asp-controller="AccountManager">
+        <div>
+            <input type="file" id="photo" name="photo" accept=".jpg,.jpeg" required style="display: none;">
+            <button id="select_a_file" type="button" class="add-photo-button" onclick="document.getElementById('photo').click();">Выбрать файл</button>
+        </div>
+        <button style="display: none"  class="add-photo-button" type="submit">Загрузить</button>
+    </form>
+</div>
+
+<div class="content-container">
+    <h2>Изменение данных пользователя</h2>
+    <form id="editForm" method="post" asp-action="update-profile" asp-controller="AccountManager">
+
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <div class="input-wrapper">
+                <input asp-for="FirstName">
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <div class="input-wrapper">
+                <input asp-for="LastName">
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Login"></label>
+            <div class="input-wrapper">
+                <input asp-for="Login">
+                <span asp-validation-for="Login"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <div class="input-wrapper">
+                <input style="background-color: aliceblue" asp-for="Email" readonly>
+                <span class="field-validation-valid"></span>
+            </div>
+        </div>
+
+        <label>Дата рождения</label>
+        <div style="display: flex; gap: 8px;">
+            <select id="birth-year" asp-for="Year" onchange="updateDays()" required>
+                <option value="">Год</option>
+            </select>
+            <select id="birth-month" asp-for="Month" onchange="updateDays()" required>
+                <option value="">Месяц</option>
+            </select>
+            <select id="birth-day" asp-for="Date" required>
+                <option value="">День</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Status"></label>
+            <div class="input-wrapper">
+                <input asp-for="Status">
+                <span asp-validation-for="Status"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="About"></label>
+            <div class="input-wrapper">
+                <input asp-for="About">
+                <span asp-validation-for="About"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CurrentPassword"></label>
+            <div class="input-wrapper">
+                <input asp-for="CurrentPassword" autocomplete="current-password">
+                <span asp-validation-for="CurrentPassword"></span>
+            </div>
+        </div>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <button id="submitButton" class="submit-button" type="submit">Подтвердить изменения</button>
+    </form>
+</div>
+
+
+<script>
+    window.existingYear = @Model.Year;
+    window.existingMonth = @Model.Month;
+    window.existingDay = @Model.Date;
+</script>

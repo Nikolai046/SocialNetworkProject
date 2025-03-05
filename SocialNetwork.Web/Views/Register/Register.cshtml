@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model SocialNetwork.Core.Models.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<div class="main-container">
+    <h2>Впервые в SocialNetwork?</h2>
+    <form id="editForm" method="get" asp-controller="Register" asp-action="RegisterPart2">
+
+        <div class="form-group">
+            <label asp-for="FirstName">Имя</label>
+            <div class="input-wrapper">
+                <input asp-for="FirstName" required>
+                <span asp-validation-for="FirstName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName">Фамилия</label>
+            <div class="input-wrapper">
+                <input asp-for="LastName" required>
+                <span asp-validation-for="LastName"></span>
+            </div>
+        </div>
+
+
+        <label>Дата рождения</label>
+        <div style="display: flex; gap: 8px;">
+            <select id="birth-year" asp-for="Year" onchange="updateDays()" required>
+                <option value="">Год</option>
+            </select>
+            <select id="birth-month" asp-for="Month" onchange="updateDays()" required>
+                <option value="">Месяц</option>
+            </select>
+            <select id="birth-day" asp-for="Date" required>
+                <option value="">День</option>
+            </select>
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <button type="submit">Продолжить регистрацию</button>
+    </form>
+    <p>Уже зарегистрированы? <a asp-area="" asp-controller="Home" asp-action="Index">Авторизироваться</a></p>
+
+</div>
+

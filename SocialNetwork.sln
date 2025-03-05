@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork", "SocialNetwork\SocialNetwork.csproj", "{66628226-AEB7-49B7-9055-5F9F849F61AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Web", "SocialNetwork.Web\SocialNetwork.Web.csproj", "{66628226-AEB7-49B7-9055-5F9F849F61AF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{4924A1E5-E465-4854-AAE2-66FF7F4B755B} = {4924A1E5-E465-4854-AAE2-66FF7F4B755B}
 		{E7BFC52F-807B-4A0B-8444-74C43D7FA3B6} = {E7BFC52F-807B-4A0B-8444-74C43D7FA3B6}

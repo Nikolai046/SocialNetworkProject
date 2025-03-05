@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Models.ViewModels.DTO;
+﻿namespace SocialNetwork.Core.Models.ViewModels.DTO;
 
 /// <summary>
 /// Представляет модель представления комментария к сообщению.

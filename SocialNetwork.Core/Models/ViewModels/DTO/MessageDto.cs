@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Models.ViewModels.DTO;
+﻿namespace SocialNetwork.Core.Models.ViewModels.DTO;
 
 /// <summary>
 /// Класс MessageDto представляет объект передачи данных (DTO) для сообщения,

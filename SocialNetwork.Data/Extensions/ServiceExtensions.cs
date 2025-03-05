@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SocialNetwork.Data.Repositories;
-using SocialNetwork.DLL.UoW;
+using SocialNetwork.Data.UoW;
 
 namespace SocialNetwork.Data.Extensions;
 

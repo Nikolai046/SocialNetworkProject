@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SocialNetwork.Models.ViewModels.Account;
+namespace SocialNetwork.Core.Models.ViewModels.Account;
 
 /// <summary>
 /// Класс UpdateViewModel представляет модель данных для обновления информации о пользователе.

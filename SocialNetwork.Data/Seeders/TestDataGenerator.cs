@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.DLL.Entities;
-using SocialNetwork.DLL.Repositories;
-using SocialNetwork.DLL.UoW;
+using SocialNetwork.Data.Entities;
+using SocialNetwork.Data.Repositories;
+using SocialNetwork.Data.UoW;
 
-namespace SocialNetwork.Service;
+namespace SocialNetwork.Data.Seeders;
 
 /// <summary>
 /// Генерирует тестовые данные для пользователей, включая профили, друзей, сообщения и комментарии.

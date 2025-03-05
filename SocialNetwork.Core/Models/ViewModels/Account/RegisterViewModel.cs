@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SocialNetwork.Models.ViewModels.Account;
+namespace SocialNetwork.Core.Models.ViewModels.Account;
 
 /// <summary>
 /// Класс модели представления для регистрации пользователя.

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-using SocialNetwork.DLL.DB;
-using SocialNetwork.DLL.Repositories;
+using SocialNetwork.Data.Repositories;
 
-namespace SocialNetwork.DLL.UoW;
+
+namespace SocialNetwork.Data.UoW;
 
 /// <summary>
 /// Класс UnitOfWork представляет паттерн "Единица работы", который используется для группировки одного или нескольких

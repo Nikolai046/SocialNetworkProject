@@ -1,6 +1,6 @@
-﻿using SocialNetwork.DLL.Entities;
+﻿using SocialNetwork.Data.Entities;
 
-namespace SocialNetwork.Models.ViewModels.Account;
+namespace SocialNetwork.Core.Models.ViewModels.Account;
 
 /// <summary>
 /// Класс представления модели пользователя, содержащий информацию о пользователе и его друзьях.
