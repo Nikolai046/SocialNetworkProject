@@ -35,6 +35,11 @@ public class TestDataGenerator
 
     public async Task Generate(int userCount)
     {
+
+        var isDatabaseEmpty = !await _userManager.Users.AnyAsync();
+        if (isDatabaseEmpty)
+            return;
+
         var testDataFlag = await _serviceDataRepo
             .GetAll()
             .FirstOrDefaultAsync(sd => sd.Key == "IsTestDataGenerated");
@@ -43,8 +48,10 @@ public class TestDataGenerator
             return;
 
         var random = new Random();
-        var seedTextPath = Path.Combine("seedData", "textData");
-        var seedImagePath = Path.Combine("seedData", "Avatars");
+
+        var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "SocialNetwork.Data");
+        var seedTextPath = Path.Combine(basePath, "seedData", "textData");
+        var seedImagePath = Path.Combine(basePath, "seedData", "Avatars");
 
         // Чтение данных из файлов
         _firstNames = File.ReadAllLines(Path.Combine(seedTextPath, "firstNames.txt"));

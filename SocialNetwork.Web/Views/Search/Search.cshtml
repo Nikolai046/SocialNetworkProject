@@ -13,20 +13,20 @@
         @foreach (var userDto in (List<UserlistDto>)ViewBag.Users)
         {
             <li class="search_currentuser_container">
-                <a asp-controller="User" asp-action="UserPage" asp-route-userID="@userDto.user.Id">
+                <a asp-controller="User" asp-action="UserPage" asp-route-userID="@userDto.UserId">
                 <div class="div_search_user_container">
                     <div class="search_avatar">
-                        <img src="@userDto.user.Image" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;" />
+                        <img src="@userDto.Image" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%;" />
                     </div>
                     <ul>
                         <li>
-                                <p>Пользователь:</p> @userDto.user.FirstName @userDto.user.LastName <p>&nbsp;&nbsp;&nbsp;&nbsp;Дата рождения: </p> @userDto.user.BirthDate.ToString("dd/MM/yyyy")
+                                <p>Пользователь:</p> @userDto.FullName <p>&nbsp;&nbsp;&nbsp;&nbsp;Дата рождения: </p> @userDto.BirthDate.ToString("dd/MM/yyyy")
                         </li>
                         <li>
-                            <p>e-mail:</p> @userDto.user.Email
+                            <p>e-mail:</p> @userDto.Email
                         </li>
                         <li>
-                            <p>Статус:</p> @userDto.user.Status
+                            <p>Статус:</p> @userDto.Status
                         </li>
                     </ul>
                 </div>
@@ -34,11 +34,11 @@
                     <div class="search_followme">
                         @if (userDto.IsMyFriend)
                         {
-                            <button class="btn btn-primary" onclick="unfollow('@userDto.user.Id')">Отписаться</button>
+                            <button class="btn btn-primary" onclick="unfollow('@userDto.UserId')">Отписаться</button>
                         }
                         else
                         {
-                            <button class="btn btn-primary" onclick="follow('@userDto.user.Id')">Подписаться</button>
+                            <button class="btn btn-primary" onclick="follow('@userDto.UserId')">Подписаться</button>
                         }
 
                     </div>

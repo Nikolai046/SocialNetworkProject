@@ -13,8 +13,7 @@ namespace SocialNetwork.Web.Controllers;
 [Route("[controller]")]
 public class SearchController : Controller
 {
-    private IMapper _mapper;
-
+    private readonly IMapper _mapper;
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
     private readonly ILogger<SearchController> _logger;
@@ -56,7 +55,8 @@ public class SearchController : Controller
         if (string.IsNullOrEmpty(query)) return RedirectToAction("MyPage", "AccountManager");
 
         var currentUser = await _userManager.GetUserAsync(User);
-        var model = new UserViewModel(currentUser!);
+
+        var model = _mapper.Map<UserViewModel>(currentUser);
 
         // Разделяем запрос на части (на случай если в запросе Имя и Фамилия)
         var queryParts = query?.Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
@@ -83,12 +83,10 @@ public class SearchController : Controller
                     f.UserId == currentUser!.Id && f.CurrentFriendId == user.Id ||
                     f.CurrentFriendId == currentUser.Id && f.UserId == user.Id);
 
+            var addUser = _mapper.Map<UserlistDto>(user);
+            addUser.IsMyFriend = isFriend;
             // Добавляем пользователя в список
-            userlist.Add(new UserlistDto
-            {
-                user = user,
-                IsMyFriend = isFriend
-            });
+            userlist.Add(addUser);
         }
 
         // Передаем результаты поиска в ViewBag

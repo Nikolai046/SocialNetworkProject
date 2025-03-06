@@ -49,6 +49,10 @@ builder.Services.AddAutoMapper(assembly);
 // Настройка маршрутизации (URL в нижнем регистре)
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+
+//// Добавляем сервис IHttpContextAccessor в контейнер внедрения зависимостей
+//builder.Services.AddHttpContextAccessor();
+
 // Регистрация генератора тестовых данных
 builder.Services.AddScoped<TestDataGenerator>();
 
@@ -96,7 +100,7 @@ using (var scope = app.Services.CreateScope())
     if (app.Environment.IsDevelopment())
     {
         var dataGen = scope.ServiceProvider.GetRequiredService<TestDataGenerator>();
-        //await dataGen.Generate(30);
+        await dataGen.Generate(30);
     }
 }
 

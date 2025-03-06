@@ -1,21 +1,17 @@
-﻿using SocialNetwork.Data.Entities;
-
-namespace SocialNetwork.Core.Models.ViewModels.Account;
+﻿namespace SocialNetwork.Core.Models.ViewModels.Account;
 
 /// <summary>
-/// Класс представления модели пользователя, содержащий информацию о пользователе и его друзьях.
+/// Класс представления модели пользователя.
 /// </summary>
-/// <param name="user">Объект пользователя, для которого создается модель представления.</param>
-/// <param name="messages">Список сообщений, связанных с пользователем (необязательный параметр).</param>
-/// <param name="friends">Список друзей пользователя (необязательный параметр).</param>
 public class UserViewModel
 {
-    public User _user;
-    public List<Friend> Friends { get; set; }
-
-    public UserViewModel(User user, List<MessageViewModel> messages = null, List<Friend> friends = null)
-    {
-        _user = user;
-        Friends = friends ?? [];
-    }
+    public string UserId { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string FullName { get; set; }
+    public string Email { get; set; }
+    public string Image { get; set; }
+    public DateTime BirthDate { get; set; }
+    public string Status { get; set; }
+    public string About { get; set; }
 }

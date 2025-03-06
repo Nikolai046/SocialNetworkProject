@@ -2,11 +2,11 @@
 
 @{
     Layout = "_UserLayout";
-    ViewData["Title"] = $"{ViewBag.targetUser?.GetFullName() ?? "Неизвестный пользователь"} page";
-    string userId = ViewBag.targetUser?.Id ?? Model._user.Id;
+    ViewData["Title"] = $"{ViewBag.targetUser?.FullName ?? "Неизвестный пользователь"} page";
+    string userId = ViewBag.targetUser?.UserId ?? Model.UserId;
 }
 
-<h2>Лента @ViewBag.targetUser?.GetFullName() </h2>
+<h2>Лента @ViewBag.targetUser?.FullName </h2>
 
 <div id="messageSection"></div>
 <div id="loading" style="display: none; text-align: center">

@@ -1,7 +1,7 @@
 ﻿@{
-    string userId = ViewBag.targetUser?.Id ?? Model._user.Id;
-    string title = ViewBag.targetUser?.GetFullName() ?? Model._user.GetFullName();
-    ViewData["Title"] = $"{Model._user.GetFullName()} page";
+    string userId = ViewBag.targetUser?.UserId ?? Model.UserId;
+    string title = ViewBag.targetUser?.FullName ?? Model.FullName;
+    ViewData["Title"] = $"{Model.FullName} page";
 }
 
 <h2>Моя лента</h2>

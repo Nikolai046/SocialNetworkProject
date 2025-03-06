@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SocialNetwork.Core.Models.ViewModels.Account;
+using SocialNetwork.Core.Models.ViewModels.DTO;
 using SocialNetwork.Data.Entities;
 
 
@@ -39,5 +40,26 @@ public class MappingProfile : Profile
             .ForMember(x => x.Status, opt => opt.MapFrom(c => c.Status))
             .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => new DateTime((int)c.Year, (int)c.Month, (int)c.Date)))
             .ForMember(x => x.About, opt => opt.MapFrom(c => c.About));
+        CreateMap<User, UserViewModel>()
+            .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id))
+            .ForMember(x => x.FirstName, opt => opt.MapFrom(c => c.FirstName))
+            .ForMember(x => x.LastName, opt => opt.MapFrom(c => c.LastName))
+            .ForMember(x => x.FullName, opt => opt.MapFrom(c => string.Concat(c.FirstName, " ", c.LastName)))
+            .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
+            .ForMember(x => x.Image, opt => opt.MapFrom(c => c.Image))
+            .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => c.BirthDate))
+            .ForMember(x => x.Status, opt => opt.MapFrom(c => c.Status))
+            .ForMember(x => x.About, opt => opt.MapFrom(c => c.About));
+        CreateMap<User, UserlistDto>()
+            .ForMember(x => x.UserId, opt => opt.MapFrom(c => c.Id))
+            .ForMember(x => x.FirstName, opt => opt.MapFrom(c => c.FirstName))
+            .ForMember(x => x.LastName, opt => opt.MapFrom(c => c.LastName))
+            .ForMember(x => x.FullName, opt => opt.MapFrom(c => string.Concat(c.FirstName, " ", c.LastName)))
+            .ForMember(x => x.Email, opt => opt.MapFrom(c => c.Email))
+            .ForMember(x => x.Image, opt => opt.MapFrom(c => c.Image))
+            .ForMember(x => x.BirthDate, opt => opt.MapFrom(c => c.BirthDate))
+            .ForMember(x => x.Status, opt => opt.MapFrom(c => c.Status))
+            .ForMember(x => x.About, opt => opt.MapFrom(c => c.About))
+            .ForMember(x => x.IsMyFriend, opt => opt.MapFrom(_ => false));
     }
 }

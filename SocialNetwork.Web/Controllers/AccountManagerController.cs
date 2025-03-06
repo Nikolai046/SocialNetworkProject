@@ -50,7 +50,9 @@ public class AccountManagerController : Controller
     public async Task<IActionResult> MyPage()
     {
         var authorizedUser = await _userManager.GetUserAsync(User);
-        if (authorizedUser != null) return View("Mypage", new UserViewModel(authorizedUser));
+        var model = _mapper.Map<UserViewModel>(authorizedUser);
+
+        if (authorizedUser != null) return View("Mypage", model);
         return RedirectToAction("Index", "Home");
     }
 

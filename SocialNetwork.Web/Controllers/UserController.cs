@@ -78,7 +78,8 @@ public class UserController : Controller
         ViewBag.targetUser = targetUser; // Передаем найденного пользователя
 
         // Создаем модель для текущего пользователя
-        var model = new UserViewModel(currentUser!);
+        //var model = new UserViewModel(currentUser!);
+        var model = _mapper.Map<UserViewModel>(currentUser);
 
         // Возвращаем представление
         return View("UserPage", model);

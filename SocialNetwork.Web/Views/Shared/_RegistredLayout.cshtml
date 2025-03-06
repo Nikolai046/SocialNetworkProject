@@ -3,22 +3,23 @@
 
 @{
     Layout = "_Layout"; // используем макет _Layout.cshtml как базовый
-    string userId = (Model._user.Id ?? ViewBag.targetUser?.Id) ?? throw new InvalidOperationException();
+    string userId = Model.UserId ?? ViewBag.targetUser?.UserId;
+
 }
 
 <div class="main-container">
     <div class="user-container">
-        <h2>@Model._user.FirstName @Model._user.LastName</h2>
+        <h2>@Model.FullName</h2>
         <div class="portrait-box">
-            <img id="user_photo" src="@Model._user.Image" />
+            <img id="user_photo" src="@Model.Image" />
             <a asp-controller="AccountManager" asp-action="UpdateUserData">
                 <img src="~/images/edit.svg" alt="Редактировать данные пользователя">
             </a>
         </div>
         <div class="about-user-container">
-            <p>Дата рождения: </p><span>@Model._user.BirthDate.ToString("dd/MM/yyyy")</span>
-            <p>Обо мне: </p><span>@Model._user.About</span>
-            <p>Статус: </p><span>@Model._user.Status</span>
+            <p>Дата рождения: </p><span>@Model.BirthDate.ToString("dd/MM/yyyy")</span>
+            <p>Обо мне: </p><span>@Model.About</span>
+            <p>Статус: </p><span>@Model.Status</span>
         </div>
         <span class="friens-container-header">Друзья:</span>
         <div class="friens-container">
@@ -35,6 +36,6 @@
 
 <script>
     window.userId = "@userId";
-    console.log('Layout:_RegistredLayout');
+    console.log('Layout:_RegisteredLayout');
 </script>
 
