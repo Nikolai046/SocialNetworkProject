@@ -19,12 +19,12 @@ public class TestDataGenerator
     private readonly UserManager<User> _userManager;
     private IUnitOfWork _unitOfWork;
 
-    private string[] _firstNames;
-    private string[] _lastNames;
-    private string[] _statuses;
-    private string[] _abouts;
-    private string[] _messages;
-    private string[] _comments;
+    private string[] _firstNames = null!;
+    private string[] _lastNames = null!;
+    private string[] _statuses = null!;
+    private string[] _abouts = null!;
+    private string[] _messages = null!;
+    private string[] _comments = null!;
 
     public TestDataGenerator(IUnitOfWork unitOfWork, UserManager<User> userManager)
     {
@@ -91,7 +91,7 @@ public class TestDataGenerator
                 // Обновляем путь к изображению
                 userFromDb.Image = $"/images/userphoto/{destinationPhotoName}";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 user.Image = "/images/person-unknown.svg";
             }

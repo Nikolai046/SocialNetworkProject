@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SocialNetwork.Core.Models.ViewModels.Account;
+using SocialNetwork.Core.Models.ViewModels;
 using SocialNetwork.Core.Models.ViewModels.DTO;
 using SocialNetwork.Data.Entities;
 using SocialNetwork.Data.UoW;

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SocialNetwork.Core.Models.ViewModels;
 using SocialNetwork.Core.Models.ViewModels.Account;
 using SocialNetwork.Core.Models.ViewModels.DTO;
 using SocialNetwork.Data.Entities;

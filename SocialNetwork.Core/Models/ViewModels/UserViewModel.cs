@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.Core.Models.ViewModels.Account;
+﻿namespace SocialNetwork.Core.Models.ViewModels;
 
 /// <summary>
 /// Класс представления модели пользователя.

@@ -1,6 +1,6 @@
 ﻿using SocialNetwork.Core.Models.ViewModels.DTO;
 
-namespace SocialNetwork.Core.Models.ViewModels.Account;
+namespace SocialNetwork.Core.Models.ViewModels;
 
 /// <summary>
 /// Класс представления сообщения, содержащий информацию о тексте сообщения,
