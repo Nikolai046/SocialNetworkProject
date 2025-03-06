@@ -74,12 +74,12 @@ public class UserController : Controller
             return RedirectToAction("Error", "Home");
         }
 
-        // Передаем данные в представление
-        ViewBag.targetUser = targetUser; // Передаем найденного пользователя
-
         // Создаем модель для текущего пользователя
         //var model = new UserViewModel(currentUser!);
-        var model = _mapper.Map<UserViewModel>(currentUser);
+        var model = _mapper.Map<UserViewModel>(targetUser);
+
+        // Передаем данные в представление
+        ViewBag.targetUser = model; // Передаем найденного пользователя
 
         // Возвращаем представление
         return View("UserPage", model);

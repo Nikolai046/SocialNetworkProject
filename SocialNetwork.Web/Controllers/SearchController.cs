@@ -68,8 +68,8 @@ public class SearchController : Controller
                 .ToListAsync()
             : await _userManager.Users
                 .Where(u => u != currentUser && queryParts.All(part =>
-                    u.FirstName.ToLowerInvariant().Contains(part.ToLower()) ||
-                    u.LastName.Contains(part, StringComparison.CurrentCultureIgnoreCase)))
+                    u.FirstName.ToLower().Contains(part.ToLower()) ||
+                    u.LastName.ToLower().Contains(part.ToLower())))
                 .ToListAsync();
 
         // Создаем список UserlistDto

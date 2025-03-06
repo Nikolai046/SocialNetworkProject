@@ -390,7 +390,7 @@ public class AccountManagerController : Controller
 
         var friendship = await _unitOfWork.GetRepository<Friend>()
             .GetAll()
-            .FirstOrDefaultAsync(f => f.UserId == currentUser.Id && f.CurrentFriendId == userId);
+            .FirstOrDefaultAsync(f => (f.UserId == currentUser.Id && f.CurrentFriendId == userId) || (f.UserId == userId && f.CurrentFriendId == currentUser.Id));
 
         if (friendship != null)
         {
