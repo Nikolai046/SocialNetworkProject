@@ -4,14 +4,13 @@
 @{
     Layout = "_Layout"; // используем макет _Layout.cshtml как базовый
     string userId = Model.UserId ?? ViewBag.targetUser?.UserId;
-
 }
 
 <div class="main-container">
     <div class="user-container">
         <h2>@Model.FullName</h2>
         <div class="portrait-box">
-            <img id="user_photo" src="@Model.Image" />
+            <img id="user_photo" src="@Model.Image"/>
             <a asp-controller="AccountManager" asp-action="UpdateUserData">
                 <img src="~/images/edit.svg" alt="Редактировать данные пользователя">
             </a>
@@ -38,4 +37,3 @@
     window.userId = "@userId";
     console.log('Layout:_RegisteredLayout');
 </script>
-

@@ -60,12 +60,12 @@ header {
     height: 50px;
 }
 
-    .navbar a {
-        text-decoration: none; /* Убирает подчеркивание */
-        color: inherit; /* Наследует цвет текста */
-        display: flex; /* Чтобы содержимое ссылки оставалось блочным */
-        align-items: center;
-    }
+.navbar a {
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit; /* Наследует цвет текста */
+    display: flex; /* Чтобы содержимое ссылки оставалось блочным */
+    align-items: center;
+}
 
 .toolbar_logo {
     margin-left: 2vH;
@@ -74,11 +74,11 @@ header {
     cursor: pointer;
 }
 
-    .toolbar_logo p {
-        margin-left: 0.5em;
-        margin-right: 1em;
-        font-size: 1.5em;
-    }
+.toolbar_logo p {
+    margin-left: 0.5em;
+    margin-right: 1em;
+    font-size: 1.5em;
+}
 
 /*Кнопка Logout*/
 
@@ -91,17 +91,17 @@ header {
     right: 0;
 }
 
-    .toolbar_logout button {
-        background: none;
-        border: none;
-        display: flex;
-        cursor: pointer;
-    }
+.toolbar_logout button {
+    background: none;
+    border: none;
+    display: flex;
+    cursor: pointer;
+}
 
-    .toolbar_logout p {
-        margin-right: 0.5em;
-        font-size: 1em;
-    }
+.toolbar_logout p {
+    margin-right: 0.5em;
+    font-size: 1em;
+}
 
 .search-wrapper {
     position: absolute;
@@ -182,72 +182,68 @@ main {
     max-width: 400px; /* Фиксируем максимальную ширину */
 }
 
-    .login-form h2,
-    .main-container h2 {
-        text-align: center;
-        margin-bottom: 15px;
-        color: #333;
-    }
+.login-form h2,
+.main-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+}
 
-    .login-form label,
-    .main-container label {
-        display: block;
-        margin-bottom: 5px;
-        color: #666;
-    }
+.login-form label,
+.main-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
 
-    .login-form input,
-    .main-container input,
-    .main-container select {
-        width: 100%;
-        box-sizing: border-box;
-        max-width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
+.login-form input,
+.main-container input,
+.main-container select {
+    width: 100%;
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
-    .login-form button,
-    .main-container button {
-        width: 100%;
-        padding: 10px;
-        background-color: #ff7700;
-        border: none;
-        border-radius: 100px;
-        color: white;
-        font-size: 1em;
-        cursor: pointer;
-        margin-top: 20px;
-    }
+.login-form button,
+.main-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff7700;
+    border: none;
+    border-radius: 100px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
-        .login-form button:hover,
-        .main-container button:hover {
-            background-color: #d66400;
-        }
+.login-form button:hover,
+.main-container button:hover { background-color: #d66400; }
 
-    .login-form p,
-    .main-container p {
-        margin-top: 15px;
-        text-align: center;
-    }
+.login-form p,
+.main-container p {
+    margin-top: 15px;
+    text-align: center;
+}
 
-    .login-form a,
-    .main-container a {
-        color: #ff7700;
-        text-decoration: none;
-    }
+.login-form a,
+.main-container a {
+    color: #ff7700;
+    text-decoration: none;
+}
 
-        .login-form a:hover,
-        .main-container a:hover {
-            text-decoration: underline;
-        }
+.login-form a:hover,
+.main-container a:hover { text-decoration: underline; }
 
 /* Контейнер для группы элементов формы */
 
 .form-group {
     position: relative;
-    /*margin-bottom: 20px;*/ /* Отступ между группами */
+    /*margin-bottom: 20px;*//* Отступ между группами */
 }
 
 /* Обертка для input и сообщения */
@@ -257,15 +253,15 @@ main {
     width: 100%; /* Занимает доступное пространство */
 }
 
-    /* Стиль для input */
+/* Стиль для input */
 
-    .input-wrapper input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+.input-wrapper input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
 /* Стиль для всплывающего сообщения */
 
@@ -297,12 +293,12 @@ main {
     display: none;
 }
 
-    /* Показываем только ошибки и корректные сообщения после отправки формы */
+/* Показываем только ошибки и корректные сообщения после отправки формы */
 
-    .field-validation-error.show,
-    .field-validation-valid.show {
-        display: inline-block; /* Показываем сообщение об ошибке */
-    }
+.field-validation-error.show,
+.field-validation-valid.show {
+    display: inline-block; /* Показываем сообщение об ошибке */
+}
 
 /* Стили для контейнера чекбокса */
 
@@ -312,23 +308,23 @@ main {
     margin-bottom: 15px; /* Отступ перед кнопкой */
 }
 
-    /* Стили для чекбокса */
+/* Стили для чекбокса */
 
-    .remember-me input[type="checkbox"] {
-        margin: 0; /* Убираем отступы вокруг чекбокса */
-        margin-right: 8px; /* Отступ между чекбоксом и текстом */
-        width: 16px; /* Размер чекбокса */
-        height: 16px;
-        cursor: pointer;
-    }
+.remember-me input[type="checkbox"] {
+    margin: 0; /* Убираем отступы вокруг чекбокса */
+    margin-right: 8px; /* Отступ между чекбоксом и текстом */
+    width: 16px; /* Размер чекбокса */
+    height: 16px;
+    cursor: pointer;
+}
 
-    /* Стили для текста рядом с чекбоксом */
+/* Стили для текста рядом с чекбоксом */
 
-    .remember-me label {
-        margin: 0;
-        font-size: 0.9em;
-        cursor: pointer;
-    }
+.remember-me label {
+    margin: 0;
+    font-size: 0.9em;
+    cursor: pointer;
+}
 
 .error-container {
     text-align: center;
@@ -337,9 +333,7 @@ main {
     font-size: clamp(0.7em, 2.5vw, 1em);
 }
 
-    .error-container h1 {
-        font-size: clamp(17px, 2.5vw, 25px);
-    }
+.error-container h1 { font-size: clamp(17px, 2.5vw, 25px); }
 
 /* Стили для контейнера ошибок */
 
@@ -351,11 +345,11 @@ main {
     transform: translateY(-5px);
 }
 
-    .text-danger.validation-summary-errors ul {
-        display: contents;
-        list-style-type: none;
-        padding-left: 0;
-    }
+.text-danger.validation-summary-errors ul {
+    display: contents;
+    list-style-type: none;
+    padding-left: 0;
+}
 
 footer {
     margin-top: auto;
@@ -435,13 +429,9 @@ footer {
 
 @media (max-width: 768px) {
     .toolbar_logo p,
-    .toolbar_logout p {
-        display: none;
-    }
+    .toolbar_logout p { display: none; }
 
-    .search-wrapper {
-        margin: 0 10px;
-    }
+    .search-wrapper { margin: 0 10px; }
 }
 
 @media (max-width: 480px) {

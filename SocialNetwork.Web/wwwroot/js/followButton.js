@@ -1,12 +1,13 @@
 // Обработчик добавления/удаления кнопки подписаться *@
 async function follow(userId) {
     try {
-        const response = await fetch(`/AccountManager/FollowUser/${userId}`, {
-            method: 'POST',
-            headers: {
-                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-            }
-        });
+        const response = await fetch(`/AccountManager/FollowUser/${userId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            });
 
         if (response.ok) {
             // Обновляем кнопку после успешной подписки
@@ -25,12 +26,13 @@ async function follow(userId) {
 
 async function unfollow(userId) {
     try {
-        const response = await fetch(`/AccountManager/UnfollowUser/${userId}`, {
-            method: 'POST',
-            headers: {
-                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-            }
-        });
+        const response = await fetch(`/AccountManager/UnfollowUser/${userId}`,
+            {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                }
+            });
 
         if (response.ok) {
             // Обновляем кнопку после успешной отписки

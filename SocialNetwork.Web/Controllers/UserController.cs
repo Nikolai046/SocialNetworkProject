@@ -30,7 +30,8 @@ public class UserController : Controller
     /// <returns>
     /// Не возвращает значений.
     /// </returns>
-    public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork, ILogger<UserController> logger)
+    public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper,
+        IUnitOfWork unitOfWork, ILogger<UserController> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;

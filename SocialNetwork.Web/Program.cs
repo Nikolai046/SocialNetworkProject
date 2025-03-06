@@ -20,8 +20,8 @@ builder.Services.AddControllersWithViews();
 
 // Настройка DbContext с использованием ILoggerFactory
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .UseLoggerFactory(loggerFactory)) // Передаем уже созданную фабрику логгера
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            .UseLoggerFactory(loggerFactory)) // Передаем уже созданную фабрику логгера
     .AddCustomRepository<Message, MessagesRepository>()
     .AddCustomRepository<Comment, CommentsRepository>()
     .AddCustomRepository<Friend, FriendsRepository>()
@@ -31,8 +31,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Настройка Identity с усиленными требованиями к паролям
 builder.Services.AddIdentity<User, IdentityRole>(opts =>
 {
-    opts.Password.RequiredLength = 5;   // Минимальная длина пароля
-    opts.Password.RequireNonAlphanumeric = false;   // Не требовать не алфавитно-цифровых символов
+    opts.Password.RequiredLength = 5; // Минимальная длина пароля
+    opts.Password.RequireNonAlphanumeric = false; // Не требовать не алфавитно-цифровых символов
     opts.Password.RequireLowercase = false; // Не требовать строчных букв
     opts.Password.RequireUppercase = false; // Не требовать заглавных букв
     opts.Password.RequireDigit = false; // Не требовать цифр
@@ -117,6 +117,7 @@ app.Use(async (context, next) =>
         context.Response.Redirect("/Home/Index");
         return;
     }
+
     await next();
 });
 

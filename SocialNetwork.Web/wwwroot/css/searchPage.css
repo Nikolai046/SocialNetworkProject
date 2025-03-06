@@ -12,11 +12,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-    .search_currentuser_container:hover {
-        background-color: #faeddd;
-        border: 1px solid rgba(128, 128, 128, 0.3);
-        box-shadow: 0px 0px 9px 9px rgba(0, 0, 0, 0.1)
-    }
+.search_currentuser_container:hover {
+    background-color: #faeddd;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    box-shadow: 0px 0px 9px 9px rgba(0, 0, 0, 0.1)
+}
 
 .div_search_user_container {
     display: inline-flex;
@@ -35,11 +35,11 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-    .search_avatar img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-    }
+.search_avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 
 .div_search_user_container ul {
     list-style-type: none;

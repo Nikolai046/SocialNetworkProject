@@ -9,19 +9,18 @@
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
         <link rel="stylesheet" href="~/css/hideElementsFromNavbar.css" asp-append-version="true"/>
     }
+
     if (controllerName is "AccountManager" or "Search" or "User")
     {
-        <link rel="stylesheet" href="~/css/siteAuthorized.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/siteAuthorized.css" asp-append-version="true"/>
         if (actionName is "UpdateUserData" or "UpdateProfile" or "UploadPhoto")
         {
-            <link rel="stylesheet" href="~/css/UpdateUserData.css" asp-append-version="true" />
+            <link rel="stylesheet" href="~/css/UpdateUserData.css" asp-append-version="true"/>
         }
     }
 
     if (controllerName is "Search")
     {
-        <link rel="stylesheet" href="~/css/searchPage.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/searchPage.css" asp-append-version="true"/>
     }
 }
-
-    

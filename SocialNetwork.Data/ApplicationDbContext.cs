@@ -14,14 +14,17 @@ public class ApplicationDbContext : IdentityDbContext<User>
     /// Получает или задает набор служебнвх данных в контексте базы данных.
     /// </summary>
     public DbSet<ServiceData> ServiceData { get; set; }
+
     /// <summary>
     /// Получает или задает набор сообщений в контексте базы данных.
     /// </summary>
     public DbSet<Message> Messages { get; set; }
+
     /// <summary>
     /// Получает или задает набор комментариев в контексте базы данных.
     /// </summary>
     public DbSet<Comment> Comments { get; set; }
+
     /// <summary>
     /// Получает или задает набор друзей в контексте базы данных.
     /// </summary>

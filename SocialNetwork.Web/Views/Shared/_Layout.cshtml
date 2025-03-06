@@ -1,63 +1,68 @@
 ﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SocialNetwork - @ViewData["Title"]</title>
     @await Html.PartialAsync("_CssPartial.cshtml")
 
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <a asp-controller="Home" asp-action="Index"> <div class="toolbar_logo"><img src="/images/logo.png" alt="Logo"><p>SocialNetwork</p></div></a>
-            <div class="search-wrapper">
-                <form  asp-controller="Search" asp-action="Search" method="get">
+<header>
+    <nav class="navbar">
+        <a asp-controller="Home" asp-action="Index">
+            <div class="toolbar_logo">
+                <img src="/images/logo.png" alt="Logo">
+                <p>SocialNetwork</p>
+            </div>
+        </a>
+        <div class="search-wrapper">
+            <form asp-controller="Search" asp-action="Search" method="get">
                 <label class="label-input">
-                        <input type="text" class="input" placeholder="Поиск" name="query" maxlength="255" data-error="false" value="" wfd-id="id1">
+                    <input type="text" class="input" placeholder="Поиск" name="query" maxlength="255" data-error="false" value="" wfd-id="id1">
                     <button type="submit" class="button-clean">
-                        <img src="/images/search_ico.svg" />
+                        <img src="/images/search_ico.svg"/>
                     </button>
                 </label>
-                </form>
-            </div>
-            <form class="toolbar_logout" asp-controller="AccountManager" asp-action="logout" method="post">
-                @Html.AntiForgeryToken()
-                <button type="submit">
-                    <p>Выйти</p>
-                    <img src="/images/logout.svg" alt="Logo">
-                </button>
             </form>
-        </nav>
-    </header>
+        </div>
+        <form class="toolbar_logout" asp-controller="AccountManager" asp-action="logout" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit">
+                <p>Выйти</p>
+                <img src="/images/logout.svg" alt="Logo">
+            </button>
+        </form>
+    </nav>
+</header>
 
-    <div class="container">
-        <main role="main">
-            <div class="spacer-container"></div>
-            @RenderBody()
-            <div class="spacer-container"></div>
+<div class="container">
+    <main role="main">
+        <div class="spacer-container"></div>
+        @RenderBody()
+        <div class="spacer-container"></div>
 
-        </main>
-    </div>
+    </main>
+</div>
 <footer>
     <div class="footer-container">
         &copy; 2025 - SocialNetwork
     </div>
 </footer>
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <p id="modalText">Вы уверены, что хотите выполнить это действие?</p>
-            <div class="modal-buttons">
-                <button id="confirmButton" class="btn-confirm">Да</button>
-                <button id="cancelButton" class="btn-cancel">Отмена</button>
-            </div>
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <p id="modalText">Вы уверены, что хотите выполнить это действие?</p>
+        <div class="modal-buttons">
+            <button id="confirmButton" class="btn-confirm">Да</button>
+            <button id="cancelButton" class="btn-cancel">Отмена</button>
         </div>
     </div>
-    <script>
-        var trashboxUrl = "@Url.Content("~/images/trashbox.svg")";
-        var closeUrl = "@Url.Content("~/images/close.svg")";
-    </script>
-    @await Html.PartialAsync("_ScriptPartial.cshtml")
+</div>
+<script>
+    var trashboxUrl = "@Url.Content("~/images/trashbox.svg")";
+    var closeUrl = "@Url.Content("~/images/close.svg")";
+</script>
+@await Html.PartialAsync("_ScriptPartial.cshtml")
 </body>
 </html>
 

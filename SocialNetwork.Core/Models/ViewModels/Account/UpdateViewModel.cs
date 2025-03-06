@@ -41,11 +41,9 @@ public class UpdateViewModel
 
     public string Image { get; set; }
 
-    [Display(Name = "Статус")]
-    public string? Status { get; set; }
+    [Display(Name = "Статус")] public string? Status { get; set; }
 
-    [Display(Name = "Обо мне")]
-    public string? About { get; set; }
+    [Display(Name = "Обо мне")] public string? About { get; set; }
 
     [DataType(DataType.Password)]
     [Required(ErrorMessage = "Введите текущий пароль")]

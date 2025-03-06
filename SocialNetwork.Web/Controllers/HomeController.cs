@@ -19,7 +19,8 @@ public class HomeController : Controller
     private readonly UserManager<User> _userManager;
     private readonly SignInManager<User> _signInManager;
 
-    public HomeController(ILogger<HomeController> logger, IMapper mapper, UserManager<User> userManager, SignInManager<User> signInManager)
+    public HomeController(ILogger<HomeController> logger, IMapper mapper, UserManager<User> userManager,
+        SignInManager<User> signInManager)
     {
         _logger = logger;
         _mapper = mapper;
@@ -47,7 +48,8 @@ public class HomeController : Controller
                 return View(model); // возвращаем представление, чтобы отобразились ошибки
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName!, model.Password!, model.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName!, model.Password!, model.RememberMe,
+                lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 return RedirectToAction("MyPage", "AccountManager");

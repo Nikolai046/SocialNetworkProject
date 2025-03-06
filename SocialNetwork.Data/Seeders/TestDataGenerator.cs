@@ -35,7 +35,6 @@ public class TestDataGenerator
 
     public async Task Generate(int userCount)
     {
-
         var isDatabaseEmpty = !await _userManager.Users.AnyAsync();
         if (isDatabaseEmpty)
             return;
@@ -80,7 +79,8 @@ public class TestDataGenerator
             await _userManager.CreateAsync(user, "123456");
             var userFromDb = await _userManager.FindByEmailAsync(user.Email);
             var destinationPhotoName = userFromDb.Id + ".jpeg";
-            var destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto", destinationPhotoName);
+            var destinationPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "userphoto",
+                destinationPhotoName);
 
             try
             {
@@ -95,6 +95,7 @@ public class TestDataGenerator
             {
                 user.Image = "/images/person-unknown.svg";
             }
+
             await _userManager.UpdateAsync(userFromDb);
         }
 

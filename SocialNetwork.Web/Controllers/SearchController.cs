@@ -27,7 +27,8 @@ public class SearchController : Controller
     /// <param name="mapper">Маппер для преобразования одних типов данных в другие.</param>
     /// <param name="unitOfWork">Единица работы, координирующая работу с репозиториями.</param>
     /// <param name="logger">Логгер для ведения журнала событий или ошибок.</param>
-    public SearchController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork, ILogger<SearchController> logger)
+    public SearchController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper,
+        IUnitOfWork unitOfWork, ILogger<SearchController> logger)
     {
         _mapper = mapper;
         _userManager = userManager;

@@ -27,7 +27,8 @@ function showConfirmModal(message, confirmCallback) {
     confirmButton.addEventListener('click', confirmHandler);
     cancelButton.addEventListener('click', closeModal);
     window.addEventListener('keydown', handleEscape);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
+    modal.addEventListener('click',
+        (e) => {
+            if (e.target === modal) closeModal();
+        });
 }

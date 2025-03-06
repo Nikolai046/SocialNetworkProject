@@ -21,12 +21,12 @@ document.addEventListener('DOMContentLoaded',
 
         // Наблюдатель за триггером
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && hasMore && !loading) {
-                    loadMessages();
-                }
-            });
-        },
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && hasMore && !loading) {
+                        loadMessages();
+                    }
+                });
+            },
             { threshold: 0.1 });
 
         observer.observe(loadTrigger);

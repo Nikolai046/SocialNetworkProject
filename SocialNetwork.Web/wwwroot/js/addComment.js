@@ -1,6 +1,6 @@
 // Обработчик комментариев
 document.addEventListener('click',
-    async function (e) {
+    async function(e) {
         // Добавление поля для комментария
         if (e.target.classList.contains('addComment')) {
             const closeUrl = window.closeUrl; //прием адреса иконки закрыть из представления
@@ -44,7 +44,8 @@ document.addEventListener('click',
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                            'RequestVerificationToken': document
+                                .querySelector('input[name="__RequestVerificationToken"]').value
                         },
                         body: JSON.stringify({
                             MessageId: parseInt(messageId),

@@ -49,6 +49,7 @@ public class UnitOfWork : IUnitOfWork
                 // Освобождаем управляемые ресурсы
                 _appContext?.Dispose();
             }
+
             // Освобождаем неуправляемые ресурсы
             _disposed = true;
         }

@@ -22,7 +22,8 @@ public class AccountManagerController : Controller
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILogger<AccountManagerController> _logger;
 
-    public AccountManagerController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper, IUnitOfWork unitOfWork, ILogger<AccountManagerController> logger)
+    public AccountManagerController(UserManager<User> userManager, SignInManager<User> signInManager, IMapper mapper,
+        IUnitOfWork unitOfWork, ILogger<AccountManagerController> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -233,6 +234,7 @@ public class AccountManagerController : Controller
             {
                 return Forbid();
             }
+
             await _unitOfWork.GetRepository<Message>().DeleteAsync(message);
             Console.WriteLine($"\n\x1b[42m\x1b[37mСообщение {postId} удалено\x1b[0m");
         }
@@ -243,6 +245,7 @@ public class AccountManagerController : Controller
             {
                 return Forbid();
             }
+
             await _unitOfWork.GetRepository<Comment>().DeleteAsync(comment);
             Console.WriteLine($"\n\x1b[42m\x1b[37mКомментарий {postId} удалty\x1b[0m");
         }
@@ -390,7 +393,9 @@ public class AccountManagerController : Controller
 
         var friendship = await _unitOfWork.GetRepository<Friend>()
             .GetAll()
-            .FirstOrDefaultAsync(f => (f.UserId == currentUser.Id && f.CurrentFriendId == userId) || (f.UserId == userId && f.CurrentFriendId == currentUser.Id));
+            .FirstOrDefaultAsync(f =>
+                (f.UserId == currentUser.Id && f.CurrentFriendId == userId) ||
+                (f.UserId == userId && f.CurrentFriendId == currentUser.Id));
 
         if (friendship != null)
         {
@@ -411,25 +416,25 @@ public class AccountManagerController : Controller
     public async Task<IActionResult> GetFriends([FromQuery] string UserID)
     {
         var friends = await _unitOfWork.GetRepository<Friend>()
-        .GetAll()
-        .Where(f => f.UserId == UserID || f.CurrentFriendId == UserID)
-        .Include(f => f.User)
-        .Include(f => f.CurrentFriend)
-        .Select(f => f.UserId == UserID
-            ? new FriendDto
-            {
-                FriendId = f.CurrentFriend!.Id,
-                FriendFullName = f.CurrentFriend.FirstName + " " + f.CurrentFriend.LastName,
-                Image = f.CurrentFriend.Image
-            }
-            : new FriendDto
-            {
-                FriendId = f.User!.Id,
-                FriendFullName = f.User.FirstName + " " + f.User.LastName,
-                Image = f.User.Image
-            })
-        .Distinct()
-        .ToListAsync();
+            .GetAll()
+            .Where(f => f.UserId == UserID || f.CurrentFriendId == UserID)
+            .Include(f => f.User)
+            .Include(f => f.CurrentFriend)
+            .Select(f => f.UserId == UserID
+                ? new FriendDto
+                {
+                    FriendId = f.CurrentFriend!.Id,
+                    FriendFullName = f.CurrentFriend.FirstName + " " + f.CurrentFriend.LastName,
+                    Image = f.CurrentFriend.Image
+                }
+                : new FriendDto
+                {
+                    FriendId = f.User!.Id,
+                    FriendFullName = f.User.FirstName + " " + f.User.LastName,
+                    Image = f.User.Image
+                })
+            .Distinct()
+            .ToListAsync();
 
         return Json(new
         {

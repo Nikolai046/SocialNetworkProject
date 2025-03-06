@@ -22,39 +22,40 @@ const existingMonth = window.existingMonth;
 const existingDay = window.existingDay;
 
 // Инициализация годов, месяцев и дней при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    const yearSelect = document.getElementById('birth-year');
-    const monthSelect = document.getElementById('birth-month');
-    const daySelect = document.getElementById('birth-day');
-    const currentYear = new Date().getFullYear();
-    const startYear = 1940;
+document.addEventListener('DOMContentLoaded',
+    () => {
+        const yearSelect = document.getElementById('birth-year');
+        const monthSelect = document.getElementById('birth-month');
+        const daySelect = document.getElementById('birth-day');
+        const currentYear = new Date().getFullYear();
+        const startYear = 1940;
 
-    // Заполняем года
-    for (let year = currentYear - 10; year >= startYear; year--) {
-        yearSelect.appendChild(new Option(year, year));
-    }
+        // Заполняем года
+        for (let year = currentYear - 10; year >= startYear; year--) {
+            yearSelect.appendChild(new Option(year, year));
+        }
 
-    // Заполняем месяцы
-    months.forEach(month => {
-        monthSelect.appendChild(new Option(month.name, month.value));
+        // Заполняем месяцы
+        months.forEach(month => {
+            monthSelect.appendChild(new Option(month.name, month.value));
+        });
+
+        // Устанавливаем существующие значения, если они есть
+        if (existingYear !== null) {
+            yearSelect.value = existingYear;
+        }
+        if (existingMonth !== null) {
+            monthSelect.value = existingMonth;
+        }
+
+        // Обновляем список дней на основе выбранных года и месяца
+        updateDays();
+
+        // Устанавливаем существующий день, если он есть
+        if (existingDay !== null) {
+            daySelect.value = existingDay;
+        }
     });
-
-    // Устанавливаем существующие значения, если они есть
-    if (existingYear !== null) {
-        yearSelect.value = existingYear;
-    }
-    if (existingMonth !== null) {
-        monthSelect.value = existingMonth;
-    }
-
-    // Обновляем список дней на основе выбранных года и месяца
-    updateDays();
-
-    // Устанавливаем существующий день, если он есть
-    if (existingDay !== null) {
-        daySelect.value = existingDay;
-    }
-});
 
 function updateDays() {
     const month = document.getElementById("birth-month").value;

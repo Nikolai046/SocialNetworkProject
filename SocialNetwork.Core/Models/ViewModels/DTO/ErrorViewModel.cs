@@ -4,7 +4,6 @@ namespace SocialNetwork.Core.Models.ViewModels.DTO;
 /// Модель представления ошибки, содержащая информацию о запросе.
 /// </summary>
 /// <param name="RequestId">Идентификатор запроса, который может быть null.</param>
-
 public class ErrorViewModel
 {
     public string? RequestId { get; set; }

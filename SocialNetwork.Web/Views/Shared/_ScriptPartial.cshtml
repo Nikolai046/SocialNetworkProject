@@ -18,14 +18,11 @@
         if (actionName is "Register")
         {
             <script src="~/js/monthChoiser.js" defer asp-append-version="true"></script>
-           }
-
+        }
     }
 
     if (controllerName is "AccountManager")
     {
-        
-        
         if (actionName is "UpdateUserData" or "UpdateProfile")
         {
             <script src="~/lib/jquery/dist/jquery.min.js" defer asp-append-version="true"></script>
@@ -44,17 +41,13 @@
             <script src="~/js/showConfirmModal.js" asp-append-version="true"></script> // Обработчик модального окна "Да/Отмена"
             <script src="~/js/postDelete.js" defer asp-append-version="true"></script> // Обработчик удаления сообщения или комментария
         }
-
-
     }
 
     if (controllerName is "Search")
     {
         <script src="~/js/followButton.js" defer asp-append-version="true"></script>
-
     }
 
-    
 
     if (controllerName is "User")
     {
@@ -63,7 +56,5 @@
         <script src="~/js/textareaAutosize.js" defer asp-append-version="true"></script>
         <script src="~/js/showConfirmModal.js"></script>
         <script src="~/js/postDelete.js" defer asp-append-version="true"></script>
-        
     }
-
 }

@@ -17,8 +17,7 @@ public class LoginViewModel
     [Display(Name = "Пароль")]
     public string? Password { get; set; }
 
-    [Display(Name = "Запомнить меня")]
-    public bool RememberMe { get; set; } = false;
+    [Display(Name = "Запомнить меня")] public bool RememberMe { get; set; } = false;
 
     public string ReturnUrl { get; set; } = string.Empty;
 }

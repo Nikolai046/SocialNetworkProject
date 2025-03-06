@@ -11,7 +11,7 @@
 <div class="user-container">
     <h2>@Model.GetFullName()</h2>
     <div class="portrait-box">
-        <img id="user_photo" alt="" src="@Model.Image" />
+        <img id="user_photo" alt="" src="@Model.Image"/>
     </div>
 
     <form id="uploadForm" method="post" enctype="multipart/form-data" asp-action="UploadPhoto" asp-controller="AccountManager">
@@ -19,7 +19,7 @@
             <input type="file" id="photo" name="photo" accept=".jpg,.jpeg" required style="display: none;">
             <button id="select_a_file" type="button" class="add-photo-button" onclick="document.getElementById('photo').click();">Выбрать файл</button>
         </div>
-        <button style="display: none"  class="add-photo-button" type="submit">Загрузить</button>
+        <button style="display: none" class="add-photo-button" type="submit">Загрузить</button>
     </form>
 </div>
 

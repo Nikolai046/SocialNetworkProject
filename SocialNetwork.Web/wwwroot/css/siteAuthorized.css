@@ -36,12 +36,12 @@ header {
     height: 50px;
 }
 
-    .navbar a {
-        text-decoration: none; /* Убирает подчеркивание */
-        color: inherit; /* Наследует цвет текста */
-        display: flex; /* Чтобы содержимое ссылки оставалось блочным */
-        align-items: center;
-    }
+.navbar a {
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit; /* Наследует цвет текста */
+    display: flex; /* Чтобы содержимое ссылки оставалось блочным */
+    align-items: center;
+}
 
 .toolbar_logo {
     margin-left: 2vH;
@@ -50,11 +50,11 @@ header {
     cursor: pointer;
 }
 
-    .toolbar_logo p {
-        margin-left: 0.5em;
-        margin-right: 1em;
-        font-size: 1.5em;
-    }
+.toolbar_logo p {
+    margin-left: 0.5em;
+    margin-right: 1em;
+    font-size: 1.5em;
+}
 
 /*Кнопка Logout*/
 
@@ -67,17 +67,17 @@ header {
     right: 0;
 }
 
-    .toolbar_logout button {
-        background: none;
-        border: none;
-        display: flex;
-        cursor: pointer;
-    }
+.toolbar_logout button {
+    background: none;
+    border: none;
+    display: flex;
+    cursor: pointer;
+}
 
-    .toolbar_logout p {
-        margin-right: 0.5em;
-        font-size: 1em;
-    }
+.toolbar_logout p {
+    margin-right: 0.5em;
+    font-size: 1em;
+}
 
 .search-wrapper {
     position: absolute;
@@ -89,9 +89,7 @@ header {
     max-width: 450px; /* Максимальная ширина формы поиска */
 }
 
-    .search-wrapper form {
-        width: 100%;
-    }
+.search-wrapper form { width: 100%; }
 
 /* Стили для label */
 
@@ -187,9 +185,7 @@ main {
     right: 6px;
 }
 
-    .portrait-box a img {
-        opacity: 0.3;
-    }
+.portrait-box a img { opacity: 0.3; }
 
 .user-container {
     display: flex;
@@ -206,17 +202,11 @@ main {
     padding-left: 10px;
 }
 
-.about-user-container {
-    width: 175px;
-}
+.about-user-container { width: 175px; }
 
-    .about-user-container p {
-        margin-bottom: 0;
-    }
+.about-user-container p { margin-bottom: 0; }
 
-    .about-user-container span {
-        font-weight: bold;
-    }
+.about-user-container span { font-weight: bold; }
 
 .friens-container {
     display: flex;
@@ -232,15 +222,15 @@ main {
     overflow-x: hidden;
 }
 
-    .friens-container a {
-        text-decoration: none;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        color: black;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
+.friens-container a {
+    text-decoration: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
 .friens-container-header {
     font-size: 1.2em;
@@ -260,9 +250,7 @@ main {
     margin-top: 4px;
 }
 
-    .friens-container li:hover {
-        background-color: rgba(252, 244, 236, 255)
-    }
+.friens-container li:hover { background-color: rgba(252, 244, 236, 255) }
 
 .friens-container img {
     margin-right: 5px;
@@ -317,29 +305,25 @@ main {
     padding: 5px;
 }
 
-    .card-subtitle span {
-        background-color: rgba(203, 175, 129, 0.16);
-        margin-left: auto;
-        padding: 1px;
-        display: flex;
-        justify-content: center;
-        border-radius: 5px;
-        align-items: center;
-        cursor: pointer;
-    }
-
-        .card-subtitle span img {
-            height: 15px;
-            margin: 2px;
-        }
-
-.card-subtitle-author {
-    margin: 0 10px 0 0;
+.card-subtitle span {
+    background-color: rgba(203, 175, 129, 0.16);
+    margin-left: auto;
+    padding: 1px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    align-items: center;
+    cursor: pointer;
 }
 
-.card-subtitle-date {
-    margin: 0;
+.card-subtitle span img {
+    height: 15px;
+    margin: 2px;
 }
+
+.card-subtitle-author { margin: 0 10px 0 0; }
+
+.card-subtitle-date { margin: 0; }
 
 .card-text {
     margin: 0;
@@ -391,12 +375,12 @@ main {
     cursor: pointer;
 }
 
-    /* Стиль для изображения */
+/* Стиль для изображения */
 
-    .close-icon img {
-        height: 10px;
-        width: 10px;
-    }
+.close-icon img {
+    height: 10px;
+    width: 10px;
+}
 
 footer {
     margin-top: auto;
@@ -475,11 +459,7 @@ footer {
 
 @media (max-width: 768px) {
     .toolbar_logo p,
-    .toolbar_logout p {
-        display: none;
-    }
+    .toolbar_logout p { display: none; }
 
-    .search-wrapper {
-        margin: 0 10px;
-    }
+    .search-wrapper { margin: 0 10px; }
 }

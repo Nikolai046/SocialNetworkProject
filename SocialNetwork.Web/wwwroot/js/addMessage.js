@@ -1,6 +1,6 @@
 // Обработчик отправки сообщения
 document.getElementById('sendMessage').addEventListener('click',
-    async function () {
+    async function() {
         const messageInput = document.getElementById('messageInput');
         const text = messageInput.value.trim();
         const trashboxUrl = window.trashboxUrl;
@@ -13,7 +13,8 @@ document.getElementById('sendMessage').addEventListener('click',
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]')
+                            .value
                     },
                     body: JSON.stringify({ Text: text })
                 });

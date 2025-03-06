@@ -22,15 +22,15 @@
     width: 100%; /* Занимает доступное пространство */
 }
 
-    /* Стиль для input */
+/* Стиль для input */
 
-    .input-wrapper input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+.input-wrapper input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
 /* Стиль для всплывающего сообщения */
 
@@ -62,12 +62,12 @@
     display: none;
 }
 
-    /* Показываем только ошибки и корректные сообщения после отправки формы */
+/* Показываем только ошибки и корректные сообщения после отправки формы */
 
-    .field-validation-error.show,
-    .field-validation-valid.show {
-        display: inline-block; /* Показываем сообщение об ошибке */
-    }
+.field-validation-error.show,
+.field-validation-valid.show {
+    display: inline-block; /* Показываем сообщение об ошибке */
+}
 
 .submit-button {
     padding: 10px;
@@ -91,9 +91,7 @@
     margin-top: 6px;
 }
 
-.submit-button:hover {
-    background-color: #d66400;
-}
+.submit-button:hover { background-color: #d66400; }
 
 .text-danger.validation-summary-errors {
     font-size: 0.8em;
@@ -103,8 +101,8 @@
     transform: translateY(-5px);
 }
 
-    .text-danger.validation-summary-errors ul {
-        display: contents;
-        list-style-type: none;
-        padding-left: 0;
-    }
+.text-danger.validation-summary-errors ul {
+    display: contents;
+    list-style-type: none;
+    padding-left: 0;
+}
